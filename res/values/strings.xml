@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Bem vindo(a) ao World of Words !</string>
+    <string name="app_name">World of Words</string>
+    <string name="anagrama">AnagramaHT</string>
+    <string name="dicRapido">Dicionário Rápido</string>
+    <string name="adedonha">Adedonha</string>
+    <string name="forca">Jogo da Forca</string>
+
+    <!-- AnagramaHT -->
+
+    <string name="jogar">Jogar</string>
+    <string name="opcoes">Opções</string>
+    <string name="ajuda">Ajuda</string>
+    <string name="sair">Sair</string>
+    <string name="hello_app">Bem vindo ao Anagrama HT!</string>
+    <string name="sub_menu_jogar">Insira o nome do jogador</string>
+    <string name="string_ajuda">Instruções e Regras do jogo</string>
+    <string name="string_opcoes">Opções do jogo</string>
+    <string name="confirmar">OK</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="limpar">Limpar</string>
+
+    <!-- RadioButton opcoes -->
+    <string name="facil">Fácil</string>
+    <string name="normal">Normal</string>
+    <string name="dificil">Difícil</string>
+    <string name="cronometro">Cronometro</string>
+    <string name="enviar">Enviar</string>
+    <string name="teste">teste</string>
+    <string name="ranking">Ranking</string>
+    <string name="voltar">Voltar</string>
+
+</resources>
