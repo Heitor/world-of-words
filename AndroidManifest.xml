@@ -11,6 +11,7 @@
         android:label="@string/app_name" >
         <activity
             android:name=".WorldofWordsActivity"
+            android:screenOrientation="portrait" 
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,32 +22,45 @@
         
         <activity
             android:name=".anagrama.activity.AjudaActivity"
+            android:screenOrientation="portrait" 
             android:label="@string/app_name" >
         </activity>
         
          <activity
             android:name=".anagrama.activity.SubMenuJogarActivity"
+            android:screenOrientation="portrait" 
             android:label="@string/app_name" >
         </activity>
         
           <activity
             android:name=".anagrama.activity.OpcoesActivity"
+            android:screenOrientation="portrait" 
             android:label="@string/app_name" >
         </activity>
         
         <activity
             android:name=".anagrama.activity.JogoActivity"
+            android:screenOrientation="portrait" 
             android:label="@string/app_name" >
         </activity>
         
         <activity
             android:name=".anagrama.activity.RankingActivity"
+            android:screenOrientation="portrait" 
             android:label="@string/app_name" >
         </activity>
         
          <activity
             android:name=".anagrama.activity.AnagramaHTActivity"
+            android:screenOrientation="portrait" 
             android:label="@string/app_name" >
+        </activity>
+        
+         
+         <activity
+            android:name=".adedonha.activity.AdedonhaActivity"
+            android:screenOrientation="portrait" 
+            android:label="@string/app_name_adedonha" >
         </activity>
     </application>
     
