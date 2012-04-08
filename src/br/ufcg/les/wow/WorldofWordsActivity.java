@@ -1,6 +1,7 @@
 package br.ufcg.les.wow;
 
 import br.ufcg.les.wow.anagrama.activity.AnagramaHTActivity;
+import br.ufcg.les.wow.client.TesteHttp;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +18,11 @@ public class WorldofWordsActivity extends Activity {
         
         Button botaoAnagrama = (Button) findViewById(R.id.button4);
         botaoAnagrama.setOnClickListener(botaoAnagramaListener());
+        
+        
+        // Heitor: My Tests
+        TesteHttp teste = new TesteHttp();
+        teste.testeHttpConnection();
     }
 
 	private OnClickListener botaoAnagramaListener() {
