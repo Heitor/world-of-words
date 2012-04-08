@@ -16,7 +16,9 @@ public class UsuarioDAO extends GenericDAOImpl<Usuario> {
 	}
 
 	private String[] todasOsUsuarios = { GenericDAOSQLiteHelper.COLUNA_ID,
-			GenericDAOSQLiteHelper.COLUNA_USUARIOS, GenericDAOSQLiteHelper.COLUNA_PONTUACAO, GenericDAOSQLiteHelper.COLUNA_TEMPO};
+			GenericDAOSQLiteHelper.COLUNA_USUARIOS,
+			GenericDAOSQLiteHelper.COLUNA_PONTUACAO,
+			GenericDAOSQLiteHelper.COLUNA_TEMPO};
 	
 	public void inserirObjeto(String obj, int obj2, long obj3) {
 		ContentValues values = new ContentValues();
@@ -28,7 +30,8 @@ public class UsuarioDAO extends GenericDAOImpl<Usuario> {
 	}
 
 	public void deletarObjeto(Long idObj) {
-		bancoDeDados.delete(GenericDAOSQLiteHelper.TABELA_USUARIOS, GenericDAOSQLiteHelper.COLUNA_ID
+		bancoDeDados.delete(GenericDAOSQLiteHelper.TABELA_USUARIOS,
+				GenericDAOSQLiteHelper.COLUNA_ID
 				+ " = " + idObj, null);
 	}
 
@@ -54,10 +57,6 @@ public class UsuarioDAO extends GenericDAOImpl<Usuario> {
 		
 	}
 
-	/*public void limpar() {
-		// TODO Auto-generated method stub
-		
-	}*/
 	private Usuario cursorParaUsuario(Cursor cursor) {
 		Usuario usuario = new Usuario("Unknown", 0, 0);
 		usuario.setId(cursor.getLong(0));

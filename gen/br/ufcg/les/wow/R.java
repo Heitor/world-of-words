@@ -19,6 +19,8 @@ public final class R {
         public static final int seta=0x7f020005;
         public static final int tela_inicial=0x7f020006;
         public static final int twitter=0x7f020007;
+        public static final int wow=0x7f020008;
+        public static final int wow2=0x7f020009;
     }
     public static final class id {
         public static final int acertosColuna1=0x7f050017;
@@ -29,10 +31,13 @@ public final class R {
         public static final int button2=0x7f050001;
         public static final int button3=0x7f050002;
         public static final int button4=0x7f050003;
-        public static final int cancelar=0x7f050028;
+        public static final int cancelar=0x7f05002d;
+        public static final int cancelar_adedonha=0x7f050028;
         public static final int chronometer1=0x7f05000e;
-        public static final int confirmar=0x7f050027;
-        public static final int edittext=0x7f050025;
+        public static final int confirmar=0x7f05002c;
+        public static final int confirmar_adedonha=0x7f050027;
+        public static final int edittext=0x7f05002b;
+        public static final int edittext_adedonha=0x7f050025;
         public static final int group=0x7f050026;
         public static final int groupAcertos=0x7f050016;
         public static final int groupCaixinhas=0x7f050011;
@@ -42,7 +47,8 @@ public final class R {
         public static final int imageViewSubMenuJogar=0x7f05002a;
         public static final int imageViewTelaPrincipal=0x7f050004;
         public static final int jogar=0x7f050005;
-        public static final int limpar=0x7f050029;
+        public static final int limpar=0x7f05002e;
+        public static final int limpar_adedonha=0x7f050029;
         public static final int nivelok=0x7f05001d;
         public static final int opcoes=0x7f050007;
         public static final int primeiro=0x7f05001f;
@@ -68,42 +74,48 @@ public final class R {
     public static final class layout {
         public static final int buttonshape=0x7f030000;
         public static final int main=0x7f030001;
-        public static final int main_anagrama=0x7f030002;
-        public static final int page_ajuda_anagrama=0x7f030003;
-        public static final int page_jogo_anagrama=0x7f030004;
-        public static final int page_opcoes_anagrama=0x7f030005;
-        public static final int page_ranking_anagrama=0x7f030006;
-        public static final int sub_page_jogar_anagrama=0x7f030007;
+        public static final int main_adedonha=0x7f030002;
+        public static final int main_anagrama=0x7f030003;
+        public static final int page_ajuda_anagrama=0x7f030004;
+        public static final int page_jogo_anagrama=0x7f030005;
+        public static final int page_opcoes_anagrama=0x7f030006;
+        public static final int page_ranking_anagrama=0x7f030007;
+        public static final int sub_page_jogar_adedonha=0x7f030008;
+        public static final int sub_page_jogar_anagrama=0x7f030009;
     }
     public static final class string {
         public static final int adedonha=0x7f040004;
-        public static final int ajuda=0x7f040008;
+        public static final int ajuda=0x7f040009;
         public static final int anagrama=0x7f040002;
         public static final int app_name=0x7f040001;
-        public static final int cancelar=0x7f04000f;
-        public static final int confirmar=0x7f04000e;
-        public static final int cronometro=0x7f040014;
+        public static final int app_name_adedonha=0x7f040006;
+        public static final int cancelar=0x7f040010;
+        public static final int confirmar=0x7f04000f;
+        public static final int cronometro=0x7f040015;
         public static final int dicRapido=0x7f040003;
-        public static final int dificil=0x7f040013;
-        public static final int enviar=0x7f040015;
+        public static final int dificil=0x7f040014;
+        public static final int enviar=0x7f040016;
         /**  RadioButton opcoes 
          */
-        public static final int facil=0x7f040011;
+        public static final int facil=0x7f040012;
         public static final int forca=0x7f040005;
         public static final int hello=0x7f040000;
-        public static final int hello_app=0x7f04000a;
+        /**  Adedonha 
+         */
+        public static final int hello_app_adedonha=0x7f04001a;
+        public static final int hello_app_anagrama=0x7f04000b;
         /**  AnagramaHT 
          */
-        public static final int jogar=0x7f040006;
-        public static final int limpar=0x7f040010;
-        public static final int normal=0x7f040012;
-        public static final int opcoes=0x7f040007;
-        public static final int ranking=0x7f040017;
-        public static final int sair=0x7f040009;
-        public static final int string_ajuda=0x7f04000c;
-        public static final int string_opcoes=0x7f04000d;
-        public static final int sub_menu_jogar=0x7f04000b;
-        public static final int teste=0x7f040016;
-        public static final int voltar=0x7f040018;
+        public static final int jogar=0x7f040007;
+        public static final int limpar=0x7f040011;
+        public static final int normal=0x7f040013;
+        public static final int opcoes=0x7f040008;
+        public static final int ranking=0x7f040018;
+        public static final int sair=0x7f04000a;
+        public static final int string_ajuda=0x7f04000d;
+        public static final int string_opcoes=0x7f04000e;
+        public static final int sub_menu_jogar=0x7f04000c;
+        public static final int teste=0x7f040017;
+        public static final int voltar=0x7f040019;
     }
 }

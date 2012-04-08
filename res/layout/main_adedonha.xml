@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/backgroundimg"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textColor="#FFFFFF"
+        android:text="@string/hello_app_adedonha" />
+    
+    <ImageView
+        android:id="@+id/imageViewTelaPrincipal"
+        android:contentDescription="@string/ajuda"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/tela_inicial" />
+
+    <Button
+        android:id="@+id/jogar"
+        android:layout_width="158dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:background="@layout/buttonshape"
+        android:text="@string/jogar" />
+
+    <Button
+        android:id="@+id/ranking"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:background="@layout/buttonshape"
+        android:text="@string/ranking" />
+
+    <Button
+        android:id="@+id/opcoes"
+        android:layout_width="118dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:background="@layout/buttonshape"
+        android:text="@string/opcoes" />
+
+    <Button
+        android:id="@+id/ajuda"
+        android:layout_width="104dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:background="@layout/buttonshape"
+        android:text="@string/ajuda" />
+
+    <Button
+        android:id="@+id/sair"
+        android:layout_width="85dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:background="@layout/buttonshape"
+        android:text="@string/sair" />
+
+</LinearLayout>

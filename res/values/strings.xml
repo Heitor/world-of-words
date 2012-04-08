@@ -7,6 +7,7 @@
     <string name="dicRapido">Dicionário Rápido</string>
     <string name="adedonha">Adedonha</string>
     <string name="forca">Jogo da Forca</string>
+    <string name="app_name_adedonha">World of Words - Adedonha</string>
 
     <!-- AnagramaHT -->
 
@@ -14,7 +15,7 @@
     <string name="opcoes">Opções</string>
     <string name="ajuda">Ajuda</string>
     <string name="sair">Sair</string>
-    <string name="hello_app">Bem vindo ao Anagrama HT!</string>
+    <string name="hello_app_anagrama">Bem vindo ao Anagrama HT!</string>
     <string name="sub_menu_jogar">Insira o nome do jogador</string>
     <string name="string_ajuda">Instruções e Regras do jogo</string>
     <string name="string_opcoes">Opções do jogo</string>
@@ -31,5 +32,8 @@
     <string name="teste">teste</string>
     <string name="ranking">Ranking</string>
     <string name="voltar">Voltar</string>
-
+    
+   	 <!-- Adedonha -->
+   	 
+   	<string name="hello_app_adedonha">Bem vindo ao Adedonha!</string>
 </resources>
