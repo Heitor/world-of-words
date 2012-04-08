@@ -61,7 +61,20 @@
             android:name=".adedonha.activity.AdedonhaActivity"
             android:screenOrientation="portrait" 
             android:label="@string/app_name_adedonha" >
+        </activity> 
+        
+         <activity
+            android:name=".adedonha.activity.SubMenuJogarAdedonhaActivity"
+            android:screenOrientation="portrait" 
+            android:label="@string/app_name_adedonha" >
         </activity>
+        
+        <activity
+            android:name=".activity.GenericSubMenuJogarActivity"
+            android:screenOrientation="portrait" 
+            android:label="@string/app_name_adedonha" > 
+        </activity>
+        
     </application>
     
     

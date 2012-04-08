@@ -19,6 +19,8 @@ public final class R {
         public static final int seta=0x7f020005;
         public static final int tela_inicial=0x7f020006;
         public static final int twitter=0x7f020007;
+        public static final int wow=0x7f020008;
+        public static final int wow2=0x7f020009;
     }
     public static final class id {
         public static final int acertosColuna1=0x7f050017;
@@ -29,10 +31,13 @@ public final class R {
         public static final int button2=0x7f050001;
         public static final int button3=0x7f050002;
         public static final int button4=0x7f050003;
-        public static final int cancelar=0x7f050028;
+        public static final int cancelar=0x7f05002d;
+        public static final int cancelar_adedonha=0x7f050028;
         public static final int chronometer1=0x7f05000e;
-        public static final int confirmar=0x7f050027;
-        public static final int edittext=0x7f050025;
+        public static final int confirmar=0x7f05002c;
+        public static final int confirmar_adedonha=0x7f050027;
+        public static final int edittext=0x7f05002b;
+        public static final int edittext_adedonha=0x7f050025;
         public static final int group=0x7f050026;
         public static final int groupAcertos=0x7f050016;
         public static final int groupCaixinhas=0x7f050011;
@@ -42,7 +47,8 @@ public final class R {
         public static final int imageViewSubMenuJogar=0x7f05002a;
         public static final int imageViewTelaPrincipal=0x7f050004;
         public static final int jogar=0x7f050005;
-        public static final int limpar=0x7f050029;
+        public static final int limpar=0x7f05002e;
+        public static final int limpar_adedonha=0x7f050029;
         public static final int nivelok=0x7f05001d;
         public static final int opcoes=0x7f050007;
         public static final int primeiro=0x7f05001f;
@@ -74,7 +80,8 @@ public final class R {
         public static final int page_jogo_anagrama=0x7f030005;
         public static final int page_opcoes_anagrama=0x7f030006;
         public static final int page_ranking_anagrama=0x7f030007;
-        public static final int sub_page_jogar_anagrama=0x7f030008;
+        public static final int sub_page_jogar_adedonha=0x7f030008;
+        public static final int sub_page_jogar_anagrama=0x7f030009;
     }
     public static final class string {
         public static final int adedonha=0x7f040004;

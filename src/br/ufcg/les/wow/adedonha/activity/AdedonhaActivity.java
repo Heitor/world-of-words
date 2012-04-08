@@ -8,7 +8,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import br.ufcg.les.wow.R;
 import br.ufcg.les.wow.WorldofWordsActivity;
-import br.ufcg.les.wow.adedonha.activity.util.ActionUtil;
 
 public class AdedonhaActivity extends Activity{
 
@@ -17,25 +16,30 @@ public class AdedonhaActivity extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_adedonha);
 
+		botaoJogarAction();
 		botaoSairAction();
+	}
+
+	private void botaoJogarAction() {
+		Button botaoJogar = (Button) findViewById(R.id.jogar);
+		botaoJogar.setOnClickListener(listenerTrocarTela(SubMenuJogarAdedonhaActivity.class));
 	}
 
 	private void botaoSairAction() {
 		Button botaoSair = (Button) findViewById(R.id.sair);
-		botaoSair.setOnClickListener(botaoSairListener());
+		botaoSair.setOnClickListener(listenerTrocarTela(WorldofWordsActivity.class));
 
 	}
 
-	private OnClickListener botaoSairListener() {
+	
+	private OnClickListener listenerTrocarTela(final Class<?> telaDestino) {
 		return new OnClickListener() {
-
+			
 			public void onClick(View v) {
-				ActionUtil util = new ActionUtil();
-				util.sairDoJogo(AdedonhaActivity.this, WorldofWordsActivity.class);
-//				Intent outButton = new Intent(AdedonhaActivity.this,
-//						WorldofWordsActivity.class);
-//				startActivity(outButton);
-//				finish();
+				Intent outButton = new Intent(AdedonhaActivity.this,
+						telaDestino);
+				startActivity(outButton);
+				finish();
 			}
 		};
 	}
