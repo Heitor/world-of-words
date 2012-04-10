@@ -12,11 +12,11 @@ import android.widget.Button;
 import br.ufcg.les.wow.R;
 import br.ufcg.les.wow.WorldofWordsActivity;
 import br.ufcg.les.wow.anagrama.enummeration.Nivel;
-import br.ufcg.les.wow.anagrama.model.Usuario;
 import br.ufcg.les.wow.anagrama.persistence.FactoryDao;
 import br.ufcg.les.wow.anagrama.persistence.dao.PalavrasDAO;
 import br.ufcg.les.wow.anagrama.persistence.dao.RankingDAO;
 import br.ufcg.les.wow.anagrama.persistence.dao.UsuarioDAO;
+import br.ufcg.les.wow.persistence.User;
 
 public class AnagramaHTActivity extends Activity implements Serializable {
 	
@@ -50,14 +50,14 @@ public class AnagramaHTActivity extends Activity implements Serializable {
     	super.onResume();
     	
     	Intent usuarioIntent = getIntent();
-        Usuario usuario = (Usuario) usuarioIntent.getSerializableExtra("usuario");
+        User usuario = (User) usuarioIntent.getSerializableExtra("usuario");
         
         if (usuario != null) {
         	if(rankingDAO.addUsuario(usuario)) {
         		try {
     				usuarioDAO.open();
-    				usuarioDAO.inserirObjeto(usuario.getNome(), usuario.getPontucao(),
-    						usuario.getTempo());
+    				usuarioDAO.inserirObjeto(usuario.getUserName(), usuario.getPointing(),
+    						usuario.getTime());
     			} catch (SQLException e) {
     				// TODO Auto-generated catch block
     				e.printStackTrace();
@@ -170,7 +170,7 @@ public class AnagramaHTActivity extends Activity implements Serializable {
 			palavrasDAO.open();
 			if(!palavrasDAO.isBdPopulated()) {
 				System.out.println("HA");
-				palavrasDAO.limpar();
+				palavrasDAO.clear();
 				palavrasDAO.criarPalavras();
 			}
 		} catch (SQLException e) {

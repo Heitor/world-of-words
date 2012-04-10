@@ -20,9 +20,9 @@ import android.widget.TextView;
 import br.ufcg.les.wow.R;
 import br.ufcg.les.wow.anagrama.enummeration.Nivel;
 import br.ufcg.les.wow.anagrama.model.Jogo;
-import br.ufcg.les.wow.anagrama.model.Usuario;
-import br.ufcg.les.wow.exceptions.AnagramaNaoExistenteException;
+import br.ufcg.les.wow.exceptions.NonExistentAnagramException;
 import br.ufcg.les.wow.exceptions.PalavraJaEncontradaException;
+import br.ufcg.les.wow.persistence.User;
 
 public class JogoActivity extends Activity {
 
@@ -149,7 +149,7 @@ public class JogoActivity extends Activity {
 
 	private void verificaFimDoJogo() {
 		if (palavrasRestantes == 0) {
-			atualizaVariaveisFimDeJogo("Parabéns. Fim de jogo!");
+			atualizaVariaveisFimDeJogo("Parabï¿½ns. Fim de jogo!");
 			
 		} else {
 			apresentaBotoesPalavra();
@@ -166,9 +166,9 @@ public class JogoActivity extends Activity {
 		respostaEditText.setEnabled(false);
 	}
 
-	private Usuario criaUsuario() {
-		Usuario usuario = new Usuario(jogoAtual.getNomeJogador(),
-				jogoAtual.getPontuacao(), jogoAtual.getTempo());
+	private User criaUsuario() {
+		User usuario = new User(jogoAtual.getNomeJogador(),
+				jogoAtual.getPontuacao(), jogoAtual.getTempo(), 0); //TODO set game type;
 		return usuario;
 	}
 
@@ -209,14 +209,14 @@ public class JogoActivity extends Activity {
 
 					respostaEditText.setText(VAZIO);
 
-				} catch (AnagramaNaoExistenteException re) {
+				} catch (NonExistentAnagramException re) {
 
-					mostraDialog("Esta não é uma palavra listada!",
+					mostraDialog("Esta nï¿½o ï¿½ uma palavra listada!",
 							alertaListener());
 					apresentaBotoesPalavra();
 
 				} catch (PalavraJaEncontradaException pe) {
-					mostraDialog("Esta palavra já foi encontrada!",
+					mostraDialog("Esta palavra jï¿½ foi encontrada!",
 							alertaListener());
 					apresentaBotoesPalavra();
 
@@ -310,7 +310,7 @@ public class JogoActivity extends Activity {
 		};
 	}
 	
-	private DialogInterface.OnClickListener listenerShare(Usuario usuario) {
+	private DialogInterface.OnClickListener listenerShare(User usuario) {
 		return new DialogInterface.OnClickListener() {
 
 			private void shareIt() {
@@ -318,7 +318,7 @@ public class JogoActivity extends Activity {
 				sharingIntent.setType("text/plain");
 				String shareBody = "Fiz " + jogoAtual.getPontuacao()
 						+ " pontos no @AnagramaHT !"
-						+ "\nTente você também!!";
+						+ "\nTente vocï¿½ tambï¿½m!!";
 				sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,
 						"Subject Here");
 				sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT,
@@ -346,7 +346,7 @@ public class JogoActivity extends Activity {
 				if (palavrasRestantes == 0) {
 					atualizaVariaveisFimDeJogo("Fim de jogo!");
 				} else {
-					atualizaVariaveisFimDeJogo("Você desistiu. Fim de jogo!");
+					atualizaVariaveisFimDeJogo("Vocï¿½ desistiu. Fim de jogo!");
 				}
 			}
 
@@ -359,9 +359,9 @@ public class JogoActivity extends Activity {
 		limpaBotoesPalavras();
 		desabilitaBotoes();
 		setTextFimDeJogo(msg);
-		Usuario usuario = criaUsuario();
-		mostraDialogSairJogo("FIM DE JOGO" + "\n\n Parabéns: "
-				+ jogoAtual.getNomeJogador() + "\n Pontuação: "
+		User usuario = criaUsuario();
+		mostraDialogSairJogo("FIM DE JOGO" + "\n\n Parabï¿½ns: "
+				+ jogoAtual.getNomeJogador() + "\n Pontuaï¿½ï¿½o: "
 				+ jogoAtual.getPontuacao() + "\n Tempo: "
 				+ cronometro.getText(),
 				alertaFimListener(usuario), listenerShare(usuario));
@@ -372,7 +372,7 @@ public class JogoActivity extends Activity {
 	}
 
 	private void atualizaPontuacao() {
-		pontuacaoTextView.setText("Pontuação: " + jogoAtual.getPontuacao());
+		pontuacaoTextView.setText("Pontuaï¿½ï¿½o: " + jogoAtual.getPontuacao());
 	}
 
 	private void atualizaPalavrasRestantes() {
@@ -414,7 +414,7 @@ public class JogoActivity extends Activity {
 	
 
 	private DialogInterface.OnClickListener alertaFimListener(
-			final Usuario usuario) {
+			final User usuario) {
 		return new DialogInterface.OnClickListener() {
 
 			public void onClick(DialogInterface dialog, int which) {
@@ -422,13 +422,13 @@ public class JogoActivity extends Activity {
 				mudaContexto(usuario);
 			}
 
-			private void mudaContexto(Usuario usuario) {
+			private void mudaContexto(User usuario) {
 				sairDoJogo(usuario);
 			}
 		};
 	}
 	
-	private void sairDoJogo(Usuario usuario) {
+	private void sairDoJogo(User usuario) {
 		Intent fimIntent = new Intent(JogoActivity.this,
 				AnagramaHTActivity.class);
 		fimIntent.putExtra("usuario", usuario);
