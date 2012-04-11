@@ -27,8 +27,8 @@ public class WorldofWordsActivity extends Activity {
         // Heitor: My Tests
         WebServiceConnector teste = new WebServiceConnector(this);
         teste.updateDataBase();
-        User newUser = new User("nomeUser", 20, 40L, 1); 
-        teste.sendUser(newUser);
+        //User newUser = new User("nomeUser", 20, 40L, 1); 
+        //teste.sendUser(newUser);
         // Heitor: End of My Tests
         
         botaoAdedonhaAction();

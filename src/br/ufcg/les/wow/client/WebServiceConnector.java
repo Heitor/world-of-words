@@ -24,9 +24,11 @@ public class WebServiceConnector {
 	private static final String GET_BEST_USERS = "getBestUsers";
 	private static final String SEND_USER_POINTS = "sendPontuation";
 	private static final String TARGET_NAMESPACE = "http://server.wow.les.ufcg.br/";
-	private static final String SERVER_ADDRESS = "http://jaleco.no-ip.org:9000/world-of-words";
-	//private static final String SERVER_ADDRESS = "http://192.168.0.23:9000/world-of-words";
+	//private static final String SERVER_ADDRESS = "http://jaleco.no-ip.org:9000/world-of-words";
+	private static final String SERVER_ADDRESS = "http://192.168.1.202:9000/world-of-words";
 	private static final int ADEDONHA = 1;
+	private static final int DICIONARIO_RAPIDO = 4;
+	
 	
 	private Context context;
 
@@ -103,13 +105,14 @@ public class WebServiceConnector {
 				String tmpVariable = soapObject.getProperty(i).toString();
 				newUser.setUserName(tmpVariable);
 				
-				tmpVariable = soapObject.getProperty(i+1).toString();
-				Integer gametype = Integer.valueOf(tmpVariable);
-				newUser.setGameType(gametype);
+				//tmpVariable = soapObject.getProperty(i+1).toString();
+				//Integer gametype = Integer.valueOf(tmpVariable);
+				//newUser.setGameType(gametype);
+				newUser.setGameType(1);
 				
 				tmpVariable = soapObject.getProperty(i+2).toString();
-				Integer points = Integer.valueOf(tmpVariable);
-				newUser.setPointing(points);
+				Long points = Long.valueOf(tmpVariable);
+				newUser.setPointing(Integer.valueOf(points.toString()));
 				
 				tmpVariable = soapObject.getProperty(i+3).toString();
 				Long time = Long.valueOf(tmpVariable); 
@@ -117,7 +120,7 @@ public class WebServiceConnector {
 				
 				usersDao.inserirObjeto(newUser);
 				
-				System.out.println(newUser);
+				//System.out.println(newUser);
 			}
 		 
 		}catch (Exception exception) {
@@ -145,9 +148,10 @@ public class WebServiceConnector {
 			SoapObject soapObject = (SoapObject)envelope.bodyIn;
 			
 			int returnedObjects = soapObject.getPropertyCount();
-			for (int i = 0; i < returnedObjects; i++) {
-				String tmpWebAnswer = soapObject.getProperty(i).toString();
-				adedonhaDao.inserirObjeto(new WordAdedonhaDAO(tmpWebAnswer));
+			for (int i = 0; i < returnedObjects; i+=2) {
+				String tmpWord = soapObject.getProperty(i).toString();
+				String tmpLevel = soapObject.getProperty(i+1).toString();
+				adedonhaDao.inserirObjeto(new WordAdedonhaDAO(tmpWord, tmpLevel));
 			}
 		 
 		}catch (Exception exception) {
