@@ -6,8 +6,11 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Chronometer;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import br.ufcg.les.wow.R;
 import br.ufcg.les.wow.util.GeradorStrings;
@@ -22,6 +25,7 @@ public class JogoAdedonhaActivity extends Activity {
 	private TextView nomeJogadorTextView;
 	private Chronometer cronometro;
 	private EditText resposta;
+	private ImageButton botaoSair;
 	
 	private static final String TEMA_PARAM = "temaJogo";
 	private static final String NOME_JOGADOR_PARAM = "nomeJogador";
@@ -62,7 +66,25 @@ public class JogoAdedonhaActivity extends Activity {
 		letraTextView = (TextView) findViewById(R.id.text_view_letra);
 		letraTextView.setText("Letra selecionada: " + letra.toUpperCase());
 		
+		botaoSair = (ImageButton) findViewById(R.id.imageBotaoSair);
+		botaoSair.setBackgroundResource(R.drawable.close);
+		botaoSair.setOnClickListener(botaoSairListener());
 		
+		
+	}
+
+	private OnClickListener botaoSairListener() {
+		return new OnClickListener() {
+			
+			public void onClick(View v) {
+				Intent botaoSairIntent = new Intent(JogoAdedonhaActivity.this, 
+						AdedonhaActivity.class);
+				//fimIntent.putExtra("usuario", usuario);
+				startActivity(botaoSairIntent);
+				finish();
+				
+			}
+		};
 	}
 
 	private void carregaIntent() {
