@@ -13,14 +13,14 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 import br.ufcg.les.wow.R;
-import br.ufcg.les.wow.anagrama.model.Usuario;
 import br.ufcg.les.wow.anagrama.persistence.dao.RankingDAO;
 import br.ufcg.les.wow.anagrama.persistence.dao.UsuarioDAO;
+import br.ufcg.les.wow.persistence.User;
 
 public class RankingActivity extends Activity {
 	
 	UsuarioDAO usuariosDAO = new UsuarioDAO(this);
-	private List<Usuario> listaUsuarios;
+	private List<User> listaUsuarios;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

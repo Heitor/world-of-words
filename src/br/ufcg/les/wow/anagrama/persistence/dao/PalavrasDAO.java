@@ -14,6 +14,8 @@ import java.util.Random;
 import br.ufcg.les.wow.anagrama.enummeration.Nivel;
 import br.ufcg.les.wow.anagrama.model.Palavras;
 import br.ufcg.les.wow.exceptions.TamanhoDaPalavraInvalidoException;
+import br.ufcg.les.wow.persistence.GenericDAOImpl;
+import br.ufcg.les.wow.persistence.GenericSQLiteHelper;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -22,8 +24,8 @@ import android.database.sqlite.SQLiteDatabase;
 
 public class PalavrasDAO extends GenericDAOImpl<Palavras> {
 	
-	protected String[] todasAsPalavras = { GenericDAOSQLiteHelper.COLUNA_ID,
-			GenericDAOSQLiteHelper.COLUNA_PALAVRAS };
+	protected String[] todasAsPalavras = { GenericSQLiteHelper.COLUNA_ID,
+			GenericSQLiteHelper.COLUMN_WORDS_ANAGRAMS };
 	private Map<Nivel, List<List<String>>> palavrasPorNivel;
 	
 	
@@ -263,19 +265,19 @@ public class PalavrasDAO extends GenericDAOImpl<Palavras> {
 		byte[] bytes = baos.toByteArray();
 
 		ContentValues values = new ContentValues();
-		values.put(GenericDAOSQLiteHelper.COLUNA_PALAVRAS, bytes);
-		bancoDeDados.insert(GenericDAOSQLiteHelper.TABELA_PALAVRAS, null, values);
+		values.put(GenericSQLiteHelper.COLUMN_WORDS_ANAGRAMS, bytes);
+		dataBase.insert(GenericSQLiteHelper.TABLE_ANAGRAMS, null, values);
 	}
 
 	public void deletarObjeto(Long idObj) {
-		bancoDeDados.delete(GenericDAOSQLiteHelper.TABELA_PALAVRAS, GenericDAOSQLiteHelper.COLUNA_ID
+		dataBase.delete(GenericSQLiteHelper.TABLE_ANAGRAMS, GenericSQLiteHelper.COLUNA_ID
 				+ " = " + idObj, null);
 	}
 
 	public List<Palavras> listarObjetos() {
 		List<Palavras> palavras = new ArrayList<Palavras>();
 		
-		Cursor cursor = bancoDeDados.query(GenericDAOSQLiteHelper.TABELA_PALAVRAS,
+		Cursor cursor = dataBase.query(GenericSQLiteHelper.TABLE_ANAGRAMS,
 				todasAsPalavras, null, null, null, null, null);
 		
 		cursor.moveToFirst();
@@ -290,7 +292,7 @@ public class PalavrasDAO extends GenericDAOImpl<Palavras> {
 	}
 	
 	public boolean isBdPopulated() {
-		Cursor cursor = bancoDeDados.query(GenericDAOSQLiteHelper.TABELA_PALAVRAS,
+		Cursor cursor = dataBase.query(GenericSQLiteHelper.TABLE_ANAGRAMS,
 				todasAsPalavras, null, null, null, null, null);
 		if(cursor != null) {
 			if(cursor.getCount() > 0) {
@@ -343,10 +345,29 @@ public class PalavrasDAO extends GenericDAOImpl<Palavras> {
 		
 	}
 	
-	@Override
-	public void limpar() {
+	public void clear() {
 		SQLiteDatabase bd = bdHelper.getWritableDatabase();
-		bd.execSQL("DROP TABLE IF EXISTS " + GenericDAOSQLiteHelper.TABELA_PALAVRAS);
-		bd.execSQL(GenericDAOSQLiteHelper.CREATE_DB_PALAVRAS);
+		bd.execSQL("DROP TABLE IF EXISTS " + GenericSQLiteHelper.TABLE_ANAGRAMS);
+		bd.execSQL(GenericSQLiteHelper.CREATE_DB_ANAGRAMS);
+	}
+
+	public void inserirObjeto(String[] obj) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void inserirObjeto(Palavras obj) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void inserirObjeto(Palavras[] obj) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void inserirObjeto(List<Palavras> obj) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -2,8 +2,10 @@ package br.ufcg.les.wow;
 
 import br.ufcg.les.wow.adedonha.activity.AdedonhaActivity;
 import br.ufcg.les.wow.anagrama.activity.AnagramaHTActivity;
-import br.ufcg.les.wow.client.TesteHttp;
+import br.ufcg.les.wow.client.WebServiceConnector;
+import br.ufcg.les.wow.persistence.User;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,7 +13,8 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 public class WorldofWordsActivity extends Activity {
-    /** Called when the activity is first created. */
+
+	/** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,8 +25,12 @@ public class WorldofWordsActivity extends Activity {
         
         
         // Heitor: My Tests
-        TesteHttp teste = new TesteHttp();
-        teste.testeHttpConnection();
+        WebServiceConnector teste = new WebServiceConnector(this);
+        teste.updateDataBase();
+        User newUser = new User("nomeUser", 20, 40L, 1); 
+        teste.sendUser(newUser);
+        // Heitor: End of My Tests
+        
         botaoAdedonhaAction();
         botaoAnagramaAction();
     }

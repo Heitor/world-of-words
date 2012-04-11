@@ -3,47 +3,49 @@ package br.ufcg.les.wow.anagrama.persistence.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.ufcg.les.wow.anagrama.model.Usuario;
+import br.ufcg.les.wow.persistence.GenericDAOImpl;
+import br.ufcg.les.wow.persistence.GenericSQLiteHelper;
+import br.ufcg.les.wow.persistence.User;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-public class UsuarioDAO extends GenericDAOImpl<Usuario> {
+public class UsuarioDAO extends GenericDAOImpl<User> {
 	public UsuarioDAO(Context contexto) {
 		super(contexto);
 	}
 
-	private String[] todasOsUsuarios = { GenericDAOSQLiteHelper.COLUNA_ID,
-			GenericDAOSQLiteHelper.COLUNA_USUARIOS,
-			GenericDAOSQLiteHelper.COLUNA_PONTUACAO,
-			GenericDAOSQLiteHelper.COLUNA_TEMPO};
+	private String[] todasOsUsuarios = { GenericSQLiteHelper.COLUNA_ID,
+			GenericSQLiteHelper.COLUMN_USERNAME,
+			GenericSQLiteHelper.COLUMN_POINTING,
+			GenericSQLiteHelper.COLUMN_TIME};
 	
 	public void inserirObjeto(String obj, int obj2, long obj3) {
 		ContentValues values = new ContentValues();
-		values.put(GenericDAOSQLiteHelper.COLUNA_USUARIOS, obj);
-		values.put(GenericDAOSQLiteHelper.COLUNA_PONTUACAO, obj2);
-		values.put(GenericDAOSQLiteHelper.COLUNA_TEMPO, obj3);
-		bancoDeDados.insert(GenericDAOSQLiteHelper.TABELA_USUARIOS, null,
+		values.put(GenericSQLiteHelper.COLUMN_USERNAME, obj);
+		values.put(GenericSQLiteHelper.COLUMN_POINTING, obj2);
+		values.put(GenericSQLiteHelper.COLUMN_TIME, obj3);
+		dataBase.insert(GenericSQLiteHelper.TABLE_USERS, null,
 				values);
 	}
 
 	public void deletarObjeto(Long idObj) {
-		bancoDeDados.delete(GenericDAOSQLiteHelper.TABELA_USUARIOS,
-				GenericDAOSQLiteHelper.COLUNA_ID
+		dataBase.delete(GenericSQLiteHelper.TABLE_USERS,
+				GenericSQLiteHelper.COLUNA_ID
 				+ " = " + idObj, null);
 	}
 
-	public List<Usuario> listarObjetos() {
-		List<Usuario> usuarios = new ArrayList<Usuario>();
+	public List<User> listarObjetos() {
+		List<User> usuarios = new ArrayList<User>();
 		
-		Cursor cursor = bancoDeDados.query(GenericDAOSQLiteHelper.TABELA_USUARIOS,
+		Cursor cursor = dataBase.query(GenericSQLiteHelper.TABLE_USERS,
 				todasOsUsuarios, null, null, null, null, null);
 		
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast()) {
-			Usuario palavra = cursorParaUsuario(cursor);
+			User palavra = cursorParaUsuario(cursor);
 			usuarios.add(palavra);
 			cursor.moveToNext();
 		}
@@ -57,12 +59,13 @@ public class UsuarioDAO extends GenericDAOImpl<Usuario> {
 		
 	}
 
-	private Usuario cursorParaUsuario(Cursor cursor) {
-		Usuario usuario = new Usuario("Unknown", 0, 0);
+	private User cursorParaUsuario(Cursor cursor) {
+		User usuario = new User();
 		usuario.setId(cursor.getLong(0));
-		usuario.setNome(cursor.getString(1));
-		usuario.setPontucao(cursor.getInt(2));
-		usuario.setTempo(cursor.getLong(3));
+		usuario.setUserName(cursor.getString(1));
+		usuario.setPointing(cursor.getInt(2));
+		usuario.setTime(cursor.getLong(3));
+		// TODO set game type
 		return usuario;
 	}
 	
@@ -76,15 +79,14 @@ public class UsuarioDAO extends GenericDAOImpl<Usuario> {
 		
 	}
 	
-	@Override
-	public void limpar() {
+	public void clear() {
 		SQLiteDatabase bd = bdHelper.getWritableDatabase();
-		bd.execSQL("DROP TABLE IF EXISTS " + GenericDAOSQLiteHelper.TABELA_USUARIOS);
-		bd.execSQL(GenericDAOSQLiteHelper.CREATE_DB_USUARIOS);
+		bd.execSQL("DROP TABLE IF EXISTS " + GenericSQLiteHelper.TABLE_USERS);
+		bd.execSQL(GenericSQLiteHelper.CREATE_DB_USERS);
 	}
 	
 	public boolean isBdPopulated() {
-		Cursor cursor = bancoDeDados.query(GenericDAOSQLiteHelper.TABELA_USUARIOS,
+		Cursor cursor = dataBase.query(GenericSQLiteHelper.TABLE_USERS,
 				todasOsUsuarios, null, null, null, null, null);
 		if(cursor != null) {
 			if(cursor.getCount() > 0) {
@@ -93,6 +95,26 @@ public class UsuarioDAO extends GenericDAOImpl<Usuario> {
 			}
 		}
 		return false;
+	}
+
+	public void inserirObjeto(String[] obj) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void inserirObjeto(User obj) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void inserirObjeto(User[] obj) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void inserirObjeto(List<User> obj) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

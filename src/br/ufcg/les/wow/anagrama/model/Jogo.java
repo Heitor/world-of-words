@@ -10,7 +10,7 @@ import android.content.Context;
 import android.util.Log;
 import br.ufcg.les.wow.anagrama.enummeration.Nivel;
 import br.ufcg.les.wow.anagrama.persistence.dao.PalavrasDAO;
-import br.ufcg.les.wow.exceptions.AnagramaNaoExistenteException;
+import br.ufcg.les.wow.exceptions.NonExistentAnagramException;
 import br.ufcg.les.wow.exceptions.PalavraJaEncontradaException;
 import br.ufcg.les.wow.util.ContabilizaPontos;
 import br.ufcg.les.wow.util.GeradorStrings;
@@ -93,7 +93,7 @@ public class Jogo implements Serializable {
 			
 		} else if(!anagramas.contains(palavraAChecar)) {
 			decrementaPontuacao(PALAVRA_INEXISTENTE);
-			throw new AnagramaNaoExistenteException(palavra);
+			throw new NonExistentAnagramException(palavra);
 			
 		} else {
 			incrementaPontuacao(PONTO);
