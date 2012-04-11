@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import br.ufcg.les.wow.adedonha.activity.AdedonhaActivity;
 import br.ufcg.les.wow.anagrama.activity.AnagramaHTActivity;
 import br.ufcg.les.wow.client.WebServiceConnector;
 import br.ufcg.les.wow.dicionario.activity.DicionarioActivity;
@@ -18,10 +19,6 @@ public class WorldofWordsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
-        Button botaoAnagrama = (Button) findViewById(R.id.button4);
-        botaoAnagrama.setOnClickListener(botaoAnagramaListener());
-        
-        
         // Heitor: My Tests
 //        WebServiceConnector teste = new WebServiceConnector(this);
 //        teste.updateDataBase();
@@ -29,9 +26,28 @@ public class WorldofWordsActivity extends Activity {
         //teste.sendUser(newUser);
         // Heitor: End of My Tests
         
+        botaoAdedonhaAction();
         botaoDicionarioAction();
         botaoAnagramaAction();
     }
+
+	private void botaoAdedonhaAction() {
+		Button botaoAdedonha = (Button) findViewById(R.id.button1);
+		botaoAdedonha.setOnClickListener(botaoAdedonhaListener());
+		
+	}
+
+	private OnClickListener botaoAdedonhaListener() {
+		return new OnClickListener() {
+
+			public void onClick(View v) {
+				Intent settingsButton = new Intent(WorldofWordsActivity.this,
+						AdedonhaActivity.class);
+				startActivity(settingsButton);
+				finish();
+			}
+		};
+	}
 
 	private void botaoDicionarioAction() {
 		Button botaoDicionario = (Button) findViewById(R.id.button2);

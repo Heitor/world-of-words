@@ -22,35 +22,35 @@
         android:src="@drawable/tela_inicial" />
 
     <Button
-        android:id="@+id/jogar"
+        android:id="@+id/jogar_dicionario"
         android:layout_width="158dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:text="@string/jogar" />
 
     <Button
-        android:id="@+id/ranking"
+        android:id="@+id/ranking_dicionario"
         android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="@string/ranking" />
 
     <Button
-        android:id="@+id/opcoes"
+        android:id="@+id/opcoes_dicionario"
         android:layout_width="118dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="@string/opcoes" />
 
     <Button
-        android:id="@+id/ajuda"
+        android:id="@+id/ajuda_dicionario"
         android:layout_width="104dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="@string/ajuda" />
 
     <Button
-        android:id="@+id/sair"
+        android:id="@+id/sair_dicionario"
         android:layout_width="85dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

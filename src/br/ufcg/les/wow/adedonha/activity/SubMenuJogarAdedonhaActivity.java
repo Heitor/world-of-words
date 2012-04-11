@@ -1,8 +1,5 @@
 package br.ufcg.les.wow.adedonha.activity;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,44 +16,36 @@ import br.ufcg.les.wow.R;
 
 public class SubMenuJogarAdedonhaActivity extends Activity {
 	
-	private String nomeJogador = "";
-	private String tema = "";
-	
-	private List<String> temas = new ArrayList<String>();
-	
-	private Spinner spinnerTema;
 	private EditText editText;
+	private String nomeJogador = "";
+	private String nivel = "";
+	private Spinner spinnerTema;
 	
 	private static int totalChamadas;
 	private static final String GUEST = "Guest";
 	private static final String VAZIO = "";
-	private static final String ESCOLHA = "Você escolheu o tema: ";
-	
+	protected static final String ESCOLHA = "Nível escolhido: ";
 	
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.sub_page_jogar_adedonha);
+		totalChamadas = 0;
 		
 		editText = (EditText) findViewById(R.id.edittext_adedonha);
 		
-		totalChamadas = 0;
-
 		botaoOkAction();
 		botaoLimparAction();
 		botaoCancelarAction();
 		spinnerAction();
+		
 	}
 	
 	private void spinnerAction() {
-		spinnerTema = (Spinner) findViewById(R.id.spinner_tema_adedonha);
+		spinnerTema = (Spinner) findViewById(R.id.spinner_nivel_adedonha);
 		
-		//TODO CARREGAR OS TEMAS AQUI
-		temas.add("TESTE - 1");
-		temas.add("TESTE - 2");
-		
-		ArrayAdapter<String> adapterOpcoes = criaAdapterOpcoes(temas);
-		spinnerTema.setAdapter(adapterOpcoes);
+		ArrayAdapter<?> adapterNiveis = criaAdapterOpcoes();
+		spinnerTema.setAdapter(adapterNiveis);
 		
 		spinnerTema.setOnItemSelectedListener(spinnerTemaListener());
 		
@@ -67,11 +56,12 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 
 				public void onItemSelected(AdapterView<?> parent, View arg1,
 						int position, long id) {
-					tema = parent.getItemAtPosition(position).toString();
+					
+					nivel = parent.getItemAtPosition(position).toString();
 					
 					if (totalChamadas > 0) {
 						Toast.makeText(parent.getContext(), ESCOLHA +
-							tema, Toast.LENGTH_SHORT).show();
+								nivel, Toast.LENGTH_SHORT).show();
 					}
 					totalChamadas++;
 				}
@@ -82,10 +72,11 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 			};
 	}
 
-	private ArrayAdapter<String> criaAdapterOpcoes(List<String> teste) {
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_spinner_item, teste);
+	private ArrayAdapter<?> criaAdapterOpcoes() {
+		ArrayAdapter<?> adapter = ArrayAdapter.createFromResource(this,
+				R.array.nivel, android.R.layout.simple_spinner_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		
 		return adapter;
 	}
 
@@ -103,7 +94,7 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 				Intent subMenuIntent = new Intent(SubMenuJogarAdedonhaActivity.this,
 						JogoAdedonhaActivity.class);
 				subMenuIntent.putExtra("nomeJogador", nomeJogador);
-				subMenuIntent.putExtra("temaJogo", tema);
+				subMenuIntent.putExtra("nivel", nivel);
 				
 
 				startActivity(subMenuIntent);
@@ -117,25 +108,7 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 		botaoLimpar.setOnClickListener(botaoLimparListener());
 
 	}
-
-	private void setJogador() {
-		if (nomeInvalido()) {
-			setNomeUsuario(GUEST + getRandon());
-		} else {
-			setNomeUsuario(editText.getText().toString());
-		}
-	}
-
-	private OnClickListener botaoLimparListener() {
-		return new OnClickListener() {
-
-			public void onClick(View v) {
-				editText.setText(VAZIO);
-				setNomeUsuario(VAZIO);
-			}
-		};
-	}
-
+	
 	private void botaoCancelarAction() {
 		Button botaoCancelar = (Button) findViewById(R.id.cancelar_adedonha);
 		botaoCancelar.setOnClickListener(botaoCancelarListener());
@@ -153,31 +126,51 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 			}
 		};
 	}
+	
+	
+	private void setJogador() {
+		if (nomeInvalido()) {
+			setNomeJogador(GUEST + getRandon());
+		} else {
+			setNomeJogador(editText.getText().toString());
+		}
+	}
 
+	private OnClickListener botaoLimparListener() {
+		return new OnClickListener() {
+
+			public void onClick(View v) {
+				editText.setText(VAZIO);
+				setNomeJogador(VAZIO);
+			}
+		};
+	}
+	
 	private boolean nomeInvalido() {
 		return editText.getText().toString().trim().equals(VAZIO);
 	}
-
+	
 	private String getRandon() {
 		int aleatorio = (int) (1 + Math.random() * 100);
 		return String.valueOf(aleatorio);
 	}
 
-	public void setNomeUsuario(String nomeUsuario) {
-		this.nomeJogador = nomeUsuario;
-	}
 
-	public String getNomeUsuario() {
+	public String getNomeJogador() {
 		return nomeJogador;
 	}
 
-	public String getTema() {
-		return tema;
+
+	public void setNomeJogador(String nomeJogador) {
+		this.nomeJogador = nomeJogador;
+	}
+	
+	public EditText getEditText() {
+		return editText;
 	}
 
-	public void setTema(String tema) {
-		this.tema = tema;
+	public void setEditText(EditText editText) {
+		this.editText = editText;
 	}
-
 
 }

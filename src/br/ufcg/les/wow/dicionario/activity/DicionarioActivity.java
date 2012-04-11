@@ -21,12 +21,12 @@ public class DicionarioActivity extends Activity{
 	}
 
 	private void botaoJogarAction() {
-		Button botaoJogar = (Button) findViewById(R.id.jogar);
+		Button botaoJogar = (Button) findViewById(R.id.jogar_dicionario);
 		botaoJogar.setOnClickListener(listenerTrocarTela(SubMenuJogarDicionarioActivity.class));
 	}
 
 	private void botaoSairAction() {
-		Button botaoSair = (Button) findViewById(R.id.sair);
+		Button botaoSair = (Button) findViewById(R.id.sair_dicionario);
 		botaoSair.setOnClickListener(listenerTrocarTela(WorldofWordsActivity.class));
 
 	}

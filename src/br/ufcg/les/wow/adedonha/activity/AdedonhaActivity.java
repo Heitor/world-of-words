@@ -9,24 +9,25 @@ import android.widget.Button;
 import br.ufcg.les.wow.R;
 import br.ufcg.les.wow.WorldofWordsActivity;
 
-public class AdedonhaActivity extends Activity{
-
+public class AdedonhaActivity extends Activity {
+	
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_adedonha);
-
+		
 		botaoJogarAction();
 		botaoSairAction();
 	}
 
 	private void botaoJogarAction() {
-		Button botaoJogar = (Button) findViewById(R.id.jogar);
+		Button botaoJogar = (Button) findViewById(R.id.jogar_adedonha);
 		botaoJogar.setOnClickListener(listenerTrocarTela(SubMenuJogarAdedonhaActivity.class));
+		
 	}
 
 	private void botaoSairAction() {
-		Button botaoSair = (Button) findViewById(R.id.sair);
+		Button botaoSair = (Button) findViewById(R.id.sair_adedonha);
 		botaoSair.setOnClickListener(listenerTrocarTela(WorldofWordsActivity.class));
 
 	}

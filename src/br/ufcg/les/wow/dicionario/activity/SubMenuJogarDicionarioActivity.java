@@ -38,7 +38,7 @@ public class SubMenuJogarDicionarioActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.sub_page_jogar_dicionario);
 		
-		editText = (EditText) findViewById(R.id.edittext_adedonha);
+		editText = (EditText) findViewById(R.id.edittext_dicionario);
 		
 		totalChamadas = 0;
 
@@ -49,7 +49,7 @@ public class SubMenuJogarDicionarioActivity extends Activity {
 	}
 	
 	private void spinnerAction() {
-		spinnerTema = (Spinner) findViewById(R.id.spinner_tema_adedonha);
+		spinnerTema = (Spinner) findViewById(R.id.spinner_tema_dicionario);
 		
 		//TODO CARREGAR OS TEMAS AQUI
 		temas.add("TESTE - 1");
@@ -90,7 +90,7 @@ public class SubMenuJogarDicionarioActivity extends Activity {
 	}
 
 	private void botaoOkAction() {
-		Button botaoOk = (Button) findViewById(R.id.botao_confirmar_adedonha);
+		Button botaoOk = (Button) findViewById(R.id.botao_confirmar_dicionario);
 		botaoOk.setOnClickListener(botaoConfirmarListener());
 	}
 
@@ -113,7 +113,7 @@ public class SubMenuJogarDicionarioActivity extends Activity {
 	}
 
 	private void botaoLimparAction() {
-		Button botaoLimpar = (Button) findViewById(R.id.limpar_adedonha);
+		Button botaoLimpar = (Button) findViewById(R.id.limpar_dicionario);
 		botaoLimpar.setOnClickListener(botaoLimparListener());
 
 	}
@@ -137,7 +137,7 @@ public class SubMenuJogarDicionarioActivity extends Activity {
 	}
 
 	private void botaoCancelarAction() {
-		Button botaoCancelar = (Button) findViewById(R.id.cancelar_adedonha);
+		Button botaoCancelar = (Button) findViewById(R.id.cancelar_dicionario);
 		botaoCancelar.setOnClickListener(botaoCancelarListener());
 
 	}

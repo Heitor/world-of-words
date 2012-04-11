@@ -34,6 +34,9 @@
     <string name="ranking">Ranking</string>
     <string name="voltar">Voltar</string>
     
+    <string name="hello_app_adedonha">Bem vindo ao Adedonha!</string>
+     <string name="nivel_adedonha">Escolha um nível para o jogo</string>
+    
    	 <!-- Adedonha -->
    	 
    	<string name="hello_app_dic">Bem vindo ao Dicionário Rápido!</string>
