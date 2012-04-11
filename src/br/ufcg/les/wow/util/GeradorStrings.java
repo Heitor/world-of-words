@@ -1,6 +1,7 @@
 package br.ufcg.les.wow.util;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 public class GeradorStrings {
@@ -29,5 +30,10 @@ public class GeradorStrings {
 			posicoesAleatorias.addLast(pos);
 		}
 		return posicoesAleatorias;
+	}
+	
+	public static String retornaLetra(List<String> letrasDoTema) {
+		Random posicao = new Random();
+		return letrasDoTema.get(posicao.nextInt(letrasDoTema.size() - 1)).substring(0,1);
 	}
 }

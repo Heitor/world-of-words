@@ -24,8 +24,8 @@ public class WebServiceConnector {
 	private static final String GET_BEST_USERS = "getBestUsers";
 	private static final String SEND_USER_POINTS = "sendPontuation";
 	private static final String TARGET_NAMESPACE = "http://server.wow.les.ufcg.br/";
-	//private static final String SERVER_ADDRESS = "http://jaleco.no-ip.org:9000/world-of-words";
-	private static final String SERVER_ADDRESS = "http://192.168.0.23:9000/world-of-words";
+	private static final String SERVER_ADDRESS = "http://jaleco.no-ip.org:9000/world-of-words";
+	//private static final String SERVER_ADDRESS = "http://192.168.0.23:9000/world-of-words";
 	private static final int ADEDONHA = 1;
 	
 	private Context context;
