@@ -6,8 +6,8 @@ import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
 import android.content.Context;
-import br.ufcg.les.wow.adedonha.persistence.AdedonhaDAOImpl;
-import br.ufcg.les.wow.adedonha.persistence.WordAdedonhaDAO;
+import br.ufcg.les.wow.dicionario.persistence.DicionarioDAOImpl;
+import br.ufcg.les.wow.dicionario.persistence.WordDicionarioDAO;
 import br.ufcg.les.wow.exceptions.NoInternetAccessException;
 import br.ufcg.les.wow.persistence.User;
 import br.ufcg.les.wow.persistence.UsersDAOImpl;
@@ -138,7 +138,7 @@ public class WebServiceConnector {
 		
 		HttpTransportSE httpTransport = new HttpTransportSE(SERVER_ADDRESS);
 		httpTransport.debug = true;
-		AdedonhaDAOImpl adedonhaDao = new AdedonhaDAOImpl(this.context);
+		DicionarioDAOImpl adedonhaDao = new DicionarioDAOImpl(this.context);
 		try {
 			
 			adedonhaDao.open();
@@ -151,7 +151,7 @@ public class WebServiceConnector {
 			for (int i = 0; i < returnedObjects; i+=2) {
 				String tmpWord = soapObject.getProperty(i).toString();
 				String tmpLevel = soapObject.getProperty(i+1).toString();
-				adedonhaDao.inserirObjeto(new WordAdedonhaDAO(tmpWord, tmpLevel));
+				adedonhaDao.inserirObjeto(new WordDicionarioDAO(tmpWord, tmpLevel));
 			}
 		 
 		}catch (Exception exception) {

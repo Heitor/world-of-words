@@ -8,6 +8,7 @@
     <string name="adedonha">Adedonha</string>
     <string name="forca">Jogo da Forca</string>
     <string name="app_name_adedonha">World of Words - Adedonha</string>
+    <string name="app_name_dic">World of Words - Dicionário Rápido</string>
 
     <!-- AnagramaHT -->
 
@@ -35,6 +36,6 @@
     
    	 <!-- Adedonha -->
    	 
-   	<string name="hello_app_adedonha">Bem vindo ao Adedonha!</string>
-   	<string name="tema_adedonha">Escolha um tema para o jogo</string>
+   	<string name="hello_app_dic">Bem vindo ao Dicionário Rápido!</string>
+   	<string name="tema_dic">Escolha um tema para o jogo</string>
 </resources>

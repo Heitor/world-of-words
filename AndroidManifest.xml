@@ -60,25 +60,19 @@
         
          
          <activity
-            android:name=".adedonha.activity.AdedonhaActivity"
+            android:name=".dicionario.activity.DicionarioActivity"
             android:screenOrientation="portrait" 
             android:label="@string/app_name_adedonha">
         </activity> 
         
          <activity
-            android:name=".adedonha.activity.SubMenuJogarAdedonhaActivity"
+            android:name=".dicionario.activity.SubMenuJogarDicionarioActivity"
             android:screenOrientation="portrait" 
             android:label="@string/app_name_adedonha" >
         </activity>
         
-        <activity
-            android:name=".activity.GenericSubMenuJogarActivity"
-            android:screenOrientation="portrait" 
-            android:label="@string/app_name_adedonha" > 
-        </activity>
-        
          <activity
-            android:name=".adedonha.activity.JogoAdedonhaActivity"
+            android:name=".dicionario.activity.JogoDicionarioActivity"
             android:screenOrientation="portrait" 
             android:label="@string/app_name_adedonha" > 
         </activity>
