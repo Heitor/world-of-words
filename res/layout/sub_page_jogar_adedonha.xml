@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:textColor="#FFFFFF"
+        android:textSize="16dp"
         android:text="@string/sub_menu_jogar" />
     
     <EditText
@@ -25,29 +26,45 @@
         android:id="@+id/group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >
-    
+	    
 	     <Button
-	        android:id="@+id/confirmar_adedonha"
-	        android:layout_width="105dp"
-	        android:layout_height="wrap_content"
-	        android:layout_gravity="left"
-	        android:text="@string/confirmar" />
-	    
+	         android:id="@+id/cancelar_adedonha"
+	         android:layout_width="160dp"
+	         android:layout_height="wrap_content"
+	         android:layout_gravity="right"
+	         android:text="@string/cancelar" />
+	     
 	     <Button
-	        android:id="@+id/cancelar_adedonha"
-	        android:layout_width="105dp"
-	        android:layout_height="wrap_content"
-	        android:layout_gravity="right"
-	        android:text="@string/cancelar" />
-	     
-	     <Button
-	        android:id="@+id/limpar_adedonha"
-	        android:layout_width="105dp"
-	        android:layout_height="wrap_content"
-	        android:layout_gravity="right"
-	        android:text="@string/limpar" />
+	         android:id="@+id/limpar_adedonha"
+	         android:layout_width="160dp"
+	         android:layout_height="wrap_content"
+	         android:layout_gravity="right"
+	         android:text="@string/limpar" />
 	     
 	 </LinearLayout>
+	 
+     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="20dp"
+        android:textSize="16dp"
+        android:text="@string/tema_adedonha" />
+
+     <Spinner
+         android:id="@+id/spinner_tema_adedonha"
+         android:prompt="@string/tema_adedonha"
+         android:layout_marginTop="10dp"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content" />
+
+     <Button
+         android:id="@+id/botao_confirmar_adedonha"
+         android:layout_width="160dp"
+         android:layout_height="wrap_content"
+         android:layout_gravity="right"
+         android:text="@string/confirmar" />
 	 
      <ImageView
         android:id="@+id/imageViewSubMenuJogar"
@@ -55,7 +72,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="10dp"
         android:src="@drawable/android" />
 
 </LinearLayout>

@@ -26,8 +26,6 @@
         android:layout_width="158dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
-        android:background="@layout/buttonshape"
         android:text="@string/jogar" />
 
     <Button
@@ -35,8 +33,6 @@
         android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:background="@layout/buttonshape"
         android:text="@string/ranking" />
 
     <Button
@@ -44,8 +40,6 @@
         android:layout_width="118dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:background="@layout/buttonshape"
         android:text="@string/opcoes" />
 
     <Button
@@ -53,8 +47,6 @@
         android:layout_width="104dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:background="@layout/buttonshape"
         android:text="@string/ajuda" />
 
     <Button
@@ -62,8 +54,6 @@
         android:layout_width="85dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:background="@layout/buttonshape"
         android:text="@string/sair" />
 
 </LinearLayout>
