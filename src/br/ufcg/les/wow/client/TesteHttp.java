@@ -9,7 +9,7 @@ public class TesteHttp {
 	private static final String SOAP_ACTION = "WorldOfWordsServerService";
 	private static final String ANOTHER_OPERATION_NAME = "getStrings";
 	private static final String WSDL_TARGET_NAMESPACE = "http://server.wow.les.ufcg.br/";
-	private static final String SOAP_ADDRESS = "http://192.168.0.23:9001/world-of-words";
+	private static final String SOAP_ADDRESS = "http://jaleco.no-ip.org:9000/world-of-words";
 	
 	public void testeHttpConnection() {
 		System.out.println("============================== 1");

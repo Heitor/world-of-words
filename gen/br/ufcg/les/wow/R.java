@@ -16,11 +16,12 @@ public final class R {
         public static final int caixa_letra=0x7f020002;
         public static final int fechar=0x7f020003;
         public static final int ic_launcher=0x7f020004;
-        public static final int seta=0x7f020005;
-        public static final int tela_inicial=0x7f020006;
-        public static final int twitter=0x7f020007;
-        public static final int wow=0x7f020008;
-        public static final int wow2=0x7f020009;
+        public static final int miniwow=0x7f020005;
+        public static final int seta=0x7f020006;
+        public static final int tela_inicial=0x7f020007;
+        public static final int twitter=0x7f020008;
+        public static final int wow=0x7f020009;
+        public static final int wow2=0x7f02000a;
     }
     public static final class id {
         public static final int acertosColuna1=0x7f050017;
