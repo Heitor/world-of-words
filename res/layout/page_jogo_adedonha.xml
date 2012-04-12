@@ -1,73 +1,272 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/backgroundimg"
-    android:configChanges="orientation"
-    android:orientation="vertical" >
+    android:layout_height="wrap_content"
+    android:background="@drawable/backgroundimg" >
 
     <LinearLayout
-        android:id="@+id/group_jogador_cronometro"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/group_adedonha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/text_view_jogador_adedonha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#FFFFFF" />
+
+            <Chronometer
+                android:id="@+id/cronomentro_adedonha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="130dp" />
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/text_view_jogador"
+            android:id="@+id/text_view_nivel_adedonha"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="#FFFFFF" />
 
-        <Chronometer
-            android:id="@+id/cronomentro_adedonha"
+        <TextView
+            android:id="@+id/text_view_letra_adedonha"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginLeft="130dp" />
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#FFFFFF" />
+
+        <LinearLayout
+            android:id="@+id/group_botoes_adedonha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal" >
+
+            <ImageButton
+                android:id="@+id/imageBotaoSair_adedonha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="20dp"
+                android:contentDescription="@string/sair"
+                android:src="@drawable/close" />
+
+            <ImageButton
+                android:id="@+id/imageBotaoVerificar_adedonha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="200dp"
+                android:contentDescription="@string/sair"
+                android:src="@drawable/seta_direita" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/group_entradas_adedonha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/text_view_nome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/nome_adedonha"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#FFFFFF" />
+
+            <EditText
+                android:id="@+id/edit_text_nome"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="10dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/group_entradas2_adedonha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/text_view_objeto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/objeto_adedonha"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#FFFFFF" />
+
+            <EditText
+                android:id="@+id/edit_text_objeto"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="3dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/group_entradas3_adedonha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/text_view_animal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/animal_adedonha"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#FFFFFF" />
+
+            <EditText
+                android:id="@+id/edit_text_animal"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="2dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/group_entradas4_adedonha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/text_view_fruta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fruta_adedonha"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#FFFFFF" />
+
+            <EditText
+                android:id="@+id/edit_text_fruta"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="17dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/group_entradas5_adedonha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/text_view_profissao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/profissao_adedonha"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#FFFFFF"
+                android:visibility="invisible" />
+
+            <EditText
+                android:id="@+id/edit_text_profissao"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:visibility="invisible" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/group_entradas6_adedonha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/text_view_carro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/carro_adedonha"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#FFFFFF"
+                android:visibility="invisible" />
+
+            <EditText
+                android:id="@+id/edit_text_carro"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:visibility="invisible" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/group_entradas7_adedonha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/text_view_pais"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pais_adedonha"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#FFFFFF"
+                android:visibility="invisible" />
+
+            <EditText
+                android:id="@+id/edit_text_pais"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:visibility="invisible" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/group_entradas8_adedonha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/text_view_serie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/serie_adedonha"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#FFFFFF"
+                android:visibility="invisible" />
+
+            <EditText
+                android:id="@+id/edit_text_serie"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:visibility="invisible" />
+        </LinearLayout>
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/text_view_tema"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="#FFFFFF" />
-
-    <TextView
-        android:id="@+id/text_view_letra"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="#FFFFFF" />
-
-    <EditText
-        android:id="@+id/edit_text_adedonha"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="15dp"
-        android:inputType="textPersonName" />
-
-    <Button
-        android:id="@+id/botao_enviar_adedonha"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="8dp"
-        android:text="@string/enviar" />
-
-    <ImageButton
-        android:id="@+id/imageBotaoSair"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:layout_marginRight="3dp"
-        android:layout_marginTop="20dp"
-        android:contentDescription="@string/sair"
-        android:src="@drawable/close" />
-
-</LinearLayout>
+</ScrollView>

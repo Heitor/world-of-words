@@ -9,7 +9,7 @@
      <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
-        android:icon="@drawable/miniwow"
+        android:icon="@drawable/adedonha_end"
         android:label="@string/app_name" >
         <activity
             android:name=".WorldofWordsActivity"
@@ -24,6 +24,12 @@
         
          <activity
             android:name=".adedonha.activity.AdedonhaActivity"
+            android:screenOrientation="portrait" 
+            android:label="@string/app_name_adedonha" >
+        </activity>
+        
+          <activity
+            android:name=".adedonha.activity.RespostaActivity"
             android:screenOrientation="portrait" 
             android:label="@string/app_name_adedonha" >
         </activity>

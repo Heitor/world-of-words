@@ -1,0 +1,15 @@
+<resources>
+
+    <string-array name="nivel_dificil">
+        <item>Nome</item>
+        <item>Objeto</item>
+        <item>Animal</item>
+        <item>Fruta</item>
+        <item>Profissão</item>
+        <item>Carro</item>
+        <item>País/Cidade</item>
+        <item>Serie</item>
+        
+    </string-array>
+    
+</resources>

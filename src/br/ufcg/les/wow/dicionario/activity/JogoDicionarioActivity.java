@@ -54,19 +54,19 @@ public class JogoDicionarioActivity extends Activity {
 		String letra = GeradorStrings.retornaLetra(palavras);
 		
 		//XXX GAMBIARRA PARA O FUNCIONAMENTO DO JOGO---------------------------------
-		cronometro = (Chronometer) findViewById(R.id.cronomentro_adedonha);
+		cronometro = (Chronometer) findViewById(R.id.cronomentro_dicionario);
 		cronometro.start();
 		
-		nomeJogadorTextView = (TextView) findViewById(R.id.text_view_jogador);
+		nomeJogadorTextView = (TextView) findViewById(R.id.text_view_jogador_dicionario);
 		nomeJogadorTextView.setText("Boa sorte, " + nomeJogador);
 		
-		temaTextView = (TextView) findViewById(R.id.text_view_tema);
+		temaTextView = (TextView) findViewById(R.id.text_view_tema_dicionario);
 		temaTextView.setText("Tema escolhido: Carro");
 		
-		letraTextView = (TextView) findViewById(R.id.text_view_letra);
+		letraTextView = (TextView) findViewById(R.id.text_view_letra_dicionario);
 		letraTextView.setText("Letra selecionada: " + letra.toUpperCase());
 		
-		botaoSair = (ImageButton) findViewById(R.id.imageBotaoSair);
+		botaoSair = (ImageButton) findViewById(R.id.imageBotaoSair_dicionario);
 		botaoSair.setBackgroundResource(R.drawable.close);
 		botaoSair.setOnClickListener(botaoSairListener());
 		

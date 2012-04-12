@@ -34,11 +34,23 @@
     <string name="ranking">Ranking</string>
     <string name="voltar">Voltar</string>
     
-    <string name="hello_app_adedonha">Bem vindo ao Adedonha!</string>
-     <string name="nivel_adedonha">Escolha um nível para o jogo</string>
     
-   	 <!-- Adedonha -->
-   	 
-   	<string name="hello_app_dic">Bem vindo ao Dicionário Rápido!</string>
-   	<string name="tema_dic">Escolha um tema para o jogo</string>
+    <string name="hello_app_adedonha">Bem vindo ao Adedonha!</string>
+    <string name="nivel_adedonha">Escolha um nível para o jogo</string>
+      <string name="conferir_adedonha">Validação das respostas</string>
+    
+    <string name="nome_adedonha">Nome: </string>
+    <string name="objeto_adedonha">Objeto: </string>
+    <string name="animal_adedonha">Animal: </string>
+    <string name="fruta_adedonha">Fruta: </string>
+    <string name="profissao_adedonha">Profissão: </string>
+    <string name="carro_adedonha">Carro: </string>
+    <string name="pais_adedonha">Cidade: </string>
+    <string name="serie_adedonha">Serie: </string>
+
+    <!-- Adedonha -->
+
+    <string name="hello_app_dic">Bem vindo ao Dicionário Rápido!</string>
+    <string name="tema_dic">Escolha um tema para o jogo</string>
+
 </resources>

@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/backgroundimg"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/conferir_adedonha"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp" />
+
+    <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="15dp"
+        android:stretchColumns="1" >
+
+        <TableRow>
+
+            <ImageView
+                android:id="@+id/row_imagem1_adedonha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/sair" />
+
+            <TextView
+                android:id="@+id/row_palavra1_col2_adedonha"
+                android:padding="2dip"
+                android:textColor="#FFFFFF"
+                />
+
+            <ImageButton
+                android:id="@+id/row_imagem2_adedonha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:contentDescription="@string/sair"
+                android:gravity="right"
+                android:src="@drawable/sugest"
+                android:visibility="invisible" />
+        </TableRow>
+
+        <TableRow>
+
+            <ImageView
+                android:id="@+id/row2_imagem_adedonha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:contentDescription="@string/sair" />
+
+            <TextView
+                android:id="@+id/row2_palavra1_col2_adedonha"
+                android:padding="6dip"
+                android:textColor="#FFFFFF"
+                android:textSize="15dp" />
+
+            <ImageButton
+                android:id="@+id/row2_imagem2_adedonha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:contentDescription="@string/sair"
+                android:gravity="right"
+                android:src="@drawable/sugest"
+                android:visibility="invisible" />
+        </TableRow>
+
+        <TableRow>
+
+            <ImageView
+                android:id="@+id/row3_imagem_adedonha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:contentDescription="@string/sair" />
+
+            <TextView
+                android:id="@+id/row3_palavra1_col2_adedonha"
+                android:padding="6dip"
+                android:textColor="#FFFFFF"
+                android:textSize="15dp" />
+
+            <ImageButton
+                android:id="@+id/row3_imagem2_adedonha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:contentDescription="@string/sair"
+                android:gravity="right"
+                android:src="@drawable/sugest"
+                android:visibility="invisible" />
+        </TableRow>
+
+        <TableRow>
+
+            <ImageView
+                android:id="@+id/row4_imagem_adedonha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:contentDescription="@string/sair" />
+
+            <TextView
+                android:id="@+id/row4_palavra1_col2_adedonha"
+                android:padding="6dip"
+                android:textColor="#FFFFFF"
+                android:textSize="15dp" />
+
+            <ImageButton
+                android:id="@+id/row4_imagem2_adedonha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:contentDescription="@string/sair"
+                android:gravity="right"
+                android:src="@drawable/sugest"
+                android:visibility="invisible" />
+        </TableRow>
+
+        <TableRow>
+
+            <ImageView
+                android:id="@+id/row5_imagem_adedonha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:contentDescription="@string/sair" />
+
+            <TextView
+                android:id="@+id/row5_palavra1_col2_adedonha"
+                android:padding="6dip"
+                android:textColor="#FFFFFF"
+                android:textSize="15dp" />
+
+            <ImageButton
+                android:id="@+id/row5_imagem2_adedonha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:contentDescription="@string/sair"
+                android:gravity="right"
+                android:src="@drawable/sugest"
+                android:visibility="invisible" />
+        </TableRow>
+
+        <TableRow>
+
+            <ImageView
+                android:id="@+id/row6_imagem_adedonha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:contentDescription="@string/sair" />
+
+            <TextView
+                android:id="@+id/row6_palavra1_col2_adedonha"
+                android:padding="6dip"
+                android:textColor="#FFFFFF"
+                android:textSize="15dp" />
+
+            <ImageButton
+                android:id="@+id/row6_imagem2_adedonha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:contentDescription="@string/sair"
+                android:gravity="right"
+                android:src="@drawable/sugest"
+                android:visibility="invisible" />
+        </TableRow>
+
+        <TableRow>
+
+            <ImageView
+                android:id="@+id/row7_imagem_adedonha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:contentDescription="@string/sair" />
+
+            <TextView
+                android:id="@+id/row7_palavra1_col2_adedonha"
+                android:padding="6dip"
+                android:textColor="#FFFFFF"
+                android:textSize="15dp" />
+
+            <ImageButton
+                android:id="@+id/row7_imagem2_adedonha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:contentDescription="@string/sair"
+                android:gravity="right"
+                android:src="@drawable/sugest"
+                android:visibility="invisible" />
+        </TableRow>
+
+        <TableRow>
+
+            <ImageView
+                android:id="@+id/row8_imagem_adedonha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:contentDescription="@string/sair" />
+
+            <TextView
+                android:id="@+id/row8_palavra1_col2_adedonha"
+                android:padding="6dip"
+                android:textColor="#FFFFFF"
+                android:textSize="15dp" />
+
+            <ImageButton
+                android:id="@+id/row8_imagem2_adedonha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:contentDescription="@string/sair"
+                android:gravity="right"
+                android:src="@drawable/sugest"
+                android:visibility="invisible" />
+        </TableRow>
+
+        
+        <TableRow>
+
+            <TextView
+                android:id="@+id/row9_jogador_adedonha"
+                android:padding="6dip"
+                android:textColor="#FFFFFF"
+                android:textSize="13dp" />
+
+            <TextView
+                android:id="@+id/row9_tempo_adedonha"
+                android:padding="6dip"
+                android:textColor="#FFFFFF"
+                android:textSize="13dp" />
+
+             <TextView
+                android:id="@+id/row9_pontuacao_adedonha"
+                android:padding="6dip"
+                android:textColor="#FFFFFF"
+                android:textSize="13dp" />
+
+        </TableRow>
+    </TableLayout>
+
+</LinearLayout>

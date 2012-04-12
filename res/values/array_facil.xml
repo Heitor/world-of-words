@@ -1,0 +1,10 @@
+<resources>
+
+    <string-array name="nivel_facil">
+        <item>Nome</item>
+        <item>Objeto</item>
+        <item>Animal</item>
+        <item>Fruta</item>
+    </string-array>
+    
+</resources>

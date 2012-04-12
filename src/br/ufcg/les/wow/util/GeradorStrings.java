@@ -32,8 +32,9 @@ public class GeradorStrings {
 		return posicoesAleatorias;
 	}
 	
+	//FIXME Reduzi o tamanho de letras.
 	public static String retornaLetra(List<String> letrasDoTema) {
 		Random posicao = new Random();
-		return letrasDoTema.get(posicao.nextInt(letrasDoTema.size() - 1)).substring(0,1);
+		return letrasDoTema.get(posicao.nextInt(3));
 	}
 }

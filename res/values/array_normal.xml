@@ -1,0 +1,12 @@
+<resources>
+
+    <string-array name="nivel_normal">
+        <item>Nome</item>
+        <item>Objeto</item>
+        <item>Animal</item>
+        <item>Fruta</item>
+        <item>Profissão</item>
+        <item>Carro</item>
+    </string-array>
+    
+</resources>

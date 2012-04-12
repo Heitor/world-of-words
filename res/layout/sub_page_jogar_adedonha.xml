@@ -62,7 +62,7 @@
             android:id="@+id/spinner_nivel_adedonha"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
-            android:prompt="@string/tema_dic" />
+            android:prompt="@string/nivel_adedonha" />
 
         <Button
             android:id="@+id/botao_confirmar_adedonha"

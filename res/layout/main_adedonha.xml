@@ -14,12 +14,12 @@
 
     <ImageView
         android:id="@+id/imageViewTelaPrincipal"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="210dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="5dp"
         android:contentDescription="@string/ajuda"
-        android:src="@drawable/tela_inicial" />
+        android:src="@drawable/adedonha4" />
 
     <Button
         android:id="@+id/jogar_adedonha"
