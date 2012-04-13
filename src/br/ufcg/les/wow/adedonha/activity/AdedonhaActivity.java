@@ -1,5 +1,8 @@
 package br.ufcg.les.wow.adedonha.activity;
 
+import java.sql.SQLException;
+import java.util.List;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +11,9 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import br.ufcg.les.wow.R;
 import br.ufcg.les.wow.WorldofWordsActivity;
+import br.ufcg.les.wow.adedonha.persistence.AdedonhaDAOImpl;
+import br.ufcg.les.wow.adedonha.persistence.Palavra;
+import br.ufcg.les.wow.util.GeradorStrings;
 
 public class AdedonhaActivity extends Activity {
 	
@@ -18,6 +24,20 @@ public class AdedonhaActivity extends Activity {
 		
 		botaoJogarAction();
 		botaoSairAction();
+		
+		AdedonhaDAOImpl adedonhaDao = new AdedonhaDAOImpl(getApplicationContext());
+		try {
+			adedonhaDao.open();
+			if (adedonhaDao.listarObjetos().size() == 0) {
+				List<Palavra> palavras = GeradorStrings.povoaBanco();
+				adedonhaDao.inserirObjeto(palavras);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		adedonhaDao.close();
+
 	}
 
 	private void botaoJogarAction() {

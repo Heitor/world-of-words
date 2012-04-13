@@ -19,7 +19,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="5dp"
         android:contentDescription="@string/ajuda"
-        android:src="@drawable/adedonha4" />
+        android:src="@drawable/adedonha_v10" />
 
     <Button
         android:id="@+id/jogar_adedonha"

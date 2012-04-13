@@ -211,12 +211,15 @@ public class JogoAdedonhaActivity extends Activity {
 				intentRespostas.putExtra("jogador", jogador);
 				intentRespostas.putExtra("tempoString", tempo);
 				intentRespostas.putExtra("nivelJogo", nivelJogo);
+				intentRespostas.putExtra("letraJogo", letra);
 				
 				if (nivelJogo.equalsIgnoreCase("Normal")) {
 					respostas.add(editTextProfissao.getText().toString());
 					respostas.add(editTextCarro.getText().toString());
 				
 				} else if (nivelJogo.equalsIgnoreCase("Difícil")) {
+					respostas.add(editTextProfissao.getText().toString());
+					respostas.add(editTextCarro.getText().toString());
 					respostas.add(editTextPais.getText().toString());
 					respostas.add(editTextSerie.getText().toString());
 				}

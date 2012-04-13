@@ -11,7 +11,7 @@ import android.database.sqlite.SQLiteDatabase;
 import br.ufcg.les.wow.persistence.GenericDAOImpl;
 import br.ufcg.les.wow.persistence.GenericSQLiteHelper;
 
-public class AdedonhaDAOImpl extends GenericDAOImpl<WordAdedonhaDAO> {
+public class AdedonhaDAOImpl extends GenericDAOImpl<Palavra> {
 	private String[] ALL_WORDS = { GenericSQLiteHelper.COLUNA_ID,
 			GenericSQLiteHelper.COLUMN_WORDS_ADEDONHA};
 	
@@ -19,14 +19,14 @@ public class AdedonhaDAOImpl extends GenericDAOImpl<WordAdedonhaDAO> {
 		super(contexto);
 	}
 
-	public void inserirObjeto(WordAdedonhaDAO word) {
+	public void inserirObjeto(Palavra word) {
 		ContentValues values = new ContentValues();
 		values.put(GenericSQLiteHelper.COLUMN_WORDS_ADEDONHA, word.getWord());
 		dataBase.insert(GenericSQLiteHelper.TABLE_ADEDONHA, null, values);
 	}
 	
-	public void inserirObjeto(WordAdedonhaDAO[] words) {
-		for(WordAdedonhaDAO word : words) {
+	public void inserirObjeto(Palavra[] words) {
+		for(Palavra word : words) {
 			inserirObjeto(word);
 		}		
 	}
@@ -36,15 +36,15 @@ public class AdedonhaDAOImpl extends GenericDAOImpl<WordAdedonhaDAO> {
 				+ " = " + idObj, null);
 	}
 
-	public List<WordAdedonhaDAO> listarObjetos() {
-			List<WordAdedonhaDAO> palavras = new ArrayList<WordAdedonhaDAO>();
+	public List<Palavra> listarObjetos() {
+			List<Palavra> palavras = new ArrayList<Palavra>();
 			
 			Cursor cursor = dataBase.query(GenericSQLiteHelper.TABLE_ADEDONHA,
 					ALL_WORDS, null, null, null, null, null);
 			
 			cursor.moveToFirst();
 			while (!cursor.isAfterLast()) {
-				WordAdedonhaDAO palavra = cursorParaPalavra(cursor);
+				Palavra palavra = cursorParaPalavra(cursor);
 				palavras.add(palavra);
 				cursor.moveToNext();
 			}
@@ -60,16 +60,16 @@ public class AdedonhaDAOImpl extends GenericDAOImpl<WordAdedonhaDAO> {
 		
 	}
 	
-	public void inserirObjeto(List<WordAdedonhaDAO> words) {
-		Iterator<WordAdedonhaDAO> itWords = words.iterator();
+	public void inserirObjeto(List<Palavra> words) {
+		Iterator<Palavra> itWords = words.iterator();
 		while(itWords.hasNext()) {
-			WordAdedonhaDAO tmpWord = itWords.next();
+			Palavra tmpWord = itWords.next();
 			inserirObjeto(tmpWord);
 		}
 	}
 	
-	private WordAdedonhaDAO cursorParaPalavra(Cursor cursor) {
-		return new WordAdedonhaDAO(cursor.getLong(0), cursor.getString(1));
+	private Palavra cursorParaPalavra(Cursor cursor) {
+		return new Palavra(cursor.getLong(0), cursor.getString(1));
 	}
 	
 	public void atualizarObjeto(Long idObj) {
