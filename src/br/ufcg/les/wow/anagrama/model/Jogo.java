@@ -8,6 +8,7 @@ import java.util.Random;
 
 import android.content.Context;
 import android.util.Log;
+import br.ufcg.les.wow.adedonha.model.Letra;
 import br.ufcg.les.wow.anagrama.enummeration.Nivel;
 import br.ufcg.les.wow.anagrama.persistence.dao.PalavrasDAO;
 import br.ufcg.les.wow.exceptions.NonExistentAnagramException;
@@ -31,18 +32,28 @@ public class Jogo implements Serializable {
 	private String nomeJogador;
 	private int pontuacao;
 	private Nivel nivel = Nivel.NORMAL;
+	private String nivelString = "Normal";
 	private Long tempo;
 	
 	private PalavrasDAO palavrasDAO;
 	private String palavraEmbaralhada;
 	private List<String> anagramas;
 	private List<String> anagramasEncontrados;
+	private List<Letra> letrasDesejadas;
 	
-	public Jogo(String nomeJogador, Nivel nivel, Context contexto) {
+	public Jogo(String nomeJogador, Nivel nivel, List<Letra> letrasDesejadas) {
 		listaPosicoesJaUsadas = new ArrayList<Integer>();
 		setNivel(nivel);
 		setNomeJogador(nomeJogador);
-		carregarPalavras(contexto);
+		this.letrasDesejadas = letrasDesejadas;
+		this.anagramas = new ArrayList<String>();
+	}
+
+	public Jogo(String nomeJogador, String nivel, List<Letra> letrasDesejadas) {
+		listaPosicoesJaUsadas = new ArrayList<Integer>();
+		setNomeJogador(nomeJogador);
+		this.nivelString = nivel;
+		this.letrasDesejadas = letrasDesejadas;
 		this.anagramas = new ArrayList<String>();
 	}
 
@@ -213,5 +224,21 @@ public class Jogo implements Serializable {
 		}
 		this.palavrasDAO.carregarPalavras();
 		this.palavrasDAO.close();
+	}
+
+	public List<Letra> getLetrasDesejadas() {
+		return letrasDesejadas;
+	}
+
+	public void setLetrasDesejadas(List<Letra> letrasDesejadas) {
+		this.letrasDesejadas = letrasDesejadas;
+	}
+
+	public String getNivelString() {
+		return nivelString;
+	}
+
+	public void setNivelString(String nivelString) {
+		this.nivelString = nivelString;
 	}
 }

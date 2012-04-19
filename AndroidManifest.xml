@@ -20,6 +20,12 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity> 
+        
+        <activity
+            android:name=".adedonha.activity.ListaLetraActivity"
+            android:screenOrientation="portrait" 
+            android:label="@string/opcao_excluir_adedonha" >
         </activity>
         
          <activity

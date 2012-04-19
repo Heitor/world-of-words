@@ -47,6 +47,10 @@
     <string name="carro_adedonha">Carro: </string>
     <string name="pais_adedonha">Cidade: </string>
     <string name="serie_adedonha">Serie: </string>
+    
+    
+    <string name="botao_configurar_letras_adedonha">Configurar letras</string>
+    <string name="opcao_excluir_adedonha">Desmarque as letras não desejadas</string>
 
     <!-- Adedonha -->
 

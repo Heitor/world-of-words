@@ -1,5 +1,8 @@
 package br.ufcg.les.wow.adedonha.activity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +16,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 import br.ufcg.les.wow.R;
+import br.ufcg.les.wow.adedonha.model.Letra;
+import br.ufcg.les.wow.anagrama.model.Jogo;
 
 public class SubMenuJogarAdedonhaActivity extends Activity {
 	
@@ -20,11 +25,14 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 	private String nomeJogador = "";
 	private String nivel = "";
 	private Spinner spinnerTema;
+	private List<Letra> letrasDesejadas;
 	
 	private static int totalChamadas;
-	private static final String GUEST = "Guest";
+	private static final String GUEST = "Gue";
 	private static final String VAZIO = "";
 	protected static final String ESCOLHA = "Nível escolhido: ";
+	
+	private ArrayAdapter<Letra> letras;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +46,68 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 		botaoLimparAction();
 		botaoCancelarAction();
 		spinnerAction();
+		configurarLetraAction();
+		listaLetrasDesejadasOnCreate();
 		
 	}
 	
+	@Override
+	protected void onRestart() {
+		super.onRestart();
+		setPalavras(ListaLetraActivity.adapter);
+		listaLetrasDesejadasOnRestart();
+	}
+	
+	private void listaLetrasDesejadasOnRestart() {
+		for (int i = 0; i < letras.getCount(); i++) {
+			if (letras.getItem(i).isSelecioada())
+				letrasDesejadas.add(letras.getItem(i));
+		}
+	}
+	
+		
+	private void listaLetrasDesejadasOnCreate() {
+		letrasDesejadas = new ArrayList<Letra>();
+		if (letras == null) {
+			povoaLetras();
+		
+		} else {
+			for (int i = 0; i < letras.getCount(); i++) {
+				if (letras.getItem(i).isSelecioada())
+					letrasDesejadas.add(letras.getItem(i));
+			}
+		}
+	}
+	
+	private void povoaLetras() {
+		letrasDesejadas = new ArrayList<Letra>();
+
+		for (int i = 65; i < 91; i++) {
+			char a = (char) i;
+			letrasDesejadas.add(new Letra(String.valueOf(a)));
+		}
+	}
+
+	private void configurarLetraAction() {
+		Button botaoConfigurarLetra = (Button) findViewById(R.id.botao_configurar_adedonha);
+		botaoConfigurarLetra.setOnClickListener(botaoConfigurarListener());
+		
+	}
+	
+	
+	private OnClickListener botaoConfigurarListener() {
+		return new OnClickListener() {
+
+			public void onClick(View v) {
+
+				Intent subMenuIntent = new Intent(SubMenuJogarAdedonhaActivity.this,
+						ListaLetraActivity.class);
+				
+				startActivity(subMenuIntent);
+			}
+		};
+	}
+
 	private void spinnerAction() {
 		spinnerTema = (Spinner) findViewById(R.id.spinner_nivel_adedonha);
 		
@@ -90,13 +157,12 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 
 			public void onClick(View v) {
 				setJogador();
+				Jogo jogo = new Jogo(nomeJogador, nivel, letrasDesejadas);
 
 				Intent subMenuIntent = new Intent(SubMenuJogarAdedonhaActivity.this,
 						JogoAdedonhaActivity.class);
-				subMenuIntent.putExtra("nomeJogador", nomeJogador);
-				subMenuIntent.putExtra("nivel", nivel);
 				
-
+				subMenuIntent.putExtra("jogo", jogo);
 				startActivity(subMenuIntent);
 				finish();
 			}
@@ -171,6 +237,22 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 
 	public void setEditText(EditText editText) {
 		this.editText = editText;
+	}
+
+	public ArrayAdapter<Letra> getPalavras() {
+		return letras;
+	}
+
+	public void setPalavras(ArrayAdapter<Letra> palavras) {
+		this.letras = palavras;
+	}
+
+	public List<Letra> getLetrasDesejadas() {
+		return letrasDesejadas;
+	}
+
+	public void setLetrasDesejadas(List<Letra> letrasDesejadas) {
+		this.letrasDesejadas = letrasDesejadas;
 	}
 
 }
