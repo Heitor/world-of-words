@@ -81,14 +81,28 @@
             android:text="@string/confirmar" />
     </LinearLayout>
     
-    <Button
+    <LinearLayout
+        android:id="@+id/group3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp" >
+        
+         <Spinner
+            android:id="@+id/spinner_tempo_adedonha"
+            android:layout_width="160dp"
+            android:textSize="19dp"
+            android:layout_height="wrap_content"
+            android:prompt="@string/tempo_adedonha" />
+
+        <Button
             android:id="@+id/botao_configurar_adedonha"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
             android:layout_marginTop="10dp"
+            android:text="@string/botao_configurar_letras_adedonha"
             android:textSize="19dp"
-            android:textStyle="bold"
-            android:text="@string/botao_configurar_letras_adedonha" />
+            android:textStyle="bold" />
+    </LinearLayout>
 
 </LinearLayout>

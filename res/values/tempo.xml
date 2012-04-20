@@ -1,0 +1,9 @@
+<resources>
+
+    <string-array name="tempo">
+        <item>2 Minutos</item>
+        <item>3 Minutos</item>
+        <item>4 Minutos</item>
+    </string-array>
+    
+</resources>

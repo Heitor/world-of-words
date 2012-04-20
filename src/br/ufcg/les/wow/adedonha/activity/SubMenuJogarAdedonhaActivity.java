@@ -25,12 +25,17 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 	private String nomeJogador = "";
 	private String nivel = "";
 	private Spinner spinnerTema;
+	private Spinner spinnerTempo;
+	
 	private List<Letra> letrasDesejadas;
+	private Long tempoDesejado = 0L;
 	
 	private static int totalChamadas;
+	private static int totalChamadasTempo;
 	private static final String GUEST = "Gue";
 	private static final String VAZIO = "";
 	protected static final String ESCOLHA = "Nível escolhido: ";
+	protected static final String ESCOLHA_TEMPO = "Tempo escolhido: ";
 	
 	private ArrayAdapter<Letra> letras;
 	
@@ -39,6 +44,7 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.sub_page_jogar_adedonha);
 		totalChamadas = 0;
+		totalChamadasTempo = 0;
 		
 		editText = (EditText) findViewById(R.id.edittext_adedonha);
 		
@@ -109,13 +115,62 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 	}
 
 	private void spinnerAction() {
+		carregaSpinnerTema();
+		carregaSpinnerTempo();
+		
+	}
+
+	private void carregaSpinnerTempo() {
+		spinnerTempo = (Spinner) findViewById(R.id.spinner_tempo_adedonha);
+		ArrayAdapter<?> adapterNiveis = criaAdapterOpcoes(R.array.tempo);
+		
+		spinnerTempo.setAdapter(adapterNiveis);
+		spinnerTempo.setOnItemSelectedListener(spinnerTempoListener());
+		
+	}
+
+	private OnItemSelectedListener spinnerTempoListener() {
+		return new OnItemSelectedListener() {
+
+			public void onItemSelected(AdapterView<?> parent, View arg1,
+					int position, long id) {
+				
+				String tempoDesejado = configuraTempo(parent, position);
+				
+				if (totalChamadasTempo > 0) {
+					Toast.makeText(parent.getContext(), ESCOLHA +
+							tempoDesejado, Toast.LENGTH_SHORT).show();
+				}
+				
+				totalChamadasTempo++;
+			}
+
+			private String configuraTempo(AdapterView<?> parent, int position) {
+				String tempoDesejado = parent.getItemAtPosition(position).toString();
+				if (tempoDesejado.equalsIgnoreCase("2 Minutos")) {
+					setTempoDesejado(120000L);
+				
+				} else if (tempoDesejado.equalsIgnoreCase("3 Minutos")) {
+					setTempoDesejado(180000L);
+				
+				} else {
+					setTempoDesejado(240000L);
+				}
+				return tempoDesejado;
+			}
+
+			public void onNothingSelected(AdapterView<?> arg0) {
+			}
+		
+		};
+	}
+
+	private void carregaSpinnerTema() {
 		spinnerTema = (Spinner) findViewById(R.id.spinner_nivel_adedonha);
+		ArrayAdapter<?> adapterNiveis = criaAdapterOpcoes(R.array.nivel);
 		
-		ArrayAdapter<?> adapterNiveis = criaAdapterOpcoes();
 		spinnerTema.setAdapter(adapterNiveis);
-		
 		spinnerTema.setOnItemSelectedListener(spinnerTemaListener());
-		
 	}
 
 	private OnItemSelectedListener spinnerTemaListener() {
@@ -139,9 +194,9 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 			};
 	}
 
-	private ArrayAdapter<?> criaAdapterOpcoes() {
+	private ArrayAdapter<?> criaAdapterOpcoes(int idArray) {
 		ArrayAdapter<?> adapter = ArrayAdapter.createFromResource(this,
-				R.array.nivel, android.R.layout.simple_spinner_item);
+				idArray, android.R.layout.simple_spinner_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		
 		return adapter;
@@ -162,6 +217,7 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 				Intent subMenuIntent = new Intent(SubMenuJogarAdedonhaActivity.this,
 						JogoAdedonhaActivity.class);
 				
+				subMenuIntent.putExtra("tempoDesejado", tempoDesejado);
 				subMenuIntent.putExtra("jogo", jogo);
 				startActivity(subMenuIntent);
 				finish();
@@ -253,6 +309,14 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 
 	public void setLetrasDesejadas(List<Letra> letrasDesejadas) {
 		this.letrasDesejadas = letrasDesejadas;
+	}
+
+	public Long getTempoDesejado() {
+		return tempoDesejado;
+	}
+
+	public void setTempoDesejado(Long tempoDesejado) {
+		this.tempoDesejado = tempoDesejado;
 	}
 
 }

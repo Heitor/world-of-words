@@ -21,7 +21,7 @@ public class RespostaActivity extends Activity {
 	
 	private int nivel;
 	private int pontos;
-	private String tempoString = "";
+	private Long tempoRestante = 0L;
 	private AdedonhaDAOImpl adedonhaDao;
 	
 	private String letraJogo = "";
@@ -45,7 +45,7 @@ public class RespostaActivity extends Activity {
 				getSerializableExtra("respostas");
 		
 		User jogador = (User) intent.getSerializableExtra("jogador");
-		tempoString = intent.getStringExtra("tempoString");
+		tempoRestante = intent.getLongExtra("tempoJogo", 0L);
 		
 		apresentaPalavras(respostas);
 		apresentaDadosJogador(jogador);
@@ -81,9 +81,9 @@ public class RespostaActivity extends Activity {
 		nomeText.setText("Jogador: " + jogador.getUserName());
 		
 		TextView tempoText = (TextView) findViewById(R.id.saida_tempo_adedonha);
-		tempoText.setText("Tempo: " + tempoString);
+		tempoText.setText("Tempo: " + tempoRestante + "s");
 		
-		TextView pontuacao = (TextView) findViewById(R.id.saida_pontuacao_adedonha);
+		TextView pontuacao = (TextView) findViewById(R.id.pontos_jogador_adedonha);
 		pontuacao.setText("Pontuação: " + jogador.getPointing());
 		
 	}
@@ -158,27 +158,28 @@ public class RespostaActivity extends Activity {
 			int rowPalavra1Col2Adedonha, int rowImageButton) {
 		
 		TextView text = (TextView) findViewById(rowPalavra1Col2Adedonha);
-		ImageView imagem = (ImageView) findViewById(rowImagem1Adedonha);
-		ImageButton sugestao = (ImageButton) findViewById(rowImageButton);
+		//ImageView imagem = (ImageView) findViewById(rowImagem1Adedonha);
+		//ImageButton sugestao = (ImageButton) findViewById(rowImageButton);
+		//imagem.setImageResource(R.drawable.icone_ok_v2);
 		
-		if (verificaPalavra(palavra)) {
-			pontos += ACERTO;
-			imagem.setImageResource(R.drawable.icone_ok_v2);
-		
-		} else {
-			
-			if (pontos > 10) {
-				pontos -= ERRO;
-			}
-			
-			if (!palavra.equals("")) {
-				imagem.setImageResource(R.drawable.icone_not_ok);
-				sugestao.setVisibility(ImageButton.VISIBLE);
-				sugestao.setBackgroundResource(R.drawable.atencao);
-			}
-			
-			//sugestao.setOnClickListener(listener);
-		}
+//		if (verificaPalavra(palavra)) {
+//			pontos += ACERTO;
+//			imagem.setImageResource(R.drawable.icone_ok_v2);
+//		
+//		} else {
+//			
+//			if (pontos > 10) {
+//				pontos -= ERRO;
+//			}
+//			
+//			if (!palavra.equals("")) {
+//				imagem.setImageResource(R.drawable.icone_not_ok);
+//				sugestao.setVisibility(ImageButton.VISIBLE);
+//				sugestao.setBackgroundResource(R.drawable.atencao);
+//			}
+//			
+//			//sugestao.setOnClickListener(listener);
+//		}
 		
 		text.setText(palavra);
 		

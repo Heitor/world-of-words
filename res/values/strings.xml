@@ -36,7 +36,7 @@
     
     
     <string name="hello_app_adedonha">Bem vindo ao Adedonha!</string>
-    <string name="nivel_adedonha">Escolha um nível para o jogo</string>
+    <string name="nivel_adedonha">Configurações do jogo</string>
       <string name="conferir_adedonha">Validação das respostas</string>
     
     <string name="nome_adedonha">Nome: </string>
@@ -47,6 +47,8 @@
     <string name="carro_adedonha">Carro: </string>
     <string name="pais_adedonha">Cidade: </string>
     <string name="serie_adedonha">Serie: </string>
+    
+    <string name="tempo_adedonha">Tempo</string>
     
     
     <string name="botao_configurar_letras_adedonha">Configurar letras</string>
