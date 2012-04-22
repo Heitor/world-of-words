@@ -2,36 +2,37 @@ package br.ufcg.les.wow.adedonha.activity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Chronometer;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import br.ufcg.les.wow.R;
+import br.ufcg.les.wow.adedonha.model.Letra;
+import br.ufcg.les.wow.anagrama.model.Jogo;
 import br.ufcg.les.wow.persistence.User;
 import br.ufcg.les.wow.util.GeradorStrings;
 
 public class JogoAdedonhaActivity extends Activity {
 
-	private String nomeJogador = "";
-	private String nivelJogo = "";
 
 	private String letra = "";
 	
-	private Chronometer cronometro;
+	//private Chronometer cronometro;
 	private TextView nomeJogadorTextView;
+	private TextView contadorTextView;
 	private TextView nivelTextView;
 	private TextView letraTextView;
 	private ImageButton botaoSair;
 	private ImageButton botaoVerificar;
+	
 	
 	private Intent intentRespostas;
 	private EditText editTextNome;
@@ -42,8 +43,14 @@ public class JogoAdedonhaActivity extends Activity {
 	private EditText editTextCarro;
 	private EditText editTextPais;
 	private EditText editTextSerie;
+	private CountDownTimer contador; 
+	
+	private Jogo jogo;
+	private Long tempoRestante = 0L;
+	private boolean marcouFim = false;
 	
 	private static final int TIPO_ADEDONHA = 1;
+	private long tempoInicial = 12000;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,17 +58,50 @@ public class JogoAdedonhaActivity extends Activity {
 		setContentView(R.layout.page_jogo_adedonha);
 		
 		recuperaIntent();
+		
 		carregaLetra();
 
 		carregaVariaveisDoJogo();
+		
+		setContador(inicializaContador());
 		
 		intentRespostas = new Intent(
 				JogoAdedonhaActivity.this, RespostaActivity.class);
 
 	}
 
+	private CountDownTimer inicializaContador() {
+		return new CountDownTimer(tempoInicial, 1000) {
+
+		     
+
+			public void onTick(long tempoMiliseconds) {
+				if (!marcouFim) {
+					Long tempoReal = (tempoMiliseconds / 1000);
+					contadorTextView.setText("Tempo: " +tempoReal + "s");
+					tempoRestante = tempoReal;
+					System.out.println("NINGUEM MARCOU FIM NO ON TICK =" + tempoRestante);
+				}
+				System.out.println("ontick ainda rodando =" + tempoRestante);
+		     }
+
+		     public void onFinish() {
+		    	// contadorTextView.setText("Fim de jogo!");
+		    	 if (!marcouFim) {
+		    		 tempoRestante = 0L;
+		    		 contadorTextView.setText("Fim de jogo!");
+		    		 jogo.setTempo(tempoRestante);
+		    		 mostraDialogSairJogo(msgFimJogo(), fimDeJogoListener());
+		    		 System.out.println("O JOGO TERMINOU SOZINHO =" + tempoRestante);
+		    	 }
+		     }
+		  }.start();
+	}
+
 	private void carregaVariaveisDoJogo() {
 		iniciaCronometro();
+		
+		iniciaTextViewContador();
 		
 		carregaVariaveisFacil();
 		
@@ -80,6 +120,10 @@ public class JogoAdedonhaActivity extends Activity {
 		iniciaBotaoVerificar();
 	}
 
+	private void iniciaTextViewContador() {
+		contadorTextView = (TextView) findViewById(R.id.contador_adedonha);
+	}
+
 	private void carregaVariaveisFacil() {
 		editTextNome = (EditText) findViewById(R.id.edit_text_nome);
 		editTextObjeto = (EditText) findViewById(R.id.edit_text_objeto);
@@ -94,10 +138,10 @@ public class JogoAdedonhaActivity extends Activity {
 	}
 	
 	private void mapeiaNivel() {
-		if (nivelJogo.equalsIgnoreCase("Normal")) {
+		if (jogo.getNivelString().equalsIgnoreCase("Normal")) {
 			carregaVariaveisNormal();
 		
-		} else if (nivelJogo.equalsIgnoreCase("Difícil")) {
+		} else if (jogo.getNivelString().equalsIgnoreCase("Difícil")) {
 			carregaVariaveisNormal();
 			carregaVariaveisDificil();
 		}
@@ -195,47 +239,65 @@ public class JogoAdedonhaActivity extends Activity {
 		return new OnClickListener() {
 			
 			public void onClick(View v) {
-				cronometro.stop();
-				String tempo = (String) cronometro.getText();
-				Long tempoLong = cronometro.getBase();
-				
-				ArrayList<String> respostas = new ArrayList<String>();
-				
-				respostas.add(editTextNome.getText().toString());
-				respostas.add(editTextObjeto.getText().toString());
-				respostas.add(editTextAnimal.getText().toString());
-				respostas.add(editTextFruta.getText().toString());
-				
-				User jogador = new User(nomeJogador, 0, tempoLong, TIPO_ADEDONHA);
-				
-				intentRespostas.putExtra("jogador", jogador);
-				intentRespostas.putExtra("tempoString", tempo);
-				intentRespostas.putExtra("nivelJogo", nivelJogo);
-				intentRespostas.putExtra("letraJogo", letra);
-				
-				if (nivelJogo.equalsIgnoreCase("Normal")) {
-					respostas.add(editTextProfissao.getText().toString());
-					respostas.add(editTextCarro.getText().toString());
-				
-				} else if (nivelJogo.equalsIgnoreCase("Difícil")) {
-					respostas.add(editTextProfissao.getText().toString());
-					respostas.add(editTextCarro.getText().toString());
-					respostas.add(editTextPais.getText().toString());
-					respostas.add(editTextSerie.getText().toString());
-				}
-				
-				intentRespostas.putExtra("respostas", respostas);
-				
+				finalizaVariaveisJogo();
 				mostraDialogSairJogo(msgFimJogo(), listenerSair());
-				
+			}
+		};
+	}
+	
+	private void finalizaVariaveisJogo() {
+		//cronometro.stop();
+		marcouFim = true;
+		contadorTextView.setText("Fim de jogo!");
+		System.out.println("TEMPO NO FINALIZAR VARIAVEIS =" + tempoRestante);
+		
+		String nivelJogo = jogo.getNivelString();
+		//Long tempoLong = cronometro.getBase();
+		
+		ArrayList<String> respostas = new ArrayList<String>();
+		
+		respostas.add(editTextNome.getText().toString());
+		respostas.add(editTextObjeto.getText().toString());
+		respostas.add(editTextAnimal.getText().toString());
+		respostas.add(editTextFruta.getText().toString());
+		
+		User jogador = new User(jogo.getNomeJogador(), 0, tempoRestante, TIPO_ADEDONHA);
+		
+		intentRespostas.putExtra("jogador", jogador);
+		intentRespostas.putExtra("tempoJogo", tempoRestante);
+		intentRespostas.putExtra("nivelJogo", nivelJogo);
+		intentRespostas.putExtra("letraJogo", letra);
+		
+		if (nivelJogo.equalsIgnoreCase("Normal")) {
+			respostas.add(editTextProfissao.getText().toString());
+			respostas.add(editTextCarro.getText().toString());
+		
+		} else if (nivelJogo.equalsIgnoreCase("Difícil")) {
+			respostas.add(editTextProfissao.getText().toString());
+			respostas.add(editTextCarro.getText().toString());
+			respostas.add(editTextPais.getText().toString());
+			respostas.add(editTextSerie.getText().toString());
+		}
+		
+		intentRespostas.putExtra("respostas", respostas);
+		
+	}
+	
+	private DialogInterface.OnClickListener fimDeJogoListener() {
+		return new DialogInterface.OnClickListener() {
+
+			public void onClick(DialogInterface dialog, int which) {
+				finalizaVariaveisJogo();
+				startActivity(intentRespostas);
+				finish();
 			}
 		};
 	}
 	
 	public String msgFimJogo() {
 		return "FIM DE JOGO" + "\n\n Parabéns: "
-				+ getNomeJogador() + "\n Tempo: "
-				+ cronometro.getText();
+				+ jogo.getNomeJogador() + "\n Tempo restante: "
+				+ tempoRestante + "s";
 	}
 	
 	private DialogInterface.OnClickListener listenerSair() {
@@ -264,20 +326,20 @@ public class JogoAdedonhaActivity extends Activity {
 
 	private void atualizaNivelJogada() {
 		nivelTextView = (TextView) findViewById(R.id.text_view_nivel_adedonha);
-		nivelTextView.setText("Nível do jogo: " + nivelJogo);
+		nivelTextView.setText("Nível do jogo: " + jogo.getNivelString());
 	}
 
 	private void atualizaNomeJogador() {
 		nomeJogadorTextView = (TextView) findViewById(R.id.text_view_jogador_adedonha);
-		nomeJogadorTextView.setText("Boa sorte, " + nomeJogador);
+		nomeJogadorTextView.setText("Boa sorte, " + jogo.getNomeJogador());
 		
 		nomeJogadorTextView.setFocusableInTouchMode(true);
 		nomeJogadorTextView.requestFocus();
 	}
 
 	private void iniciaCronometro() {
-		cronometro = (Chronometer) findViewById(R.id.cronomentro_adedonha);
-		cronometro.start();
+//		cronometro = (Chronometer) findViewById(R.id.cronomentro_adedonha);
+//		cronometro.start();
 	}
 
 	private OnClickListener botaoSairListener() {
@@ -295,9 +357,12 @@ public class JogoAdedonhaActivity extends Activity {
 	}
 
 	private void carregaLetra() {
-		List<String> letras = povoaLetras();
-		letra = GeradorStrings.retornaLetra(letras);
+		List<Letra> letras = jogo.getLetrasDesejadas();
+		System.out.println("TAMANHO DA LETRAS NO JOGO = " + letras.size());
+		letra = GeradorStrings.retornaLetra(letras).getLetra();
 	}
+	
+	
 
 	private List<String> povoaLetras() {
 		List<String> letras = new ArrayList<String>();
@@ -311,24 +376,49 @@ public class JogoAdedonhaActivity extends Activity {
 
 	private void recuperaIntent() {
 		Intent intent = getIntent();
-		nomeJogador = intent.getStringExtra("nomeJogador");
-		nivelJogo = intent.getStringExtra("nivel");
+		jogo = (Jogo) intent.getSerializableExtra("jogo");
+		setTempoInicial(intent.getLongExtra("tempoDesejado", 120000L));
+		System.out.println(jogo.getLetrasDesejadas().size());
 	}
 
-	public String getNomeJogador() {
-		return nomeJogador;
+	public Jogo getJogo() {
+		return jogo;
 	}
 
-	public void setNomeJogador(String nomeJogador) {
-		this.nomeJogador = nomeJogador;
+	public void setJogo(Jogo jogo) {
+		this.jogo = jogo;
 	}
 
-	public String getNivelJogo() {
-		return nivelJogo;
+	public TextView getContadorTextView() {
+		return contadorTextView;
 	}
 
-	public void setNivelJogo(String nivelJogo) {
-		this.nivelJogo = nivelJogo;
+	public void setContadorTextView(TextView contadorTextView) {
+		this.contadorTextView = contadorTextView;
+	}
+
+	public CountDownTimer getContador() {
+		return contador;
+	}
+
+	public void setContador(CountDownTimer contador) {
+		this.contador = contador;
+	}
+
+	public boolean isMarcouFim() {
+		return marcouFim;
+	}
+
+	public void setMarcouFim(boolean marcouFim) {
+		this.marcouFim = marcouFim;
+	}
+
+	public long getTempoInicial() {
+		return tempoInicial;
+	}
+
+	public void setTempoInicial(long tempoInicial) {
+		this.tempoInicial = tempoInicial;
 	}
 
 }

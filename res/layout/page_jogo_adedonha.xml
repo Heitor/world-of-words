@@ -20,22 +20,27 @@
                 android:id="@+id/text_view_jogador_adedonha"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textStyle="bold"
+       			android:textSize="16dp"
                 android:textColor="#FFFFFF" />
 
-            <Chronometer
-                android:id="@+id/cronomentro_adedonha"
+             <TextView
+                android:id="@+id/contador_adedonha"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_marginLeft="130dp" />
+                android:layout_marginLeft="80dp"
+                android:textStyle="bold"
+       			android:textSize="16dp"
+                android:textColor="#FFFFFF" />
+
         </LinearLayout>
 
         <TextView
             android:id="@+id/text_view_nivel_adedonha"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textStyle="bold"
+       		android:textSize="16dp"
             android:textColor="#FFFFFF" />
 
         <TextView
@@ -44,7 +49,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+           	android:textStyle="bold"
+       		android:textSize="21dp"
             android:textColor="#FFFFFF" />
 
         <LinearLayout

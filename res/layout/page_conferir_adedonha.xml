@@ -16,7 +16,8 @@
             android:layout_gravity="center_horizontal"
             android:text="@string/conferir_adedonha"
             android:textColor="#FFFFFF"
-            android:textSize="20dp" />
+            android:textStyle="bold"
+            android:textSize="22dp" />
 
         <TextView
             android:id="@+id/saida_jogador_adedonha"
@@ -24,7 +25,18 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:textColor="#FFFFFF"
-            android:textSize="13dp" />
+            android:textStyle="bold"
+            android:layout_marginLeft="7dp"
+       	    android:textSize="18dp" />
+        
+        <TextView
+            android:id="@+id/pontos_jogador_adedonha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="7dp"
+            android:textColor="#FFFFFF"
+            android:textSize="18dp"
+            android:textStyle="bold" />
 
         <LinearLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
@@ -37,25 +49,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#FFFFFF"
-                android:textSize="13dp" />
-
-            <TextView
-                android:id="@+id/saida_pontuacao_adedonha"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:textStyle="bold"
                 android:layout_marginLeft="7dp"
-                android:textColor="#FFFFFF"
-                android:textSize="13dp" />
+       	        android:textSize="18dp" />
 
             <ImageButton
                 android:id="@+id/botao_verificado_adedonha"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="80dp"
+                android:layout_marginLeft="150dp"
                 android:contentDescription="@string/sair"
                 android:src="@drawable/seta_direita" />
         </LinearLayout>
-
+        
         <TableLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
@@ -72,7 +78,9 @@
 
                 <TextView
                     android:id="@+id/row_palavra1_col2_adedonha"
-                    android:padding="2dip"
+                    android:padding="6dip"
+                    android:textSize="18dp"
+                    android:textStyle="bold"
                     android:textColor="#FFFFFF" />
 
                 <ImageButton
@@ -99,7 +107,8 @@
                     android:id="@+id/row2_palavra1_col2_adedonha"
                     android:padding="6dip"
                     android:textColor="#FFFFFF"
-                    android:textSize="15dp" />
+                    android:textStyle="bold"
+                    android:textSize="18dp" />
 
                 <ImageButton
                     android:id="@+id/row2_imagem2_adedonha"
@@ -124,8 +133,9 @@
                 <TextView
                     android:id="@+id/row3_palavra1_col2_adedonha"
                     android:padding="6dip"
+                    android:textStyle="bold"
                     android:textColor="#FFFFFF"
-                    android:textSize="15dp" />
+                    android:textSize="18dp" />
 
                 <ImageButton
                     android:id="@+id/row3_imagem2_adedonha"
@@ -150,8 +160,9 @@
                 <TextView
                     android:id="@+id/row4_palavra1_col2_adedonha"
                     android:padding="6dip"
+                    android:textStyle="bold"
                     android:textColor="#FFFFFF"
-                    android:textSize="15dp" />
+                    android:textSize="18dp" />
 
                 <ImageButton
                     android:id="@+id/row4_imagem2_adedonha"
@@ -176,8 +187,9 @@
                 <TextView
                     android:id="@+id/row5_palavra1_col2_adedonha"
                     android:padding="6dip"
+                    android:textStyle="bold"
                     android:textColor="#FFFFFF"
-                    android:textSize="15dp" />
+                    android:textSize="18dp" />
 
                 <ImageButton
                     android:id="@+id/row5_imagem2_adedonha"
@@ -202,8 +214,9 @@
                 <TextView
                     android:id="@+id/row6_palavra1_col2_adedonha"
                     android:padding="6dip"
+                    android:textStyle="bold"
                     android:textColor="#FFFFFF"
-                    android:textSize="15dp" />
+                    android:textSize="18dp" />
 
                 <ImageButton
                     android:id="@+id/row6_imagem2_adedonha"
@@ -228,8 +241,9 @@
                 <TextView
                     android:id="@+id/row7_palavra1_col2_adedonha"
                     android:padding="6dip"
+                    android:textStyle="bold"
                     android:textColor="#FFFFFF"
-                    android:textSize="15dp" />
+                    android:textSize="18dp" />
 
                 <ImageButton
                     android:id="@+id/row7_imagem2_adedonha"
@@ -254,8 +268,9 @@
                 <TextView
                     android:id="@+id/row8_palavra1_col2_adedonha"
                     android:padding="6dip"
+                    android:textStyle="bold"
                     android:textColor="#FFFFFF"
-                    android:textSize="15dp" />
+                    android:textSize="18dp" />
 
                 <ImageButton
                     android:id="@+id/row8_imagem2_adedonha"

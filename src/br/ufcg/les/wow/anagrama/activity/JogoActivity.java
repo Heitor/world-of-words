@@ -137,7 +137,7 @@ public class JogoActivity extends Activity {
 		Nivel nivel = null;
 		nivel = (Nivel) jogoIntent.getSerializableExtra("nivel");
 
-		Jogo jogo = new Jogo(nomeJogador, nivel, this);
+		Jogo jogo = new Jogo(nomeJogador, nivel, null);
 		setJogoAtual(jogo);
 		return jogo;
 	}

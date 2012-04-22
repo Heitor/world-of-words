@@ -1,5 +1,8 @@
 package br.ufcg.les.wow.adedonha.activity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +16,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 import br.ufcg.les.wow.R;
+import br.ufcg.les.wow.adedonha.model.Letra;
+import br.ufcg.les.wow.anagrama.model.Jogo;
 
 public class SubMenuJogarAdedonhaActivity extends Activity {
 	
@@ -20,17 +25,26 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 	private String nomeJogador = "";
 	private String nivel = "";
 	private Spinner spinnerTema;
+	private Spinner spinnerTempo;
+	
+	private List<Letra> letrasDesejadas;
+	private Long tempoDesejado = 0L;
 	
 	private static int totalChamadas;
-	private static final String GUEST = "Guest";
+	private static int totalChamadasTempo;
+	private static final String GUEST = "Gue";
 	private static final String VAZIO = "";
 	protected static final String ESCOLHA = "Nível escolhido: ";
+	protected static final String ESCOLHA_TEMPO = "Tempo escolhido: ";
+	
+	private ArrayAdapter<Letra> letras;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.sub_page_jogar_adedonha);
 		totalChamadas = 0;
+		totalChamadasTempo = 0;
 		
 		editText = (EditText) findViewById(R.id.edittext_adedonha);
 		
@@ -38,17 +52,125 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 		botaoLimparAction();
 		botaoCancelarAction();
 		spinnerAction();
+		configurarLetraAction();
+		listaLetrasDesejadasOnCreate();
 		
 	}
 	
+	@Override
+	protected void onRestart() {
+		super.onRestart();
+		setPalavras(ListaLetraActivity.adapter);
+		listaLetrasDesejadasOnRestart();
+	}
+	
+	private void listaLetrasDesejadasOnRestart() {
+		for (int i = 0; i < letras.getCount(); i++) {
+			if (letras.getItem(i).isSelecioada())
+				letrasDesejadas.add(letras.getItem(i));
+		}
+	}
+	
+		
+	private void listaLetrasDesejadasOnCreate() {
+		letrasDesejadas = new ArrayList<Letra>();
+		if (letras == null) {
+			povoaLetras();
+		
+		} else {
+			for (int i = 0; i < letras.getCount(); i++) {
+				if (letras.getItem(i).isSelecioada())
+					letrasDesejadas.add(letras.getItem(i));
+			}
+		}
+	}
+	
+	private void povoaLetras() {
+		letrasDesejadas = new ArrayList<Letra>();
+
+		for (int i = 65; i < 91; i++) {
+			char a = (char) i;
+			letrasDesejadas.add(new Letra(String.valueOf(a)));
+		}
+	}
+
+	private void configurarLetraAction() {
+		Button botaoConfigurarLetra = (Button) findViewById(R.id.botao_configurar_adedonha);
+		botaoConfigurarLetra.setOnClickListener(botaoConfigurarListener());
+		
+	}
+	
+	
+	private OnClickListener botaoConfigurarListener() {
+		return new OnClickListener() {
+
+			public void onClick(View v) {
+
+				Intent subMenuIntent = new Intent(SubMenuJogarAdedonhaActivity.this,
+						ListaLetraActivity.class);
+				
+				startActivity(subMenuIntent);
+			}
+		};
+	}
+
 	private void spinnerAction() {
+		carregaSpinnerTema();
+		carregaSpinnerTempo();
+		
+	}
+
+	private void carregaSpinnerTempo() {
+		spinnerTempo = (Spinner) findViewById(R.id.spinner_tempo_adedonha);
+		ArrayAdapter<?> adapterNiveis = criaAdapterOpcoes(R.array.tempo);
+		
+		spinnerTempo.setAdapter(adapterNiveis);
+		spinnerTempo.setOnItemSelectedListener(spinnerTempoListener());
+		
+	}
+
+	private OnItemSelectedListener spinnerTempoListener() {
+		return new OnItemSelectedListener() {
+
+			public void onItemSelected(AdapterView<?> parent, View arg1,
+					int position, long id) {
+				
+				String tempoDesejado = configuraTempo(parent, position);
+				
+				if (totalChamadasTempo > 0) {
+					Toast.makeText(parent.getContext(), ESCOLHA +
+							tempoDesejado, Toast.LENGTH_SHORT).show();
+				}
+				
+				totalChamadasTempo++;
+			}
+
+			private String configuraTempo(AdapterView<?> parent, int position) {
+				String tempoDesejado = parent.getItemAtPosition(position).toString();
+				if (tempoDesejado.equalsIgnoreCase("2 Minutos")) {
+					setTempoDesejado(120000L);
+				
+				} else if (tempoDesejado.equalsIgnoreCase("3 Minutos")) {
+					setTempoDesejado(180000L);
+				
+				} else {
+					setTempoDesejado(240000L);
+				}
+				return tempoDesejado;
+			}
+
+			public void onNothingSelected(AdapterView<?> arg0) {
+			}
+		
+		};
+	}
+
+	private void carregaSpinnerTema() {
 		spinnerTema = (Spinner) findViewById(R.id.spinner_nivel_adedonha);
+		ArrayAdapter<?> adapterNiveis = criaAdapterOpcoes(R.array.nivel);
 		
-		ArrayAdapter<?> adapterNiveis = criaAdapterOpcoes();
 		spinnerTema.setAdapter(adapterNiveis);
-		
 		spinnerTema.setOnItemSelectedListener(spinnerTemaListener());
-		
 	}
 
 	private OnItemSelectedListener spinnerTemaListener() {
@@ -72,9 +194,9 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 			};
 	}
 
-	private ArrayAdapter<?> criaAdapterOpcoes() {
+	private ArrayAdapter<?> criaAdapterOpcoes(int idArray) {
 		ArrayAdapter<?> adapter = ArrayAdapter.createFromResource(this,
-				R.array.nivel, android.R.layout.simple_spinner_item);
+				idArray, android.R.layout.simple_spinner_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		
 		return adapter;
@@ -90,13 +212,13 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 
 			public void onClick(View v) {
 				setJogador();
+				Jogo jogo = new Jogo(nomeJogador, nivel, letrasDesejadas);
 
 				Intent subMenuIntent = new Intent(SubMenuJogarAdedonhaActivity.this,
 						JogoAdedonhaActivity.class);
-				subMenuIntent.putExtra("nomeJogador", nomeJogador);
-				subMenuIntent.putExtra("nivel", nivel);
 				
-
+				subMenuIntent.putExtra("tempoDesejado", tempoDesejado);
+				subMenuIntent.putExtra("jogo", jogo);
 				startActivity(subMenuIntent);
 				finish();
 			}
@@ -171,6 +293,30 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 
 	public void setEditText(EditText editText) {
 		this.editText = editText;
+	}
+
+	public ArrayAdapter<Letra> getPalavras() {
+		return letras;
+	}
+
+	public void setPalavras(ArrayAdapter<Letra> palavras) {
+		this.letras = palavras;
+	}
+
+	public List<Letra> getLetrasDesejadas() {
+		return letrasDesejadas;
+	}
+
+	public void setLetrasDesejadas(List<Letra> letrasDesejadas) {
+		this.letrasDesejadas = letrasDesejadas;
+	}
+
+	public Long getTempoDesejado() {
+		return tempoDesejado;
+	}
+
+	public void setTempoDesejado(Long tempoDesejado) {
+		this.tempoDesejado = tempoDesejado;
 	}
 
 }

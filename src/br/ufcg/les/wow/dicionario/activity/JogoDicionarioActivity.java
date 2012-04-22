@@ -51,7 +51,7 @@ public class JogoDicionarioActivity extends Activity {
 		//TODO Fazer a busca das palavras com o tema no BD.
 		
 		//TODO Pegar todas as primeiras letras das palavras do tema passado.
-		String letra = GeradorStrings.retornaLetra(palavras);
+		//String letra = GeradorStrings.retornaLetra(palavras);
 		
 		//XXX GAMBIARRA PARA O FUNCIONAMENTO DO JOGO---------------------------------
 		cronometro = (Chronometer) findViewById(R.id.cronomentro_dicionario);
@@ -64,7 +64,7 @@ public class JogoDicionarioActivity extends Activity {
 		temaTextView.setText("Tema escolhido: Carro");
 		
 		letraTextView = (TextView) findViewById(R.id.text_view_letra_dicionario);
-		letraTextView.setText("Letra selecionada: " + letra.toUpperCase());
+		//letraTextView.setText("Letra selecionada: " + letra.toUpperCase());
 		
 		botaoSair = (ImageButton) findViewById(R.id.imageBotaoSair_dicionario);
 		botaoSair.setBackgroundResource(R.drawable.close);

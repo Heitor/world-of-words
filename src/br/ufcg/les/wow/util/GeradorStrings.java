@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-import android.location.Criteria;
+import br.ufcg.les.wow.adedonha.model.Letra;
 import br.ufcg.les.wow.adedonha.persistence.Palavra;
 
 public class GeradorStrings {
@@ -37,9 +37,9 @@ public class GeradorStrings {
 	}
 	
 	//FIXME Reduzi o tamanho de letras.
-	public static String retornaLetra(List<String> letrasDoTema) {
+	public static Letra retornaLetra(List<Letra> letrasDoTema) {
 		Random posicao = new Random();
-		return letrasDoTema.get(posicao.nextInt(3));
+		return letrasDoTema.get(posicao.nextInt(letrasDoTema.size() - 1));
 	}
 
 	@Deprecated

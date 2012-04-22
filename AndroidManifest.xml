@@ -4,7 +4,7 @@
     android:versionCode="1"
     android:versionName="1.0" >
 
-    <uses-sdk android:minSdkVersion="10" />
+    <uses-sdk android:minSdkVersion="8" />
     
      <uses-permission android:name="android.permission.INTERNET"/>
 
@@ -20,6 +20,12 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity> 
+        
+        <activity
+            android:name=".adedonha.activity.ListaLetraActivity"
+            android:screenOrientation="portrait" 
+            android:label="@string/opcao_excluir_adedonha" >
         </activity>
         
          <activity
