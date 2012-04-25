@@ -1,0 +1,24 @@
+<resources>
+
+    <string-array name="itens">
+        <item>Nome</item>
+        <item>Objeto</item>
+        <item>Animal</item>
+        <item>Fruta</item>
+        <item>Profissão</item>
+        <item>Carro</item>
+        <item>País</item>
+        <item>Cidade</item>
+        <item>Serie</item>
+        <item>Novela</item>
+        <item>Filme</item>
+        <item>Ator</item>
+        <item>Atriz</item>
+        <item>Cor</item>
+        <item>Jogo</item>
+        <item>Time</item>
+        <item>Jogador</item>
+        
+    </string-array>
+    
+</resources>

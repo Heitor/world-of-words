@@ -73,26 +73,20 @@ public class JogoAdedonhaActivity extends Activity {
 	private CountDownTimer inicializaContador() {
 		return new CountDownTimer(tempoInicial, 1000) {
 
-		     
-
 			public void onTick(long tempoMiliseconds) {
 				if (!marcouFim) {
 					Long tempoReal = (tempoMiliseconds / 1000);
 					contadorTextView.setText("Tempo: " +tempoReal + "s");
 					tempoRestante = tempoReal;
-					System.out.println("NINGUEM MARCOU FIM NO ON TICK =" + tempoRestante);
 				}
-				System.out.println("ontick ainda rodando =" + tempoRestante);
 		     }
 
 		     public void onFinish() {
-		    	// contadorTextView.setText("Fim de jogo!");
 		    	 if (!marcouFim) {
 		    		 tempoRestante = 0L;
 		    		 contadorTextView.setText("Fim de jogo!");
 		    		 jogo.setTempo(tempoRestante);
 		    		 mostraDialogSairJogo(msgFimJogo(), fimDeJogoListener());
-		    		 System.out.println("O JOGO TERMINOU SOZINHO =" + tempoRestante);
 		    	 }
 		     }
 		  }.start();
@@ -358,8 +352,7 @@ public class JogoAdedonhaActivity extends Activity {
 
 	private void carregaLetra() {
 		List<Letra> letras = jogo.getLetrasDesejadas();
-		System.out.println("TAMANHO DA LETRAS NO JOGO = " + letras.size());
-		letra = GeradorStrings.retornaLetra(letras).getLetra();
+		letra = GeradorStrings.retornaLetra(letras).getDescricao();
 	}
 	
 	

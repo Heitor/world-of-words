@@ -28,6 +28,7 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 	private Spinner spinnerTempo;
 	
 	private List<Letra> letrasDesejadas;
+	private List<Letra> itensDesejados;
 	private Long tempoDesejado = 0L;
 	
 	private static int totalChamadas;
@@ -38,6 +39,7 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 	protected static final String ESCOLHA_TEMPO = "Tempo escolhido: ";
 	
 	private ArrayAdapter<Letra> letras;
+	private ArrayAdapter<Letra> itens;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -53,20 +55,57 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 		botaoCancelarAction();
 		spinnerAction();
 		configurarLetraAction();
+		configurarItemAction();
 		listaLetrasDesejadasOnCreate();
 		
 	}
 	
+	private void configurarItemAction() {
+		Button botaoConfigurarItem = (Button) findViewById(R.id.botao_itens_adedonha);
+		botaoConfigurarItem.setOnClickListener(botaoConfigurarItensListener());
+		
+	}
+
+	private OnClickListener botaoConfigurarItensListener() {
+		return new OnClickListener() {
+
+			public void onClick(View v) {
+
+				Intent subMenuIntent = new Intent(SubMenuJogarAdedonhaActivity.this,
+						ListaItemActivity.class);
+				
+				startActivity(subMenuIntent);
+			}
+		};
+	}
+
 	@Override
 	protected void onRestart() {
 		super.onRestart();
-		setPalavras(ListaLetraActivity.adapter);
-		listaLetrasDesejadasOnRestart();
+		if (ListaLetraActivity.adapter != null) {
+			setPalavras(ListaLetraActivity.adapter);
+			listaLetrasDesejadasOnRestart();
+		}
+		
+		if (ListaItemActivity.adapterItens != null) {
+			setItens(ListaItemActivity.adapterItens);
+			listaItensDesejados();
+		}
 	}
 	
+	private void listaItensDesejados() {
+		for (int i = 0; i < itens.getCount(); i++) {
+			if (itens.getItem(i).isSelecionada()) {
+				itensDesejados.add(itens.getItem(i));
+			}
+		}
+		System.out.println(itensDesejados.size());
+		
+	}
+
 	private void listaLetrasDesejadasOnRestart() {
 		for (int i = 0; i < letras.getCount(); i++) {
-			if (letras.getItem(i).isSelecioada())
+			if (letras.getItem(i).isSelecionada())
 				letrasDesejadas.add(letras.getItem(i));
 		}
 	}
@@ -74,12 +113,13 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 		
 	private void listaLetrasDesejadasOnCreate() {
 		letrasDesejadas = new ArrayList<Letra>();
+		itensDesejados = new ArrayList<Letra>();
 		if (letras == null) {
 			povoaLetras();
 		
 		} else {
 			for (int i = 0; i < letras.getCount(); i++) {
-				if (letras.getItem(i).isSelecioada())
+				if (letras.getItem(i).isSelecionada())
 					letrasDesejadas.add(letras.getItem(i));
 			}
 		}
@@ -317,6 +357,22 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 
 	public void setTempoDesejado(Long tempoDesejado) {
 		this.tempoDesejado = tempoDesejado;
+	}
+
+	public ArrayAdapter<Letra> getItens() {
+		return itens;
+	}
+
+	public void setItens(ArrayAdapter<Letra> itens) {
+		this.itens = itens;
+	}
+
+	public List<Letra> getItensDesejados() {
+		return itensDesejados;
+	}
+
+	public void setItensDesejados(List<Letra> itensDesejados) {
+		this.itensDesejados = itensDesejados;
 	}
 
 }

@@ -55,8 +55,8 @@ public class InteractiveArrayAdapter extends ArrayAdapter<Letra> {
 		}
 		
 		ViewHolder holder = (ViewHolder) view.getTag();
-		holder.text.setText(list.get(position).getLetra());
-		holder.checkbox.setChecked(list.get(position).isSelecioada());
+		holder.text.setText(list.get(position).getDescricao());
+		holder.checkbox.setChecked(list.get(position).isSelecionada());
 		return view;
 	}
 
