@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/backgroundimg"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/voltarAjuda"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="220dp"
+        android:layout_marginTop="1dp"
+        android:text="@string/voltar" />
+
+    <Button
+        android:id="@+id/voltarAjuda1"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="220dp"
+        android:layout_marginTop="1dp"
+        android:text="@string/voltar" />
+
+    <HorizontalScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp" >
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/backgroundimg"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/voltarAjuda10"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:text="@string/voltar" />
+
+            <Button
+                android:id="@+id/voltarAjuda11"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:text="@string/voltar" />
+
+            <Button
+                android:id="@+id/voltarAjuda12"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:text="@string/voltar" />
+
+            <Button
+                android:id="@+id/voltarAjuda13"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:text="@string/voltar" />
+
+            <Button
+                android:id="@+id/voltarAjuda14"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:text="@string/voltar" />
+
+            <Button
+                android:id="@+id/voltarAjuda15"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:text="@string/voltar" />
+
+            <Button
+                android:id="@+id/voltarAjuda16"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:text="@string/voltar" />
+
+            <Button
+                android:id="@+id/voltarAjuda17"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:text="@string/voltar" />
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <Button
+        android:id="@+id/voltarAjuda2"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="220dp"
+        android:layout_marginTop="1dp"
+        android:text="@string/voltar" />
+
+    <Button
+        android:id="@+id/voltarAjuda3"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="220dp"
+        android:layout_marginTop="1dp"
+        android:text="@string/voltar" />
+
+    <Button
+        android:id="@+id/voltarAjuda4"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="220dp"
+        android:layout_marginTop="1dp"
+        android:text="@string/voltar" />
+
+</LinearLayout>

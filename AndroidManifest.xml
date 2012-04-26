@@ -24,6 +24,18 @@
             </intent-filter>
         </activity> 
         
+        <activity 
+            android:name=".adedonha.activity.Example"
+            android:screenOrientation="portrait" 
+            android:label="@string/opcao_marcar_adedonha" >
+        </activity>
+        
+         <activity 
+            android:name=".adedonha.activity.ListaItemActivity"
+            android:screenOrientation="portrait" 
+            android:label="@string/opcao_marcar_adedonha" >
+        </activity>
+        
         <activity
             android:name=".adedonha.activity.ListaLetraActivity"
             android:screenOrientation="portrait" 

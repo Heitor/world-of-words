@@ -2,15 +2,21 @@ package br.ufcg.les.wow.adedonha.activity;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.TableRow;
 import android.widget.TextView;
 import br.ufcg.les.wow.R;
 import br.ufcg.les.wow.adedonha.persistence.AdedonhaDAOImpl;
@@ -25,10 +31,13 @@ public class RespostaActivity extends Activity {
 	private AdedonhaDAOImpl adedonhaDao;
 	
 	private String letraJogo = "";
+	private HashMap<String, String> respostas;
 	
 	private static final int ACERTO = 20;
 	private static final int ERRO = 5; 
 	
+	
+	@SuppressWarnings({ "unchecked" })
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -40,18 +49,58 @@ public class RespostaActivity extends Activity {
 		
 		setLetraJogo(intent.getStringExtra("letraJogo"));
 		
-		@SuppressWarnings("unchecked")
-		ArrayList<String> respostas = (ArrayList<String>) intent.
+		respostas = (HashMap<String, String>) intent.
 				getSerializableExtra("respostas");
+		
+		ScrollView layout = carregaRespostas();
+		
+		System.out.println("Tamanho do mapa nas respostas = "  +respostas.size());
 		
 		User jogador = (User) intent.getSerializableExtra("jogador");
 		tempoRestante = intent.getLongExtra("tempoJogo", 0L);
 		
-		apresentaPalavras(respostas);
-		apresentaDadosJogador(jogador);
+		//apresentaPalavras(respostas);
 		
+		setContentView(layout);
+		apresentaDadosJogador(jogador);
 		inicializaBotaoVerificado();
 	}
+	
+	
+	private ScrollView carregaRespostas() {
+		
+		ScrollView layout = (ScrollView) View.inflate(this,
+				R.layout.page_conferir_adedonha, null);
+		
+		LinearLayout vTblRow = (LinearLayout)layout.
+				findViewById(R.id.group_respostas_adedonha);
+		
+		List<String> itensList = new ArrayList<String>();
+		Set<String> itens = respostas.keySet();
+		for (String iten : itens) {
+			itensList.add(iten);
+		}
+		
+		List<String> valoresList = new ArrayList<String>();
+		Collection<String> valores = (Collection<String>) respostas.values();
+		for (String valor : valores) {
+			valoresList.add(valor);
+		}
+
+		for (int i = 0; i < respostas.size(); i++) {
+			TextView resultadoTextView = new TextView(this);
+			resultadoTextView.setText(itensList.get(i) + ": " + valoresList.get(i));
+			resultadoTextView.setTextSize(24);
+			resultadoTextView.setTextColor(0xFFFFFFFF);
+			
+			vTblRow.addView(resultadoTextView);
+		}
+		
+		
+		return layout;
+	}
+	
+	
 
 	private void inicializaBotaoVerificado() {
 		ImageButton botaoVerificado = (ImageButton) findViewById(R.id.botao_verificado_adedonha);
@@ -88,71 +137,7 @@ public class RespostaActivity extends Activity {
 		
 	}
 
-	private void apresentaPalavras(ArrayList<String> respostas) {
-		nivel = respostas.size();
-		
-		apresentaPalavraNome(respostas.get(0));
-		apresentaPalavraObjeto(respostas.get(1));
-		apresentaPalavraAnimal(respostas.get(2));
-		apresentaPalavraFruta(respostas.get(3));
-		
-		if (nivel > 4) {
-			apresentaPalavraProfissao(respostas.get(4));
-			apresentaPalavraCarro(respostas.get(5));
-			
-			if (nivel > 6) {
-				apresentaPalavraCidade(respostas.get(6));
-				apresentaPalavraSerie(respostas.get(7));
-			}
-			
-		}
-	}
 
-	private void apresentaPalavraSerie(String palavra) {
-		verificaPalavra(palavra, R.id.row8_imagem_adedonha,
-				R.id.row8_palavra1_col2_adedonha, R.id.row8_imagem2_adedonha);
-		
-	}
-
-	private void apresentaPalavraCidade(String palavra) {
-		verificaPalavra(palavra, R.id.row7_imagem_adedonha,
-				R.id.row7_palavra1_col2_adedonha, R.id.row7_imagem2_adedonha);
-		
-	}
-
-	private void apresentaPalavraCarro(String palavra) {
-		verificaPalavra(palavra, R.id.row6_imagem_adedonha,
-				R.id.row6_palavra1_col2_adedonha, R.id.row6_imagem2_adedonha);
-		
-	}
-
-	private void apresentaPalavraProfissao(String palavra) {
-		verificaPalavra(palavra, R.id.row5_imagem_adedonha,
-				R.id.row5_palavra1_col2_adedonha, R.id.row5_imagem2_adedonha);
-		
-	}
-
-	private void apresentaPalavraFruta(String palavra) {
-		verificaPalavra(palavra, R.id.row4_imagem_adedonha,
-				R.id.row4_palavra1_col2_adedonha, R.id.row4_imagem2_adedonha);
-		
-	}
-
-	private void apresentaPalavraAnimal(String palavra) {
-		verificaPalavra(palavra, R.id.row3_imagem_adedonha,
-				R.id.row3_palavra1_col2_adedonha, R.id.row3_imagem2_adedonha);
-		
-	}
-
-	private void apresentaPalavraObjeto(String palavra) {
-		verificaPalavra(palavra, R.id.row2_imagem_adedonha,
-				R.id.row2_palavra1_col2_adedonha, R.id.row2_imagem2_adedonha);
-	}
-
-	private void apresentaPalavraNome(String palavra) {
-		verificaPalavra(palavra, R.id.row_imagem1_problema_adedonha,
-				R.id.row_palavra1_col2_adedonha, R.id.row_imagem2_adedonha);
-	}
 
 	private void verificaPalavra(String palavra, int rowImagem1Adedonha,
 			int rowPalavra1Col2Adedonha, int rowImageButton) {

@@ -53,7 +53,9 @@
     
     
     <string name="botao_configurar_letras_adedonha">Configurar letras</string>
+    <string name="botao_configurar_itens_adedonha">Configurar Itens</string>
     <string name="opcao_excluir_adedonha">Desmarque as letras não desejadas</string>
+    <string name="opcao_marcar_adedonha">Marque os itens desejados</string>
 
     <!-- Adedonha -->
 

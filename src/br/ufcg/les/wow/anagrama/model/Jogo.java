@@ -40,6 +40,7 @@ public class Jogo implements Serializable {
 	private List<String> anagramas;
 	private List<String> anagramasEncontrados;
 	private List<Letra> letrasDesejadas;
+	private List<Letra> itensDesejados;
 	
 	public Jogo(String nomeJogador, Nivel nivel, List<Letra> letrasDesejadas) {
 		listaPosicoesJaUsadas = new ArrayList<Integer>();
@@ -49,11 +50,13 @@ public class Jogo implements Serializable {
 		this.anagramas = new ArrayList<String>();
 	}
 
-	public Jogo(String nomeJogador, String nivel, List<Letra> letrasDesejadas) {
+	public Jogo(String nomeJogador, String nivel, List<Letra> letrasDesejadas,
+			List<Letra> itensDesejados) {
 		listaPosicoesJaUsadas = new ArrayList<Integer>();
 		setNomeJogador(nomeJogador);
 		this.nivelString = nivel;
 		this.letrasDesejadas = letrasDesejadas;
+		this.itensDesejados = itensDesejados;
 		this.anagramas = new ArrayList<String>();
 	}
 
@@ -240,5 +243,13 @@ public class Jogo implements Serializable {
 
 	public void setNivelString(String nivelString) {
 		this.nivelString = nivelString;
+	}
+
+	public List<Letra> getItensDesejados() {
+		return itensDesejados;
+	}
+
+	public void setItensDesejados(List<Letra> itensDesejados) {
+		this.itensDesejados = itensDesejados;
 	}
 }

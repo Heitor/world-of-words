@@ -11,8 +11,8 @@
         android:layout_gravity="center_horizontal"
         android:text="@string/sub_menu_jogar"
         android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        android:textSize="20dp" />
+        android:textSize="20dp"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/edittext_adedonha"
@@ -34,18 +34,18 @@
             android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
+            android:text="@string/cancelar"
             android:textSize="19dp"
-            android:textStyle="bold"
-            android:text="@string/cancelar" />
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/limpar_adedonha"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
+            android:text="@string/limpar"
             android:textSize="19dp"
-            android:textStyle="bold"
-            android:text="@string/limpar" />
+            android:textStyle="bold" />
     </LinearLayout>
 
     <TextView
@@ -55,44 +55,46 @@
         android:layout_marginTop="20dp"
         android:text="@string/nivel_adedonha"
         android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        android:textSize="20dp" />
+        android:textSize="20dp"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:id="@+id/group2"
         android:layout_width="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp" >
 
         <Spinner
-            android:id="@+id/spinner_nivel_adedonha"
+            android:id="@+id/spinner_tempo_adedonha"
             android:layout_width="160dp"
-            android:textSize="19dp"
             android:layout_height="wrap_content"
-            android:prompt="@string/nivel_adedonha" />
+            android:prompt="@string/tempo_adedonha"
+            android:textSize="19dp" />
 
         <Button
             android:id="@+id/botao_confirmar_adedonha"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
+            android:text="@string/confirmar"
             android:textSize="19dp"
-            android:textStyle="bold"
-            android:text="@string/confirmar" />
+            android:textStyle="bold" />
     </LinearLayout>
-    
+
     <LinearLayout
         android:id="@+id/group3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp" >
-        
-         <Spinner
-            android:id="@+id/spinner_tempo_adedonha"
+
+        <Button
+            android:id="@+id/botao_itens_adedonha"
             android:layout_width="160dp"
-            android:textSize="19dp"
             android:layout_height="wrap_content"
-            android:prompt="@string/tempo_adedonha" />
+            android:layout_gravity="right"
+            android:text="@string/botao_configurar_itens_adedonha"
+            android:textSize="19dp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/botao_configurar_adedonha"
