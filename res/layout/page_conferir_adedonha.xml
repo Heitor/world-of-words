@@ -7,7 +7,7 @@
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical" >
 
         <TextView
@@ -37,252 +37,34 @@
             android:textColor="#FFFFFF"
             android:textSize="18dp"
             android:textStyle="bold" />
-
-        <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
+        
+        <TextView
+            android:id="@+id/saida_tempo_adedonha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="7dp"
+            android:textColor="#FFFFFF"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+        
+         <ImageButton
+                android:id="@+id/botao_verificado_adedonha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_gravity="right"
+                android:contentDescription="@string/sair"
+                android:src="@drawable/seta_direita" />
+        
+         <LinearLayout
+            android:id="@+id/group_respostas_adedonha"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal" >
 
-            <TextView
-                android:id="@+id/saida_tempo_adedonha"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#FFFFFF"
-                android:textStyle="bold"
-                android:layout_marginLeft="7dp"
-       	        android:textSize="18dp" />
-
-            <ImageButton
-                android:id="@+id/botao_verificado_adedonha"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="150dp"
-                android:contentDescription="@string/sair"
-                android:src="@drawable/seta_direita" />
         </LinearLayout>
-        
-        <TableLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_marginTop="15dp"
-            android:stretchColumns="1" >
 
-            <TableRow>
-
-                <ImageView
-                    android:id="@+id/row_imagem1_problema_adedonha"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="@string/sair" />
-
-                <TextView
-                    android:id="@+id/row_palavra1_col2_adedonha"
-                    android:padding="6dip"
-                    android:textSize="18dp"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF" />
-
-                <ImageButton
-                    android:id="@+id/row_imagem2_adedonha"
-                    android:layout_width="10dp"
-                    android:layout_height="20dp"
-                    android:layout_marginRight="10dp"
-                    android:contentDescription="@string/sair"
-                    android:gravity="right"
-                    android:src="@drawable/atencao"
-                    android:visibility="invisible" />
-            </TableRow>
-
-            <TableRow>
-
-                <ImageView
-                    android:id="@+id/row2_imagem_adedonha"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="3dp"
-                    android:contentDescription="@string/sair" />
-
-                <TextView
-                    android:id="@+id/row2_palavra1_col2_adedonha"
-                    android:padding="6dip"
-                    android:textColor="#FFFFFF"
-                    android:textStyle="bold"
-                    android:textSize="18dp" />
-
-                <ImageButton
-                    android:id="@+id/row2_imagem2_adedonha"
-                    android:layout_width="10dp"
-                    android:layout_height="20dp"
-                    android:layout_marginRight="10dp"
-                    android:contentDescription="@string/sair"
-                    android:gravity="right"
-                    android:src="@drawable/atencao"
-                    android:visibility="invisible" />
-            </TableRow>
-
-            <TableRow>
-
-                <ImageView
-                    android:id="@+id/row3_imagem_adedonha"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="3dp"
-                    android:contentDescription="@string/sair" />
-
-                <TextView
-                    android:id="@+id/row3_palavra1_col2_adedonha"
-                    android:padding="6dip"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:textSize="18dp" />
-
-                <ImageButton
-                    android:id="@+id/row3_imagem2_adedonha"
-                    android:layout_width="10dp"
-                    android:layout_height="20dp"
-                    android:layout_marginRight="10dp"
-                    android:contentDescription="@string/sair"
-                    android:gravity="right"
-                    android:src="@drawable/atencao"
-                    android:visibility="invisible" />
-            </TableRow>
-
-            <TableRow>
-
-                <ImageView
-                    android:id="@+id/row4_imagem_adedonha"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="3dp"
-                    android:contentDescription="@string/sair" />
-
-                <TextView
-                    android:id="@+id/row4_palavra1_col2_adedonha"
-                    android:padding="6dip"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:textSize="18dp" />
-
-                <ImageButton
-                    android:id="@+id/row4_imagem2_adedonha"
-                    android:layout_width="10dp"
-                    android:layout_height="20dp"
-                    android:layout_marginRight="10dp"
-                    android:contentDescription="@string/sair"
-                    android:gravity="right"
-                    android:src="@drawable/atencao"
-                    android:visibility="invisible" />
-            </TableRow>
-
-            <TableRow>
-
-                <ImageView
-                    android:id="@+id/row5_imagem_adedonha"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="3dp"
-                    android:contentDescription="@string/sair" />
-
-                <TextView
-                    android:id="@+id/row5_palavra1_col2_adedonha"
-                    android:padding="6dip"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:textSize="18dp" />
-
-                <ImageButton
-                    android:id="@+id/row5_imagem2_adedonha"
-                    android:layout_width="10dp"
-                    android:layout_height="20dp"
-                    android:layout_marginRight="10dp"
-                    android:contentDescription="@string/sair"
-                    android:gravity="right"
-                    android:src="@drawable/atencao"
-                    android:visibility="invisible" />
-            </TableRow>
-
-            <TableRow>
-
-                <ImageView
-                    android:id="@+id/row6_imagem_adedonha"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="3dp"
-                    android:contentDescription="@string/sair" />
-
-                <TextView
-                    android:id="@+id/row6_palavra1_col2_adedonha"
-                    android:padding="6dip"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:textSize="18dp" />
-
-                <ImageButton
-                    android:id="@+id/row6_imagem2_adedonha"
-                    android:layout_width="10dp"
-                    android:layout_height="20dp"
-                    android:layout_marginRight="10dp"
-                    android:contentDescription="@string/sair"
-                    android:gravity="right"
-                    android:src="@drawable/atencao"
-                    android:visibility="invisible" />
-            </TableRow>
-
-            <TableRow>
-
-                <ImageView
-                    android:id="@+id/row7_imagem_adedonha"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="3dp"
-                    android:contentDescription="@string/sair" />
-
-                <TextView
-                    android:id="@+id/row7_palavra1_col2_adedonha"
-                    android:padding="6dip"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:textSize="18dp" />
-
-                <ImageButton
-                    android:id="@+id/row7_imagem2_adedonha"
-                    android:layout_width="10dp"
-                    android:layout_height="20dp"
-                    android:layout_marginRight="10dp"
-                    android:contentDescription="@string/sair"
-                    android:gravity="right"
-                    android:src="@drawable/atencao"
-                    android:visibility="invisible" />
-            </TableRow>
-
-            <TableRow>
-
-                <ImageView
-                    android:id="@+id/row8_imagem_adedonha"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="3dp"
-                    android:contentDescription="@string/sair" />
-
-                <TextView
-                    android:id="@+id/row8_palavra1_col2_adedonha"
-                    android:padding="6dip"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:textSize="18dp" />
-
-                <ImageButton
-                    android:id="@+id/row8_imagem2_adedonha"
-                    android:layout_width="10dp"
-                    android:layout_height="20dp"
-                    android:layout_marginRight="10dp"
-                    android:contentDescription="@string/sair"
-                    android:gravity="right"
-                    android:src="@drawable/atencao"
-                    android:visibility="invisible" />
-            </TableRow>
-        </TableLayout>
+       
     </LinearLayout>
 
 </ScrollView>

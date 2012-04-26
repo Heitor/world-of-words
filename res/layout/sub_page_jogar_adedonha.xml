@@ -65,10 +65,10 @@
         android:layout_marginTop="10dp" >
 
         <Spinner
-            android:id="@+id/spinner_nivel_adedonha"
+            android:id="@+id/spinner_tempo_adedonha"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
-            android:prompt="@string/nivel_adedonha"
+            android:prompt="@string/tempo_adedonha"
             android:textSize="19dp" />
 
         <Button
@@ -106,12 +106,5 @@
             android:textSize="19dp"
             android:textStyle="bold" />
     </LinearLayout>
-
-    <Spinner
-        android:id="@+id/spinner_tempo_adedonha"
-        android:layout_width="160dp"
-        android:layout_height="wrap_content"
-        android:prompt="@string/tempo_adedonha"
-        android:textSize="19dp" />
 
 </LinearLayout>

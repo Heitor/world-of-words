@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -37,6 +39,7 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 	private static final String VAZIO = "";
 	protected static final String ESCOLHA = "Nível escolhido: ";
 	protected static final String ESCOLHA_TEMPO = "Tempo escolhido: ";
+	private static final String AVISO_ITEM = "Nenhum item foi selecionado!";
 	
 	private ArrayAdapter<Letra> letras;
 	private ArrayAdapter<Letra> itens;
@@ -155,7 +158,7 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 	}
 
 	private void spinnerAction() {
-		carregaSpinnerTema();
+//		carregaSpinnerTema();
 		carregaSpinnerTempo();
 		
 	}
@@ -205,34 +208,34 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 		};
 	}
 
-	private void carregaSpinnerTema() {
-		spinnerTema = (Spinner) findViewById(R.id.spinner_nivel_adedonha);
-		ArrayAdapter<?> adapterNiveis = criaAdapterOpcoes(R.array.nivel);
-		
-		spinnerTema.setAdapter(adapterNiveis);
-		spinnerTema.setOnItemSelectedListener(spinnerTemaListener());
-	}
-
-	private OnItemSelectedListener spinnerTemaListener() {
-			return new OnItemSelectedListener() {
-
-				public void onItemSelected(AdapterView<?> parent, View arg1,
-						int position, long id) {
-					
-					nivel = parent.getItemAtPosition(position).toString();
-					
-					if (totalChamadas > 0) {
-						Toast.makeText(parent.getContext(), ESCOLHA +
-								nivel, Toast.LENGTH_SHORT).show();
-					}
-					totalChamadas++;
-				}
-
-				public void onNothingSelected(AdapterView<?> arg0) {
-				}
-			
-			};
-	}
+//	private void carregaSpinnerTema() {
+//		spinnerTema = (Spinner) findViewById(R.id.spinner_nivel_adedonha);
+//		ArrayAdapter<?> adapterNiveis = criaAdapterOpcoes(R.array.nivel);
+//		
+//		spinnerTema.setAdapter(adapterNiveis);
+//		spinnerTema.setOnItemSelectedListener(spinnerTemaListener());
+//	}
+//
+//	private OnItemSelectedListener spinnerTemaListener() {
+//			return new OnItemSelectedListener() {
+//
+//				public void onItemSelected(AdapterView<?> parent, View arg1,
+//						int position, long id) {
+//					
+//					nivel = parent.getItemAtPosition(position).toString();
+//					
+//					if (totalChamadas > 0) {
+//						Toast.makeText(parent.getContext(), ESCOLHA +
+//								nivel, Toast.LENGTH_SHORT).show();
+//					}
+//					totalChamadas++;
+//				}
+//
+//				public void onNothingSelected(AdapterView<?> arg0) {
+//				}
+//			
+//			};
+//	}
 
 	private ArrayAdapter<?> criaAdapterOpcoes(int idArray) {
 		ArrayAdapter<?> adapter = ArrayAdapter.createFromResource(this,
@@ -251,18 +254,34 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 		return new OnClickListener() {
 
 			public void onClick(View v) {
-				setJogador();
-				Jogo jogo = new Jogo(nomeJogador, nivel, letrasDesejadas);
-
-				Intent subMenuIntent = new Intent(SubMenuJogarAdedonhaActivity.this,
-						JogoAdedonhaActivity.class);
+				if (itensDesejados.size() > 0) {
+					
+					setJogador();
+					Jogo jogo = new Jogo(nomeJogador, nivel, letrasDesejadas, itensDesejados);
+					
+					Intent subMenuIntent = new Intent(SubMenuJogarAdedonhaActivity.this,
+							JogoAdedonhaActivity.class);
+					
+					subMenuIntent.putExtra("tempoDesejado", tempoDesejado);
+					subMenuIntent.putExtra("jogo", jogo);
+					startActivity(subMenuIntent);
+					finish();
 				
-				subMenuIntent.putExtra("tempoDesejado", tempoDesejado);
-				subMenuIntent.putExtra("jogo", jogo);
-				startActivity(subMenuIntent);
-				finish();
+				} else {
+					mostraDialogSairJogo(AVISO_ITEM, null);
+				}
+				
 			}
 		};
+	}
+	
+	private void mostraDialogSairJogo(String msg,
+			DialogInterface.OnClickListener listener) {
+		AlertDialog alerta = new AlertDialog.
+				Builder(SubMenuJogarAdedonhaActivity.this).create();
+		alerta.setMessage(msg);
+		alerta.setButton("Ok", listener);
+		alerta.show();
 	}
 
 	private void botaoLimparAction() {

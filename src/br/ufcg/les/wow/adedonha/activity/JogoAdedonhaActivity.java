@@ -1,18 +1,25 @@
 package br.ufcg.les.wow.adedonha.activity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.LightingColorFilter;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.TableRow;
 import android.widget.TextView;
 import br.ufcg.les.wow.R;
 import br.ufcg.les.wow.adedonha.model.Letra;
@@ -33,16 +40,10 @@ public class JogoAdedonhaActivity extends Activity {
 	private ImageButton botaoSair;
 	private ImageButton botaoVerificar;
 	
+	private HashMap<String, String> mapaResultados = new HashMap<String, String>();
+	private List<Button> listaBotoesItens = new ArrayList<Button>();
 	
 	private Intent intentRespostas;
-	private EditText editTextNome;
-	private EditText editTextObjeto;
-	private EditText editTextAnimal;
-	private EditText editTextFruta;
-	private EditText editTextProfissao;
-	private EditText editTextCarro;
-	private EditText editTextPais;
-	private EditText editTextSerie;
 	private CountDownTimer contador; 
 	
 	private Jogo jogo;
@@ -51,13 +52,27 @@ public class JogoAdedonhaActivity extends Activity {
 	
 	private static final int TIPO_ADEDONHA = 1;
 	private long tempoInicial = 12000;
+
+	private Dialog dialog;
+
+	private EditText valorItem;
+
+	private Button botaoCancelar;
+
+	private Button botaoConfirmar;
+	
+	private static final int LARGURA_CAIXINHA = 90;
+	private static final int ALTURA_CAIXINHA = 50;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.page_jogo_adedonha);
+		//setContentView(R.layout.page_jogo_adedonha);
 		
 		recuperaIntent();
+		
+		ScrollView layout = carregaBotoesItens();
+		setContentView(layout);
 		
 		carregaLetra();
 
@@ -68,6 +83,95 @@ public class JogoAdedonhaActivity extends Activity {
 		intentRespostas = new Intent(
 				JogoAdedonhaActivity.this, RespostaActivity.class);
 
+	}
+	
+	private ScrollView carregaBotoesItens() {
+		
+		List<Letra> itensDesejados = jogo.getItensDesejados();
+		
+		ScrollView layout = (ScrollView) View.inflate(this,
+				R.layout.page_jogo_adedonha, null);
+		
+		LinearLayout vTblRow = (LinearLayout)layout.
+				findViewById(R.id.group_itens_adedonha);
+
+		for (int i = 0; i < itensDesejados.size(); i++) {
+			Button botaoItem = new Button(this);
+			botaoItem.setVisibility(Button.VISIBLE);
+			botaoItem.setText(itensDesejados.get(i).getDescricao());
+			botaoItem.setTextSize(24);
+			botaoItem.setLayoutParams(new TableRow.
+					LayoutParams(LARGURA_CAIXINHA, ALTURA_CAIXINHA));
+			
+			vTblRow.addView(botaoItem);
+			listaBotoesItens.add(botaoItem);
+		}
+		
+		addOnClickListenerBotoes();
+		
+		return layout;
+	}
+	
+	private void addOnClickListenerBotoes() {
+		for (Button botaoItem : listaBotoesItens) {
+			botaoItem.setOnClickListener(clickListenerItem(botaoItem));
+		}
+		
+	}
+	
+	private OnClickListener clickListenerItem(final Button botaoItem) {
+		return new OnClickListener() {
+			
+			public void onClick(View v) {
+				mostraDialog(botaoItem);
+			}
+		};
+	}
+	
+	private void mostraDialog(Button botaoItem) {
+		dialog = new Dialog(this);
+
+		dialog.setContentView(R.layout.custom_dialog_adedonha);
+		dialog.setTitle("Valor para o item: " + botaoItem.getText());
+		
+		valorItem = (EditText) dialog.findViewById(R.id.edittext_dialog_adedonha);
+		
+		botaoCancelar = (Button) dialog.findViewById(R.id.cancelar_dialog_adedonha);
+		botaoCancelar.setOnClickListener(cancelarListener());
+		
+		botaoConfirmar = (Button) dialog.findViewById(R.id.confirmar_dialog_adedonha);
+		botaoConfirmar.setOnClickListener(confirmarDialogListener(botaoItem));
+		
+		dialog.show();
+
+	}
+
+	private OnClickListener confirmarDialogListener(final Button botaoItem) {
+		return new OnClickListener() {
+			
+			public void onClick(View v) {
+				String valorInserido = valorItem.getText().toString();
+				if (entradaValida(valorInserido)) {
+					mapaResultados.put(botaoItem.getText().toString(), valorInserido);
+					botaoItem.getBackground().setColorFilter(
+							new LightingColorFilter(0xFFFFFFFF, 0xFFAA0000));
+					dialog.dismiss();
+				}
+			}
+
+			private boolean entradaValida(String valorInserido) {
+				return valorInserido != null && !valorInserido.trim().equals("");
+			}
+		};
+	}
+
+	private OnClickListener cancelarListener() {
+		return new OnClickListener() {
+			
+			public void onClick(View v) {
+				dialog.dismiss();
+			}
+		};
 	}
 
 	private CountDownTimer inicializaContador() {
@@ -97,18 +201,12 @@ public class JogoAdedonhaActivity extends Activity {
 		
 		iniciaTextViewContador();
 		
-		carregaVariaveisFacil();
-		
-		mapeiaNivel();
-
 		atualizaNomeJogador();
 
-		atualizaNivelJogada();
+		//atualizaNivelJogada();
 
 		atualizaLetraSelecionada();
 		
-		iniciaOpcaoNome();
-
 		iniciaBotaoSair();
 		
 		iniciaBotaoVerificar();
@@ -118,103 +216,9 @@ public class JogoAdedonhaActivity extends Activity {
 		contadorTextView = (TextView) findViewById(R.id.contador_adedonha);
 	}
 
-	private void carregaVariaveisFacil() {
-		editTextNome = (EditText) findViewById(R.id.edit_text_nome);
-		editTextObjeto = (EditText) findViewById(R.id.edit_text_objeto);
-		editTextAnimal = (EditText) findViewById(R.id.edit_text_animal);
-		editTextFruta = (EditText) findViewById(R.id.edit_text_fruta);
-
-	}
-
-	private void iniciaOpcaoNome() {
-		//EditText opcaoNomeEditText = (EditText) findViewById(R.id.edit_text_nome);
-		
-	}
 	
-	private void mapeiaNivel() {
-		if (jogo.getNivelString().equalsIgnoreCase("Normal")) {
-			carregaVariaveisNormal();
-		
-		} else if (jogo.getNivelString().equalsIgnoreCase("Difícil")) {
-			carregaVariaveisNormal();
-			carregaVariaveisDificil();
-		}
-
-	}
 	
-	private void carregaVariaveisDificil() {
-		variaveisPais();
-		variaveisSerie();
-		
-	}
 
-	private void variaveisSerie() {
-		inicializaEditTextSerie();
-		inicializaTextViewSerie();
-		
-	}
-
-	private void inicializaTextViewSerie() {
-		TextView textViewSerie = (TextView) findViewById(R.id.text_view_serie);
-		textViewSerie.setVisibility(TextView.VISIBLE);
-	}
-
-	private void inicializaEditTextSerie() {
-		editTextSerie = (EditText) findViewById(R.id.edit_text_serie);
-		editTextSerie.setVisibility(EditText.VISIBLE);
-		
-	}
-
-	private void variaveisPais() {
-		inicializaEditTextPais();
-		inicializaTextViewPais();
-	}
-
-	private void inicializaEditTextPais() {
-		editTextPais = (EditText) findViewById(R.id.edit_text_pais);
-		editTextPais.setVisibility(EditText.VISIBLE);
-	}
-
-	private void inicializaTextViewPais() {
-		TextView textViewPais = (TextView) findViewById(R.id.text_view_pais);
-		textViewPais.setVisibility(TextView.VISIBLE);
-	}
-
-	private void carregaVariaveisNormal() {
-		variaveisProfissao();
-		variaveisCarro();
-	}
-
-	private void variaveisCarro() {
-		inicializaTextViewCarro();
-		inicializaEditTextCarro();
-		
-	}
-
-	private void inicializaEditTextCarro() {
-		editTextCarro = (EditText) findViewById(R.id.edit_text_carro);
-		editTextCarro.setVisibility(EditText.VISIBLE);
-	}
-
-	private void inicializaTextViewCarro() {
-		TextView textViewCarro = (TextView) findViewById(R.id.text_view_carro);
-		textViewCarro.setVisibility(TextView.VISIBLE);
-	}
-
-	private void variaveisProfissao() {
-		inicializaTextViewProfissao();
-		inicializaEditTextProfissao();
-	}
-
-	private void inicializaEditTextProfissao() {
-		editTextProfissao = (EditText) findViewById(R.id.edit_text_profissao);
-		editTextProfissao.setVisibility(EditText.VISIBLE);
-	}
-
-	private void inicializaTextViewProfissao() {
-		TextView textViewProfissao = (TextView) findViewById(R.id.text_view_profissao);
-		textViewProfissao.setVisibility(TextView.VISIBLE);
-	}
 
 	private void iniciaBotaoSair() {
 		botaoSair = (ImageButton) findViewById(R.id.imageBotaoSair_adedonha);
@@ -226,7 +230,6 @@ public class JogoAdedonhaActivity extends Activity {
 		botaoVerificar = (ImageButton) findViewById(R.id.imageBotaoVerificar_adedonha);
 		botaoVerificar.setBackgroundResource(R.drawable.seta_direita);
 		botaoVerificar.setOnClickListener(botaoVerificarListener());
-		//botaoVerificar.setOnClickListener(botaoSairListener());
 	}
 
 	private OnClickListener botaoVerificarListener() {
@@ -240,20 +243,11 @@ public class JogoAdedonhaActivity extends Activity {
 	}
 	
 	private void finalizaVariaveisJogo() {
-		//cronometro.stop();
 		marcouFim = true;
 		contadorTextView.setText("Fim de jogo!");
 		System.out.println("TEMPO NO FINALIZAR VARIAVEIS =" + tempoRestante);
 		
 		String nivelJogo = jogo.getNivelString();
-		//Long tempoLong = cronometro.getBase();
-		
-		ArrayList<String> respostas = new ArrayList<String>();
-		
-		respostas.add(editTextNome.getText().toString());
-		respostas.add(editTextObjeto.getText().toString());
-		respostas.add(editTextAnimal.getText().toString());
-		respostas.add(editTextFruta.getText().toString());
 		
 		User jogador = new User(jogo.getNomeJogador(), 0, tempoRestante, TIPO_ADEDONHA);
 		
@@ -261,19 +255,7 @@ public class JogoAdedonhaActivity extends Activity {
 		intentRespostas.putExtra("tempoJogo", tempoRestante);
 		intentRespostas.putExtra("nivelJogo", nivelJogo);
 		intentRespostas.putExtra("letraJogo", letra);
-		
-		if (nivelJogo.equalsIgnoreCase("Normal")) {
-			respostas.add(editTextProfissao.getText().toString());
-			respostas.add(editTextCarro.getText().toString());
-		
-		} else if (nivelJogo.equalsIgnoreCase("Difícil")) {
-			respostas.add(editTextProfissao.getText().toString());
-			respostas.add(editTextCarro.getText().toString());
-			respostas.add(editTextPais.getText().toString());
-			respostas.add(editTextSerie.getText().toString());
-		}
-		
-		intentRespostas.putExtra("respostas", respostas);
+		intentRespostas.putExtra("respostas", mapaResultados);
 		
 	}
 	
@@ -318,10 +300,10 @@ public class JogoAdedonhaActivity extends Activity {
 		letraTextView.setText("Letra selecionada: " + letra.toUpperCase());
 	}
 
-	private void atualizaNivelJogada() {
-		nivelTextView = (TextView) findViewById(R.id.text_view_nivel_adedonha);
-		nivelTextView.setText("Nível do jogo: " + jogo.getNivelString());
-	}
+//	private void atualizaNivelJogada() {
+//		nivelTextView = (TextView) findViewById(R.id.text_view_nivel_adedonha);
+//		nivelTextView.setText("Nível do jogo: " + jogo.getNivelString());
+//	}
 
 	private void atualizaNomeJogador() {
 		nomeJogadorTextView = (TextView) findViewById(R.id.text_view_jogador_adedonha);
@@ -343,9 +325,10 @@ public class JogoAdedonhaActivity extends Activity {
 				Intent botaoSairIntent = new Intent(
 						JogoAdedonhaActivity.this, AdedonhaActivity.class);
 				// fimIntent.putExtra("usuario", usuario);
+				finalizaVariaveisJogo();
 				startActivity(botaoSairIntent);
 				finish();
-
+				
 			}
 		};
 	}
@@ -355,17 +338,6 @@ public class JogoAdedonhaActivity extends Activity {
 		letra = GeradorStrings.retornaLetra(letras).getDescricao();
 	}
 	
-	
-
-	private List<String> povoaLetras() {
-		List<String> letras = new ArrayList<String>();
-
-		for (int i = 65; i < 91; i++) {
-			char a = (char) i;
-			letras.add(String.valueOf(a));
-		}
-		return letras;
-	}
 
 	private void recuperaIntent() {
 		Intent intent = getIntent();
@@ -412,6 +384,14 @@ public class JogoAdedonhaActivity extends Activity {
 
 	public void setTempoInicial(long tempoInicial) {
 		this.tempoInicial = tempoInicial;
+	}
+
+	public HashMap<String, String> getMapaResultados() {
+		return mapaResultados;
+	}
+
+	public void setMapaResultados(HashMap<String, String> mapaResultados) {
+		this.mapaResultados = mapaResultados;
 	}
 
 }
