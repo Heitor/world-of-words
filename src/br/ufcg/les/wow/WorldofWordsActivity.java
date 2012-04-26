@@ -8,6 +8,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import br.ufcg.les.wow.adedonha.activity.AdedonhaActivity;
 import br.ufcg.les.wow.anagrama.activity.AnagramaHTActivity;
+import br.ufcg.les.wow.bluetooth.activity.BluetoothConfiguration;
 import br.ufcg.les.wow.client.WebServiceConnector;
 import br.ufcg.les.wow.dicionario.activity.DicionarioActivity;
 
@@ -20,11 +21,8 @@ public class WorldofWordsActivity extends Activity {
         setContentView(R.layout.main);
         
         // Heitor: My Tests
-//        WebServiceConnector teste = new WebServiceConnector(this);
-//        teste.updateDataBase();
-        //User newUser = new User("nomeUser", 20, 40L, 1); 
-        //teste.sendUser(newUser);
-        // Heitor: End of My Tests
+        
+        // END OF MY TESTS
         
         botaoAdedonhaAction();
         botaoDicionarioAction();
@@ -41,9 +39,12 @@ public class WorldofWordsActivity extends Activity {
 		return new OnClickListener() {
 
 			public void onClick(View v) {
-				Intent settingsButton = new Intent(WorldofWordsActivity.this,
-						AdedonhaActivity.class);
-				startActivity(settingsButton);
+				Intent bluetoothStart = new Intent(WorldofWordsActivity.this,
+		        		BluetoothConfiguration.class);
+				startActivity(bluetoothStart);
+				/*Intent settingsButton = new Intent(WorldofWordsActivity.this,
+														AdedonhaActivity.class);
+				startActivity(settingsButton);*/
 				finish();
 			}
 		};
