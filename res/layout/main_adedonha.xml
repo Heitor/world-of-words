@@ -26,27 +26,39 @@
         android:layout_width="118dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="@string/jogar" />
+        android:text="@string/jogar"
+        android:textColor="#000000"
+        android:textSize="19dp"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/ranking_adedonha"
         android:layout_width="118dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="@string/ranking" />
+        android:text="@string/ranking"
+        android:textColor="#000000"
+        android:textSize="19dp"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/ajuda_adedonha"
         android:layout_width="118dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="@string/ajuda" />
+        android:text="@string/ajuda"
+        android:textColor="#000000"
+        android:textSize="19dp"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/sair_adedonha"
         android:layout_width="118dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="@string/sair" />
+        android:text="@string/sair"
+        android:textColor="#000000"
+        android:textSize="19dp"
+        android:textStyle="bold" />
 
 </LinearLayout>
