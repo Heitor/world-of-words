@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/backgroundimg" >
+    android:background="@drawable/bg_game" >
 
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -20,27 +20,20 @@
                 android:id="@+id/text_view_jogador_adedonha"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#FFFFFF"
-                android:textSize="16dp"
+                android:textColor="#363636"
+                android:textSize="17dp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/contador_adedonha"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="80dp"
-                android:textColor="#FFFFFF"
+                android:layout_marginLeft="75dp"
+                android:textColor="#363636"
                 android:textSize="16dp"
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/text_view_nivel_adedonha"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#FFFFFF"
-            android:textSize="16dp"
-            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/text_view_letra_adedonha"
@@ -48,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
-            android:textColor="#FFFFFF"
+            android:textColor="#363636"
             android:textSize="21dp"
             android:textStyle="bold" />
 

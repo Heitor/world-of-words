@@ -42,8 +42,17 @@ public class AdedonhaActivity extends Activity {
 
 	private void botaoSairAction() {
 		Button botaoSair = (Button) findViewById(R.id.sair_adedonha);
-		botaoSair.setOnClickListener(listenerTrocarTela(WorldofWordsActivity.class));
+		botaoSair.setOnClickListener(listenerSairJogo());
 
+	}
+	
+	private OnClickListener listenerSairJogo() {
+		return new OnClickListener() {
+			
+			public void onClick(View v) {
+				finish();
+			}
+		};
 	}
 
 	
