@@ -9,6 +9,7 @@
     <string name="forca">Jogo da Forca</string>
     <string name="app_name_adedonha">World of Words - Adedonha</string>
     <string name="app_name_dic">World of Words - Dicionário Rápido</string>
+    
 
     <!-- AnagramaHT -->
 
@@ -60,5 +61,18 @@
 
     <string name="hello_app_dic">Bem vindo ao Dicionário Rápido!</string>
     <string name="tema_dic">Escolha um tema para o jogo</string>
-
+    <string name="servidor">Criar Novo Jogo</string>
+    <string name="cliente">Me Conectar a um Jogo Existente</string>
+    <string name="config_bluetooth">Configure seu bluetooth</string>
+    <string name="encerrar">Encerrar</string>
+    
+    <!--  DeviceListActivity -->
+    <string name="scanning">Buscando por dispositivos...</string>
+    <string name="select_device">Selecione o dispositivo servidor</string>
+    <string name="none_paired">Nenhum dispositivo foi pareado</string>
+    <string name="none_found">Nenhum dispositivo encontrado</string>
+    <string name="title_paired_devices">Dispositivos pareados</string>
+    <string name="title_other_devices">Outros dispositivos disponiveis</string>
+    <string name="button_scan">Busque dispositivos.</string>
+    
 </resources>
