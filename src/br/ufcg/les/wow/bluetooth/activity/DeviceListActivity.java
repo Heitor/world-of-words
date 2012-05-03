@@ -4,8 +4,8 @@ import java.util.Set;
 
 import br.ufcg.les.wow.R;
 import br.ufcg.les.wow.adedonha.activity.AdedonhaActivity;
-import br.ufcg.les.wow.bluetooth.WoWHandle;
-import br.ufcg.les.wow.bluetooth.client.ConnectClientThread;
+import br.ufcg.les.wow.bluetooth.Protocolo;
+import br.ufcg.les.wow.bluetooth.client.Cliente;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -25,6 +25,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
+/**
+ * Obrigador exemplos doo Android. =D
+ * @author alguma pessoa que vai direto pro ceu se morrer um dia.
+ */
 public class DeviceListActivity extends Activity {
     // Debugging
     private static final String TAG = "[DeviceListActivity]";
@@ -136,7 +140,7 @@ public class DeviceListActivity extends Activity {
 
     // The on-click listener for all devices in the ListViews
     private OnItemClickListener mDeviceClickListener = new OnItemClickListener() {
-    	private final WoWHandle handle = new WoWHandle();
+    	private final Protocolo handle = new Protocolo();
         public void onItemClick(AdapterView<?> av, View v, int arg2, long arg3) {
             // Cancel discovery because it's costly and we're about to connect
             mBtAdapter.cancelDiscovery();
@@ -147,20 +151,18 @@ public class DeviceListActivity extends Activity {
 
             // Create the result Intent and include the MAC address
             //FIXME That is an ugly thing, this class should not now handle or bluetooth adapters.
-            Intent intent = new Intent(DeviceListActivity.this, AdedonhaActivity.class);
+            //Intent intent = new Intent(DeviceListActivity.this, AdedonhaActivity.class);
+            Intent intent = new Intent(DeviceListActivity.this, ConectandoCliente.class);
             intent.putExtra(EXTRA_DEVICE_ADDRESS, address);
             
-            BluetoothAdapter bluetoothAdapter = BluetoothConfiguration.configBluetooth();
-            		BluetoothDevice device = bluetoothAdapter.getRemoteDevice(address);
-            Log.d(TAG, "BluetoothDevice: Address -> " + device.getAddress() + " Name -> " + device.getName());
-            connect(device);
-            startActivityForResult(intent, Activity.RESULT_OK);
+            //BluetoothAdapter bluetoothAdapter = NovasConexoesListenerActivity.adaptadorBluetooth();
+            		//BluetoothDevice device = bluetoothAdapter.getRemoteDevice(address);
+            //Log.d(TAG, "BluetoothDevice: Address -> " + device.getAddress() + " Name -> " + device.getName());
+            //connect(device);
+            //startActivityForResult(intent, Activity.RESULT_OK);
+            startActivity(intent);
             finish();
         }
-        private void connect(BluetoothDevice device) {
-    		ConnectClientThread cct = new ConnectClientThread(device, this.handle);
-    		cct.start();
-    	}
     };
 
     // The BroadcastReceiver that listens for discovered devices and

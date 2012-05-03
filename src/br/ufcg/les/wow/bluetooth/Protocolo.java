@@ -1,14 +1,20 @@
 package br.ufcg.les.wow.bluetooth;
 
+import java.io.Serializable;
+
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
 // TODO mudar esse nome.
-public class WoWHandle extends Handler {
+public class Protocolo extends Handler implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3527073534967975662L;
 	public static final int RECEBER_MENSAGEM = 1;
 	public static final int ENVIAR_MENSAGEM = 2;
-	private static final String TAG = "WoWHandle";
+	private static final String TAG = "[Protocolo]";
 	
 	@Override
 	public void handleMessage(Message msg) {

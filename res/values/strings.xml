@@ -61,9 +61,10 @@
 
     <string name="hello_app_dic">Bem vindo ao Dicionário Rápido!</string>
     <string name="tema_dic">Escolha um tema para o jogo</string>
-    <string name="servidor">Criar Servidor</string>
-    <string name="cliente">Criar Cliente</string>
+    <string name="servidor">Criar Novo Jogo</string>
+    <string name="cliente">Me Conectar a um Jogo Existente</string>
     <string name="config_bluetooth">Configure seu bluetooth</string>
+    <string name="encerrar">Encerrar</string>
     
     <!--  DeviceListActivity -->
     <string name="scanning">Buscando por dispositivos...</string>

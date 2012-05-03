@@ -8,7 +8,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import br.ufcg.les.wow.adedonha.activity.AdedonhaActivity;
 import br.ufcg.les.wow.anagrama.activity.AnagramaHTActivity;
-import br.ufcg.les.wow.bluetooth.activity.BluetoothConfiguration;
+import br.ufcg.les.wow.bluetooth.activity.ConfiguracoesDoJogoActivity;
 import br.ufcg.les.wow.client.WebServiceConnector;
 import br.ufcg.les.wow.dicionario.activity.DicionarioActivity;
 
@@ -39,12 +39,12 @@ public class WorldofWordsActivity extends Activity {
 		return new OnClickListener() {
 
 			public void onClick(View v) {
-				Intent bluetoothStart = new Intent(WorldofWordsActivity.this,
+				/*Intent bluetoothStart = new Intent(WorldofWordsActivity.this,
 		        		BluetoothConfiguration.class);
-				startActivity(bluetoothStart);
-				/*Intent settingsButton = new Intent(WorldofWordsActivity.this,
+				startActivity(bluetoothStart);*/
+				Intent settingsButton = new Intent(WorldofWordsActivity.this,
 														AdedonhaActivity.class);
-				startActivity(settingsButton);*/
+				startActivity(settingsButton);
 				finish();
 			}
 		};

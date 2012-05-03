@@ -8,6 +8,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import br.ufcg.les.wow.R;
 import br.ufcg.les.wow.WorldofWordsActivity;
+import br.ufcg.les.wow.bluetooth.activity.ConfiguracoesDoJogoActivity;
 
 public class AdedonhaActivity extends Activity {
 	
@@ -36,7 +37,8 @@ public class AdedonhaActivity extends Activity {
 
 	private void botaoJogarAction() {
 		Button botaoJogar = (Button) findViewById(R.id.jogar_adedonha);
-		botaoJogar.setOnClickListener(listenerTrocarTela(SubMenuJogarAdedonhaActivity.class));
+		//botaoJogar.setOnClickListener(listenerTrocarTela(SubMenuJogarAdedonhaActivity.class));
+		botaoJogar.setOnClickListener(listenerTrocarTela(ConfiguracoesDoJogoActivity.class));
 		
 	}
 

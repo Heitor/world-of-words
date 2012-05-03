@@ -20,7 +20,10 @@ import android.widget.Toast;
 import br.ufcg.les.wow.R;
 import br.ufcg.les.wow.adedonha.model.Letra;
 import br.ufcg.les.wow.anagrama.model.Jogo;
+import br.ufcg.les.wow.bluetooth.Protocolo;
+import br.ufcg.les.wow.bluetooth.activity.NovasConexoesListenerActivity;
 
+// FIXME o nome dessa classe deveria se tornar ConfiguracoesDoServidorActivity
 public class SubMenuJogarAdedonhaActivity extends Activity {
 	
 	private EditText editText;
@@ -40,6 +43,7 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 	protected static final String ESCOLHA = "Nível escolhido: ";
 	protected static final String ESCOLHA_TEMPO = "Tempo escolhido: ";
 	private static final String AVISO_ITEM = "Nenhum item foi selecionado!";
+	private Protocolo protocolo;
 	
 	private ArrayAdapter<Letra> letras;
 	private ArrayAdapter<Letra> itens;
@@ -52,6 +56,9 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 		totalChamadasTempo = 0;
 		
 		editText = (EditText) findViewById(R.id.edittext_adedonha);
+		
+		Intent intent = getIntent();
+		this.protocolo = (Protocolo)intent.getSerializableExtra("protocolo");
 		
 		botaoOkAction();
 		botaoLimparAction();
@@ -259,11 +266,14 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 					setJogador();
 					Jogo jogo = new Jogo(nomeJogador, nivel, letrasDesejadas, itensDesejados);
 					
+					/*Intent subMenuIntent = new Intent(SubMenuJogarAdedonhaActivity.this,
+							JogoAdedonhaActivity.class);*/
 					Intent subMenuIntent = new Intent(SubMenuJogarAdedonhaActivity.this,
-							JogoAdedonhaActivity.class);
+							NovasConexoesListenerActivity.class);
 					
 					subMenuIntent.putExtra("tempoDesejado", tempoDesejado);
 					subMenuIntent.putExtra("jogo", jogo);
+					subMenuIntent.putExtra("protocolo", protocolo);
 					startActivity(subMenuIntent);
 					finish();
 				
