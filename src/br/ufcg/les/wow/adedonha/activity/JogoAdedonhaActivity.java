@@ -154,7 +154,7 @@ public class JogoAdedonhaActivity extends Activity {
 				if (entradaValida(valorInserido)) {
 					mapaResultados.put(botaoItem.getText().toString(), valorInserido);
 					botaoItem.getBackground().setColorFilter(
-							new LightingColorFilter(0xFFFFFFFF, 0xFFAA0000));
+							new LightingColorFilter(0xFFFFFFFF, 0xff0000ff));
 					dialog.dismiss();
 				}
 			}

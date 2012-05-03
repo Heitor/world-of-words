@@ -29,14 +29,12 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 	private EditText editText;
 	private String nomeJogador = "";
 	private String nivel = "";
-	private Spinner spinnerTema;
 	private Spinner spinnerTempo;
 	
 	private List<Letra> letrasDesejadas;
 	private List<Letra> itensDesejados;
 	private Long tempoDesejado = 0L;
 	
-	private static int totalChamadas;
 	private static int totalChamadasTempo;
 	private static final String GUEST = "Gue";
 	private static final String VAZIO = "";
@@ -51,8 +49,8 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		itensDefault();
 		setContentView(R.layout.sub_page_jogar_adedonha);
-		totalChamadas = 0;
 		totalChamadasTempo = 0;
 		
 		editText = (EditText) findViewById(R.id.edittext_adedonha);
@@ -88,16 +86,25 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 			}
 		};
 	}
+	
+	private void itensDefault() {
+		itensDesejados = new ArrayList<Letra>();
+		itensDesejados.add(new Letra("Nome"));
+		itensDesejados.add(new Letra("Objeto"));
+		itensDesejados.add(new Letra("Animal"));
+		itensDesejados.add(new Letra("Fruta"));
+	}
 
 	@Override
 	protected void onRestart() {
 		super.onRestart();
 		if (ListaLetraActivity.adapter != null) {
-			setPalavras(ListaLetraActivity.adapter);
+			setLetras(ListaLetraActivity.adapter);
 			listaLetrasDesejadasOnRestart();
 		}
 		
 		if (ListaItemActivity.adapterItens != null) {
+			itensDesejados = new ArrayList<Letra>();
 			setItens(ListaItemActivity.adapterItens);
 			listaItensDesejados();
 		}
@@ -109,11 +116,11 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 				itensDesejados.add(itens.getItem(i));
 			}
 		}
-		System.out.println(itensDesejados.size());
 		
 	}
 
 	private void listaLetrasDesejadasOnRestart() {
+		letrasDesejadas = new ArrayList<Letra>();
 		for (int i = 0; i < letras.getCount(); i++) {
 			if (letras.getItem(i).isSelecionada())
 				letrasDesejadas.add(letras.getItem(i));
@@ -123,7 +130,6 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 		
 	private void listaLetrasDesejadasOnCreate() {
 		letrasDesejadas = new ArrayList<Letra>();
-		itensDesejados = new ArrayList<Letra>();
 		if (letras == null) {
 			povoaLetras();
 		
@@ -165,7 +171,6 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 	}
 
 	private void spinnerAction() {
-//		carregaSpinnerTema();
 		carregaSpinnerTempo();
 		
 	}
@@ -203,9 +208,25 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 				} else if (tempoDesejado.equalsIgnoreCase("3 Minutos")) {
 					setTempoDesejado(180000L);
 				
-				} else {
+				} else if (tempoDesejado.equalsIgnoreCase("4 Minutos")){
 					setTempoDesejado(240000L);
+				
+				} else if (tempoDesejado.equalsIgnoreCase("5 Minutos")) {
+					setTempoDesejado(300000L);
+				
+				} else if (tempoDesejado.equalsIgnoreCase("8 Minutos")) {
+					setTempoDesejado(480000L);
+				
+				} else if (tempoDesejado.equalsIgnoreCase("10 Minutos")) {
+					setTempoDesejado(600000L);
+				
+				} else if (tempoDesejado.equalsIgnoreCase("15 Minutos")) {
+					setTempoDesejado(900000L);
+				
+				} else {
+					setTempoDesejado(1200000L);
 				}
+				
 				return tempoDesejado;
 			}
 
@@ -215,34 +236,6 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 		};
 	}
 
-//	private void carregaSpinnerTema() {
-//		spinnerTema = (Spinner) findViewById(R.id.spinner_nivel_adedonha);
-//		ArrayAdapter<?> adapterNiveis = criaAdapterOpcoes(R.array.nivel);
-//		
-//		spinnerTema.setAdapter(adapterNiveis);
-//		spinnerTema.setOnItemSelectedListener(spinnerTemaListener());
-//	}
-//
-//	private OnItemSelectedListener spinnerTemaListener() {
-//			return new OnItemSelectedListener() {
-//
-//				public void onItemSelected(AdapterView<?> parent, View arg1,
-//						int position, long id) {
-//					
-//					nivel = parent.getItemAtPosition(position).toString();
-//					
-//					if (totalChamadas > 0) {
-//						Toast.makeText(parent.getContext(), ESCOLHA +
-//								nivel, Toast.LENGTH_SHORT).show();
-//					}
-//					totalChamadas++;
-//				}
-//
-//				public void onNothingSelected(AdapterView<?> arg0) {
-//				}
-//			
-//			};
-//	}
 
 	private ArrayAdapter<?> criaAdapterOpcoes(int idArray) {
 		ArrayAdapter<?> adapter = ArrayAdapter.createFromResource(this,
@@ -368,7 +361,7 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 		return letras;
 	}
 
-	public void setPalavras(ArrayAdapter<Letra> palavras) {
+	public void setLetras(ArrayAdapter<Letra> palavras) {
 		this.letras = palavras;
 	}
 

@@ -39,7 +39,10 @@ public class GeradorStrings {
 	//FIXME Reduzi o tamanho de letras.
 	public static Letra retornaLetra(List<Letra> letrasDoTema) {
 		Random posicao = new Random();
-		return letrasDoTema.get(posicao.nextInt(letrasDoTema.size() - 1));
+		if (letrasDoTema.size() > 1) {
+			return letrasDoTema.get(posicao.nextInt(letrasDoTema.size()));
+		}
+		return letrasDoTema.get(0);
 	}
 
 	@Deprecated

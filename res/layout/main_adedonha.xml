@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backgroundimg"
+    android:background="@drawable/bg"
     android:orientation="vertical" >
 
     <TextView
@@ -10,43 +10,49 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:text="@string/hello_app_adedonha"
-        android:textColor="#FFFFFF" />
-
-    <ImageView
-        android:id="@+id/imageViewTelaPrincipal"
-        android:layout_width="210dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="5dp"
-        android:contentDescription="@string/ajuda"
-        android:src="@drawable/adedonha_v10" />
+        android:textSize="19dp"
+        android:textStyle="bold"
+        android:textColor="#363636" />
 
     <Button
         android:id="@+id/jogar_adedonha"
         android:layout_width="118dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="@string/jogar" />
+        android:text="@string/jogar"
+        android:textColor="#000000"
+        android:textSize="19dp"
+        android:layout_marginTop="100dp"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/ranking_adedonha"
         android:layout_width="118dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="@string/ranking" />
+        android:text="@string/ranking"
+        android:textColor="#000000"
+        android:textSize="19dp"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/ajuda_adedonha"
         android:layout_width="118dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="@string/ajuda" />
+        android:text="@string/ajuda"
+        android:textColor="#000000"
+        android:textSize="19dp"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/sair_adedonha"
         android:layout_width="118dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="@string/sair" />
+        android:text="@string/sair"
+        android:textColor="#000000"
+        android:textSize="19dp"
+        android:textStyle="bold" />
 
 </LinearLayout>

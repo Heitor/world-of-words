@@ -15,6 +15,10 @@ public class ListaItemActivity extends ListActivity {
 	
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
+		inicializaItens();
+	}
+
+	private void inicializaItens() {
 		if (adapterItens == null) {
 			adapterItens = new InteractiveArrayAdapter(this,
 				getItens());
@@ -23,7 +27,16 @@ public class ListaItemActivity extends ListActivity {
 		setListAdapter(adapterItens);
 	}
 	
-	private List<Letra> povoaItens() {
+
+	public List<Letra> getItens() {
+		List<Letra> listaItens = povoaItens();
+		for (int i = 0; i < 4; i++) {
+			listaItens.get(i).setSelecioada(true);
+		}
+		return listaItens;
+	}
+	
+	public List<Letra> povoaItens() {
 		List<Letra> itens = new ArrayList<Letra>();
 		itens.add(new Letra("Nome"));
 		itens.add(new Letra("Objeto"));
@@ -45,10 +58,5 @@ public class ListaItemActivity extends ListActivity {
 	
 		return itens;
 	}
-
-	private List<Letra> getItens() {
-		List<Letra> listaItens = povoaItens();
-		return listaItens;
-	}
-
+	
 }

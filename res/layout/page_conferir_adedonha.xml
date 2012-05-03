@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/backgroundimg" >
+    android:background="@drawable/bg_game" >
 
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:text="@string/conferir_adedonha"
-            android:textColor="#FFFFFF"
+            android:textColor="#363636"
             android:textStyle="bold"
             android:textSize="22dp" />
 
@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:textColor="#FFFFFF"
+            android:textColor="#363636"
             android:textStyle="bold"
             android:layout_marginLeft="7dp"
        	    android:textSize="18dp" />
@@ -34,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="7dp"
-            android:textColor="#FFFFFF"
+            android:textColor="#363636"
             android:textSize="18dp"
             android:textStyle="bold" />
         
@@ -43,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="7dp"
-            android:textColor="#FFFFFF"
+            android:textColor="#363636"
             android:textSize="18dp"
             android:textStyle="bold" />
         
@@ -60,7 +60,7 @@
             android:id="@+id/group_respostas_adedonha"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal" >
+            android:orientation="vertical" >
 
         </LinearLayout>
 
