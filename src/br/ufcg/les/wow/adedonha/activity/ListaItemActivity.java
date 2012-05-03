@@ -55,6 +55,8 @@ public class ListaItemActivity extends ListActivity {
 		itens.add(new Letra("Jogo"));
 		itens.add(new Letra("Time"));
 		itens.add(new Letra("Jogador"));
+		itens.add(new Letra("Cantor"));
+		itens.add(new Letra("Cantora"));
 	
 		return itens;
 	}
