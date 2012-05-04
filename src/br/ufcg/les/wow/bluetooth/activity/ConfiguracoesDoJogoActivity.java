@@ -19,7 +19,7 @@ public class ConfiguracoesDoJogoActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.configuracoes_do_jogo);
-		Log.d(TAG, "Inciando configuração de novo jogo..");
+		Log.d(TAG, "Inciando configuraÃ§Ã£o de novo jogo..");
 		
 		botaoCriaServidorAction();
 		botaoCriaClienteAction();

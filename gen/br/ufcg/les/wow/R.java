@@ -199,7 +199,7 @@ public final class R {
         public static final int app_name_dic=0x7f050007;
         public static final int botao_configurar_itens_adedonha=0x7f050028;
         public static final int botao_configurar_letras_adedonha=0x7f050027;
-        public static final int button_scan=0x7f050037;
+        public static final int button_scan=0x7f050038;
         public static final int cancelar=0x7f050011;
         public static final int carro_adedonha=0x7f050023;
         public static final int cliente=0x7f05002e;
@@ -209,7 +209,7 @@ public final class R {
         public static final int cronometro=0x7f050016;
         public static final int dicRapido=0x7f050003;
         public static final int dificil=0x7f050015;
-        public static final int encerrar=0x7f050030;
+        public static final int encerrar=0x7f050031;
         public static final int enviar=0x7f050017;
         /**  RadioButton opcoes 
          */
@@ -226,10 +226,11 @@ public final class R {
          */
         public static final int jogar=0x7f050008;
         public static final int limpar=0x7f050012;
+        public static final int modo_jogo=0x7f050030;
         public static final int nivel_adedonha=0x7f05001c;
         public static final int nome_adedonha=0x7f05001e;
-        public static final int none_found=0x7f050034;
-        public static final int none_paired=0x7f050033;
+        public static final int none_found=0x7f050035;
+        public static final int none_paired=0x7f050034;
         public static final int normal=0x7f050014;
         public static final int objeto_adedonha=0x7f05001f;
         public static final int opcao_excluir_adedonha=0x7f050029;
@@ -241,8 +242,8 @@ public final class R {
         public static final int sair=0x7f05000b;
         /**   DeviceListActivity 
          */
-        public static final int scanning=0x7f050031;
-        public static final int select_device=0x7f050032;
+        public static final int scanning=0x7f050032;
+        public static final int select_device=0x7f050033;
         public static final int serie_adedonha=0x7f050025;
         public static final int servidor=0x7f05002d;
         public static final int string_ajuda=0x7f05000e;
@@ -251,8 +252,8 @@ public final class R {
         public static final int tema_dic=0x7f05002c;
         public static final int tempo_adedonha=0x7f050026;
         public static final int teste=0x7f050018;
-        public static final int title_other_devices=0x7f050036;
-        public static final int title_paired_devices=0x7f050035;
+        public static final int title_other_devices=0x7f050037;
+        public static final int title_paired_devices=0x7f050036;
         public static final int voltar=0x7f05001a;
     }
 }

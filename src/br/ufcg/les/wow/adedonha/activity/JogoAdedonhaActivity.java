@@ -343,7 +343,6 @@ public class JogoAdedonhaActivity extends Activity {
 		Intent intent = getIntent();
 		jogo = (Jogo) intent.getSerializableExtra("jogo");
 		setTempoInicial(intent.getLongExtra("tempoDesejado", 120000L));
-		System.out.println(jogo.getLetrasDesejadas().size());
 	}
 
 	public Jogo getJogo() {

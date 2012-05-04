@@ -57,7 +57,8 @@ public class ConectandoCliente extends Activity  {
 	}
 	
 	private void iniciaConexao(String endereco) {
-		BluetoothAdapter adaptadorBluetooth = NovasConexoesListenerActivity.adaptadorBluetooth();
+		NovasConexoesListenerActivity teste = new NovasConexoesListenerActivity();
+		BluetoothAdapter adaptadorBluetooth = teste.adaptadorBluetooth();
 		BluetoothDevice device = adaptadorBluetooth.getRemoteDevice(endereco);
 		Log.d(TAG, "BluetoothDevice: Address -> " + device.getAddress() + " Name -> " + device.getName());
 		connecte(device);

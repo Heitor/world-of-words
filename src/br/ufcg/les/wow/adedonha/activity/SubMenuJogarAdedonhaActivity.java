@@ -38,7 +38,6 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 	private static int totalChamadasTempo;
 	private static final String GUEST = "Gue";
 	private static final String VAZIO = "";
-	protected static final String ESCOLHA = "Nível escolhido: ";
 	protected static final String ESCOLHA_TEMPO = "Tempo escolhido: ";
 	private static final String AVISO_ITEM = "Nenhum item foi selecionado!";
 	private Protocolo protocolo;

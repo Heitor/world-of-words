@@ -1,5 +1,6 @@
 package br.ufcg.les.wow.bluetooth.activity;
 
+import java.io.Serializable;
 import java.util.List;
 
 import br.ufcg.les.wow.R;
@@ -20,12 +21,14 @@ import android.widget.Button;
 
 public class NovasConexoesListenerActivity extends Activity {
 	private final static String TAG = "[NovasConexoesListenerActivity]";
-	private static BluetoothAdapter adaptadorBluetooth = adaptadorBluetooth();
+	private BluetoothAdapter adaptadorBluetooth = adaptadorBluetooth();
 	private Servidor sst;
 	private static final int CONECTAR_DISPOSITIVO = 1;
     private static final int HABILITA_BLUETOOTH = 2;
 	
 	private Protocolo handle;
+	private Serializable jogo;
+	private long tempoDesejado;
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +39,8 @@ public class NovasConexoesListenerActivity extends Activity {
         
         Intent intent = getIntent();
         handle =  (Protocolo)intent.getSerializableExtra("protocolo");
+        jogo = intent.getSerializableExtra("jogo");
+        tempoDesejado = intent.getLongExtra("tempoDesejado", 120000L);
         
         
         adaptadorBluetooth();
@@ -58,18 +63,21 @@ public class NovasConexoesListenerActivity extends Activity {
 				// TODO 
 				Intent bluetoothStart = new Intent(NovasConexoesListenerActivity.this,
 						JogoAdedonhaActivity.class);
+				bluetoothStart.putExtra("jogo", jogo);
+				bluetoothStart.putExtra("tempoDesejado", tempoDesejado);
 				startActivity(bluetoothStart);
 				finish();
 			}
 		};
 	}
 	
-	public static BluetoothAdapter adaptadorBluetooth() {
+	public BluetoothAdapter adaptadorBluetooth() {
 		if(adaptadorBluetooth == null) {
 			adaptadorBluetooth = BluetoothAdapter.getDefaultAdapter();
 			if(adaptadorBluetooth == null) {
 				Log.e(TAG, "Dispositivo bluetooth nao encontrado.");
-				throw new DispositivoNaoEncontradoException("O dispositivo de Bluetooth nao foi encontrado");
+				habilitaBluetooth();
+				//throw new DispositivoNaoEncontradoException("O dispositivo de Bluetooth nao foi encontrado");
 			} else {
 				Log.d(TAG, "Dispositivo bluetooth encontrado.");
 			}
