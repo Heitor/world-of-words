@@ -302,9 +302,9 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 		return new OnClickListener() {
 
 			public void onClick(View v) {
-				Intent cancelarIntent = new Intent(SubMenuJogarAdedonhaActivity.this,
-						AdedonhaActivity.class);
-				startActivity(cancelarIntent);
+//				Intent cancelarIntent = new Intent(SubMenuJogarAdedonhaActivity.this,
+//						AdedonhaActivity.class);
+//				startActivity(cancelarIntent);
 				finish();
 			}
 		};

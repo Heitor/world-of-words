@@ -33,6 +33,7 @@ public class DeviceListActivity extends Activity {
     // Debugging
     private static final String TAG = "[DeviceListActivity]";
     private static final boolean D = true;
+	private static final int REQUEST_ENABLE_BT = 1;
 
     // Return Intent extra
     public static String EXTRA_DEVICE_ADDRESS = "device_address";
@@ -45,6 +46,15 @@ public class DeviceListActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        mBtAdapter = BluetoothAdapter.getDefaultAdapter();
+        
+        if (!mBtAdapter.isEnabled()) {
+			Intent enableBtIntent = new Intent(
+					BluetoothAdapter.ACTION_REQUEST_ENABLE);
+			startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+		}
+
 
         // Setup the window
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
@@ -61,7 +71,10 @@ public class DeviceListActivity extends Activity {
                 v.setVisibility(View.GONE);
             }
         });
-
+        
+        // Get the local Bluetooth adapter
+       
+        
         // Initialize array adapters. One for already paired devices and
         // one for newly discovered devices
         mPairedDevicesArrayAdapter = new ArrayAdapter<String>(this, R.layout.device_name);
@@ -85,8 +98,7 @@ public class DeviceListActivity extends Activity {
         filter = new IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
         this.registerReceiver(mReceiver, filter);
 
-        // Get the local Bluetooth adapter
-        mBtAdapter = BluetoothAdapter.getDefaultAdapter();
+       
 
         // Get a set of currently paired devices
         Set<BluetoothDevice> pairedDevices = mBtAdapter.getBondedDevices();
@@ -95,6 +107,7 @@ public class DeviceListActivity extends Activity {
         if (pairedDevices.size() > 0) {
             findViewById(R.id.title_paired_devices).setVisibility(View.VISIBLE);
             for (BluetoothDevice device : pairedDevices) {
+            	Log.d(TAG, "PAREOU OS CARAS");
                 mPairedDevicesArrayAdapter.add(device.getName() + "\n" + device.getAddress());
             }
         } else {
@@ -147,7 +160,9 @@ public class DeviceListActivity extends Activity {
 
             // Get the device MAC address, which is the last 17 chars in the View
             String info = ((TextView) v).getText().toString();
+            Log.d(TAG, "o que danado é isso ===> " + info);
             String address = info.substring(info.length() - 17);
+            Log.d(TAG, "E ISSO ===> " + address);
 
             // Create the result Intent and include the MAC address
             //FIXME That is an ugly thing, this class should not now handle or bluetooth adapters.

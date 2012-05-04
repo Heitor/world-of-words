@@ -114,8 +114,8 @@ public class RespostaActivity extends Activity {
 			
 			public void onClick(View v) {
 				//TODO PASSAR OS DADOS PARA O RANKING
-				Intent sairIntent = new Intent(RespostaActivity.this, AdedonhaActivity.class);
-				startActivity(sairIntent);
+//				Intent sairIntent = new Intent(RespostaActivity.this, AdedonhaActivity.class);
+//				startActivity(sairIntent);
 				finish();
 				
 			}

@@ -5,6 +5,7 @@ import java.util.List;
 
 import br.ufcg.les.wow.R;
 import br.ufcg.les.wow.adedonha.activity.JogoAdedonhaActivity;
+import br.ufcg.les.wow.adedonha.activity.PreJogoAdedonhaActivity;
 import br.ufcg.les.wow.bluetooth.Protocolo;
 import br.ufcg.les.wow.bluetooth.server.Servidor;
 import br.ufcg.les.wow.bluetooth.server.ServidorThreadConectada;
@@ -59,10 +60,12 @@ public class NovasConexoesListenerActivity extends Activity {
 			public void onClick(View v) {
 				Log.d(TAG, "Clicked on encerrar.");
 				encerraServidor();
+				Intent bluetoothStart = new Intent(NovasConexoesListenerActivity.this,
+						PreJogoAdedonhaActivity.class);
 				
 				// TODO 
-				Intent bluetoothStart = new Intent(NovasConexoesListenerActivity.this,
-						JogoAdedonhaActivity.class);
+//				Intent bluetoothStart = new Intent(NovasConexoesListenerActivity.this,
+//						JogoAdedonhaActivity.class);
 				bluetoothStart.putExtra("jogo", jogo);
 				bluetoothStart.putExtra("tempoDesejado", tempoDesejado);
 				startActivity(bluetoothStart);

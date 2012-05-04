@@ -3,6 +3,7 @@ package br.ufcg.les.wow.bluetooth.activity;
 import br.ufcg.les.wow.R;
 import br.ufcg.les.wow.adedonha.activity.AdedonhaActivity;
 import android.app.Activity;
+import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,12 +20,14 @@ public class ConfiguraClienteActivity extends Activity {
 	private String nomeJogador = VAZIO;
 	
 	private static final int REQUISICAO_CONEXAO_DISPOSITIVO = 1;
+	protected static final int REQUEST_ENABLE_BT = 1;
+	private BluetoothAdapter mBtAdapter = BluetoothAdapter.getDefaultAdapter();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.configuracoes_jogo_cliente);
-		Log.d(TAG, "Inciando configuração de novo jogo..");
+		Log.d(TAG, "Inciando configuraÃ§Ã£o de novo jogo..");
 		
 		this.caixaDeTextNomeDoJogador = (EditText) findViewById(R.id.caixadetexto_opcoes_cliente);
 		
@@ -58,9 +61,9 @@ public class ConfiguraClienteActivity extends Activity {
 		return new OnClickListener() {
 
 			public void onClick(View v) {
-				Intent cancelarIntent = new Intent(ConfiguraClienteActivity.this,
-						AdedonhaActivity.class);
-				startActivity(cancelarIntent);
+//				Intent cancelarIntent = new Intent(ConfiguraClienteActivity.this,
+//						AdedonhaActivity.class);
+//				startActivity(cancelarIntent);
 				finish();
 			}
 		};
@@ -75,10 +78,13 @@ public class ConfiguraClienteActivity extends Activity {
 		return new OnClickListener() {
 
 			public void onClick(View v) {
-				Intent listarDispositivos = new Intent(ConfiguraClienteActivity.this, DeviceListActivity.class);
+
+				Intent listarDispositivos = new Intent(
+						ConfiguraClienteActivity.this, DeviceListActivity.class);
 				listarDispositivos.putExtra("nomeJogador", nomeJogador);
-	            startActivityForResult(listarDispositivos, REQUISICAO_CONEXAO_DISPOSITIVO);
-	            finish();
+				startActivityForResult(listarDispositivos,
+						REQUISICAO_CONEXAO_DISPOSITIVO);
+				finish();
 			}
 		};
 	}

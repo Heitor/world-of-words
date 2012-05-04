@@ -27,6 +27,8 @@ public class ConectandoCliente extends Activity  {
         setContentView(R.layout.conectando_cliente);
         
         String enderecoServidor = recuperaIntent(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
+        Log.d(TAG, "RECUPEROU O INTENNNNNNNNNNNNNNT: " + enderecoServidor);
+        
         Log.d(TAG, "Endereco escolhido: " + enderecoServidor);
         iniciaConexao(enderecoServidor);
         
@@ -69,6 +71,7 @@ public class ConectandoCliente extends Activity  {
 		cct.start();
 		try {
 			cct.join();
+			Log.d(TAG, "deu certo");
 		} catch (InterruptedException e) {
 			Log.e(TAG, "Falhou ao tentar fazer o join", e);
 		}
@@ -77,6 +80,7 @@ public class ConectandoCliente extends Activity  {
 		String teste = "my_name";
 		if(f != null) {
 			f.write(teste.getBytes());
+			Log.d(TAG, "CERINNNN = " + teste);
 		} else {
 			Log.e(TAG, "Nao conseguiu pegar uma thread conectada.");
 		}

@@ -24,6 +24,12 @@
             </intent-filter>
         </activity> 
         
+         <activity 
+            android:name=".adedonha.activity.PreJogoAdedonhaActivity"
+            android:screenOrientation="portrait" 
+            android:label="@string/opcao_marcar_adedonha" >
+        </activity>
+        
         <activity 
             android:name=".adedonha.activity.Example"
             android:screenOrientation="portrait" 

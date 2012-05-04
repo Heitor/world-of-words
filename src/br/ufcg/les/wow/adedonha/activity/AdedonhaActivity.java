@@ -65,7 +65,7 @@ public class AdedonhaActivity extends Activity {
 				Intent outButton = new Intent(AdedonhaActivity.this,
 						telaDestino);
 				startActivity(outButton);
-				finish();
+				//finish();
 			}
 		};
 	}
