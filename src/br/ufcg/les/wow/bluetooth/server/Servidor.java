@@ -48,8 +48,8 @@ public class Servidor extends Thread {
 			try {
 				socketConectado = servidorSocket.accept();
 			} catch (IOException e) {
-				Log.e(TAG, "Falhou enquanto aceitava uma conex„o socket.", e);
-				break;
+				Log.e(TAG, "Falhou enquanto aceitava uma conex√£o socket.", e);
+				//break;
 			}
 		}
 

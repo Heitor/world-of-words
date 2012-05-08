@@ -35,7 +35,6 @@ public class JogoAdedonhaActivity extends Activity {
 	//private Chronometer cronometro;
 	private TextView nomeJogadorTextView;
 	private TextView contadorTextView;
-	private TextView nivelTextView;
 	private TextView letraTextView;
 	private ImageButton botaoSair;
 	private ImageButton botaoVerificar;
@@ -67,7 +66,6 @@ public class JogoAdedonhaActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//setContentView(R.layout.page_jogo_adedonha);
 		
 		recuperaIntent();
 		

@@ -66,6 +66,8 @@
     <string name="config_bluetooth">Configure seu bluetooth</string>
     <string name="modo_jogo">Modo de Jogo</string>
     <string name="encerrar">Encerrar</string>
+    <string name="aguarda_jogadores">Aguardando Conexões</string>
+    <string name="iniciar_partida">Iniciar</string>
     
     <!--  DeviceListActivity -->
     <string name="scanning">Buscando por dispositivos...</string>
@@ -75,5 +77,7 @@
     <string name="title_paired_devices">Dispositivos pareados</string>
     <string name="title_other_devices">Outros dispositivos disponiveis</string>
     <string name="button_scan">Busque dispositivos.</string>
+    
+    <color name="cor_jogo">#363636</color>
     
 </resources>

@@ -12,11 +12,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
-import android.widget.TableRow;
 import android.widget.TextView;
 import br.ufcg.les.wow.R;
 import br.ufcg.les.wow.adedonha.persistence.AdedonhaDAOImpl;
@@ -25,10 +23,8 @@ import br.ufcg.les.wow.persistence.User;
 
 public class RespostaActivity extends Activity {
 	
-	private int nivel;
 	private int pontos;
 	private Long tempoRestante = 0L;
-	private AdedonhaDAOImpl adedonhaDao;
 	
 	private String letraJogo = "";
 	private HashMap<String, String> respostas;
@@ -42,8 +38,6 @@ public class RespostaActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.page_conferir_adedonha);
-		
-		adedonhaDao = new AdedonhaDAOImpl(getApplicationContext());
 		
 		Intent intent = getIntent();
 		
@@ -90,8 +84,7 @@ public class RespostaActivity extends Activity {
 		for (int i = 0; i < respostas.size(); i++) {
 			TextView resultadoTextView = new TextView(this);
 			resultadoTextView.setText(itensList.get(i) + ": " + valoresList.get(i));
-			resultadoTextView.setTextSize(24);
-			resultadoTextView.setTextColor(0xFFFFFFFF);
+			resultadoTextView.setTextAppearance(getApplicationContext(), R.style.negrito);
 			
 			vTblRow.addView(resultadoTextView);
 		}
@@ -135,6 +128,9 @@ public class RespostaActivity extends Activity {
 		TextView pontuacao = (TextView) findViewById(R.id.pontos_jogador_adedonha);
 		pontuacao.setText("Pontuação: " + jogador.getPointing());
 		
+		TextView letraText = (TextView) findViewById(R.id.saida_letra_adedonha);
+		letraText.setText("Letra: " + letraJogo);
+		
 	}
 
 
@@ -167,25 +163,6 @@ public class RespostaActivity extends Activity {
 //		}
 		
 		text.setText(palavra);
-		
-	}
-
-	private boolean verificaPalavra(String palavra) {
-		try {
-			adedonhaDao.open();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		List<Palavra> listarObjetos = adedonhaDao.listarObjetos();
-		adedonhaDao.close();
-		
-		for (Palavra pal : listarObjetos) {
-			if (pal.getWord().equalsIgnoreCase(palavra) && 
-					pal.getWord().substring(0, 1).equalsIgnoreCase(letraJogo)) {
-				return true;
-			}
-		}
-		return false;
 		
 	}
 

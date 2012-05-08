@@ -4,6 +4,17 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_game"
     android:orientation="vertical" >
+    
+    <TextView
+        android:id="@+id/aguardando_jogadores"
+        android:layout_width="250dp"
+        android:text="@string/aguarda_jogadores"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:textSize="23dp"
+        android:textStyle="bold"
+        android:textColor="#363636"  />
 
     <TextView
         android:id="@+id/primeiro"
@@ -64,6 +75,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="@string/encerrar" />
+        android:text="@string/iniciar_partida" />
 
 </LinearLayout>

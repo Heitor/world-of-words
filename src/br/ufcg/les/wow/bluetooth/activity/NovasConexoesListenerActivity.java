@@ -3,27 +3,26 @@ package br.ufcg.les.wow.bluetooth.activity;
 import java.io.Serializable;
 import java.util.List;
 
-import br.ufcg.les.wow.R;
-import br.ufcg.les.wow.adedonha.activity.JogoAdedonhaActivity;
-import br.ufcg.les.wow.adedonha.activity.PreJogoAdedonhaActivity;
-import br.ufcg.les.wow.bluetooth.Protocolo;
-import br.ufcg.les.wow.bluetooth.server.Servidor;
-import br.ufcg.les.wow.bluetooth.server.ServidorThreadConectada;
-import br.ufcg.les.wow.exceptions.DispositivoNaoEncontradoException;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.Button;
+import br.ufcg.les.wow.R;
+import br.ufcg.les.wow.adedonha.activity.PreJogoAdedonhaActivity;
+import br.ufcg.les.wow.bluetooth.Protocolo;
+import br.ufcg.les.wow.bluetooth.server.Servidor;
+import br.ufcg.les.wow.bluetooth.server.ServidorThreadConectada;
 
 public class NovasConexoesListenerActivity extends Activity {
 	private final static String TAG = "[NovasConexoesListenerActivity]";
 	private BluetoothAdapter adaptadorBluetooth = adaptadorBluetooth();
 	private Servidor sst;
+	
 	private static final int CONECTAR_DISPOSITIVO = 1;
     private static final int HABILITA_BLUETOOTH = 2;
 	
@@ -49,6 +48,8 @@ public class NovasConexoesListenerActivity extends Activity {
         botaoCriaServidorAction();
 	}
 	
+	
+
 	private void botaoCriaServidorAction() {
 		Button botaoDicionario = (Button) findViewById(R.id.button_encerrar);
 		botaoDicionario.setOnClickListener(botaoEncerrarListener());
