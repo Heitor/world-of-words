@@ -1,14 +1,12 @@
 package br.ufcg.les.wow.adedonha.activity;
 
-import java.io.Serializable;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.widget.TextView;
 import br.ufcg.les.wow.R;
-import br.ufcg.les.wow.anagrama.model.Jogo;
+import br.ufcg.les.wow.adedonha.model.Jogo;
 
 public class PreJogoAdedonhaActivity extends Activity {
 

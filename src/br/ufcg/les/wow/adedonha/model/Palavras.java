@@ -1,4 +1,4 @@
-package br.ufcg.les.wow.anagrama.model;
+package br.ufcg.les.wow.adedonha.model;
 
 import java.io.Serializable;
 import java.util.List;

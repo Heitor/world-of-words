@@ -19,7 +19,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import br.ufcg.les.wow.R;
 import br.ufcg.les.wow.adedonha.model.Letra;
-import br.ufcg.les.wow.anagrama.model.Jogo;
+import br.ufcg.les.wow.adedonha.model.Jogo;
 import br.ufcg.les.wow.bluetooth.Protocolo;
 import br.ufcg.les.wow.bluetooth.activity.NovasConexoesListenerActivity;
 

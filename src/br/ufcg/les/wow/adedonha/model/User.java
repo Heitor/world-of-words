@@ -1,4 +1,4 @@
-package br.ufcg.les.wow.persistence;
+package br.ufcg.les.wow.adedonha.model;
 
 import java.io.Serializable;
 

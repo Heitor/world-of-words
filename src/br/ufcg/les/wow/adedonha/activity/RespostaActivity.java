@@ -1,6 +1,5 @@
 package br.ufcg.les.wow.adedonha.activity;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -17,9 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import br.ufcg.les.wow.R;
-import br.ufcg.les.wow.adedonha.persistence.AdedonhaDAOImpl;
-import br.ufcg.les.wow.adedonha.persistence.Palavra;
-import br.ufcg.les.wow.persistence.User;
+import br.ufcg.les.wow.adedonha.model.User;
 
 public class RespostaActivity extends Activity {
 	
@@ -28,10 +25,6 @@ public class RespostaActivity extends Activity {
 	
 	private String letraJogo = "";
 	private HashMap<String, String> respostas;
-	
-	private static final int ACERTO = 20;
-	private static final int ERRO = 5; 
-	
 	
 	@SuppressWarnings({ "unchecked" })
 	@Override
@@ -130,39 +123,6 @@ public class RespostaActivity extends Activity {
 		
 		TextView letraText = (TextView) findViewById(R.id.saida_letra_adedonha);
 		letraText.setText("Letra: " + letraJogo);
-		
-	}
-
-
-
-	private void verificaPalavra(String palavra, int rowImagem1Adedonha,
-			int rowPalavra1Col2Adedonha, int rowImageButton) {
-		
-		TextView text = (TextView) findViewById(rowPalavra1Col2Adedonha);
-		//ImageView imagem = (ImageView) findViewById(rowImagem1Adedonha);
-		//ImageButton sugestao = (ImageButton) findViewById(rowImageButton);
-		//imagem.setImageResource(R.drawable.icone_ok_v2);
-		
-//		if (verificaPalavra(palavra)) {
-//			pontos += ACERTO;
-//			imagem.setImageResource(R.drawable.icone_ok_v2);
-//		
-//		} else {
-//			
-//			if (pontos > 10) {
-//				pontos -= ERRO;
-//			}
-//			
-//			if (!palavra.equals("")) {
-//				imagem.setImageResource(R.drawable.icone_not_ok);
-//				sugestao.setVisibility(ImageButton.VISIBLE);
-//				sugestao.setBackgroundResource(R.drawable.atencao);
-//			}
-//			
-//			//sugestao.setOnClickListener(listener);
-//		}
-		
-		text.setText(palavra);
 		
 	}
 

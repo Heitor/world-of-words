@@ -1,20 +1,20 @@
-package br.ufcg.les.wow.adedonha.persistence;
+package br.ufcg.les.wow.adedonha.model;
 
-public class WordAdedonhaDAO {
+public class Palavra {
 	private long id;
 	private String palavra;
 	private String level;
 	
-	public WordAdedonhaDAO(String word) {
+	public Palavra(String word) {
 		setWord(word);
 	}
 	
-	public WordAdedonhaDAO(long id, String word) {
+	public Palavra(long id, String word) {
 		this(word);
 		setId(id);
 	}
 	
-	public WordAdedonhaDAO(String word, String level) {
+	public Palavra(String word, String level) {
 		this(word);
 		setLevel(level);
 	}

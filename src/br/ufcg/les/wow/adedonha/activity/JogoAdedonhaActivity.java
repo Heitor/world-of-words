@@ -23,9 +23,8 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import br.ufcg.les.wow.R;
 import br.ufcg.les.wow.adedonha.model.Letra;
-import br.ufcg.les.wow.anagrama.model.Jogo;
-import br.ufcg.les.wow.persistence.User;
-import br.ufcg.les.wow.util.GeradorStrings;
+import br.ufcg.les.wow.adedonha.model.Jogo;
+import br.ufcg.les.wow.adedonha.model.User;
 
 public class JogoAdedonhaActivity extends Activity {
 
@@ -71,8 +70,6 @@ public class JogoAdedonhaActivity extends Activity {
 		
 		ScrollView layout = carregaBotoesItens();
 		setContentView(layout);
-		
-		carregaLetra();
 
 		carregaVariaveisDoJogo();
 		
@@ -330,12 +327,6 @@ public class JogoAdedonhaActivity extends Activity {
 			}
 		};
 	}
-
-	private void carregaLetra() {
-		List<Letra> letras = jogo.getLetrasDesejadas();
-		letra = GeradorStrings.retornaLetra(letras).getDescricao();
-	}
-	
 
 	private void recuperaIntent() {
 		Intent intent = getIntent();

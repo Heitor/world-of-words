@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.Toast;
 import br.ufcg.les.wow.R;
 import br.ufcg.les.wow.bluetooth.activity.ConfiguracoesDoJogoActivity;
 

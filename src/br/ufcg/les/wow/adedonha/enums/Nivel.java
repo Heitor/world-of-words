@@ -1,4 +1,4 @@
-package br.ufcg.les.wow.anagrama.enummeration;
+package br.ufcg.les.wow.adedonha.enums;
 
 import java.io.Serializable;
 
