@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 import br.ufcg.les.wow.bluetooth.Protocolo;
+import br.ufcg.les.wow.bluetooth.activity.NovasConexoesListenerActivity;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothServerSocket;
@@ -24,8 +25,7 @@ public class Servidor extends Thread {
 
 	private final List<ServidorThreadConectada> threadsConectadas = new ArrayList<ServidorThreadConectada>();
 
-	public Servidor(BluetoothAdapter adaptadorBluetooth,
-			Protocolo handle) {
+	public Servidor(BluetoothAdapter adaptadorBluetooth, Protocolo handle) {
 		BluetoothServerSocket servidorSocketTemporario = null;
 		this.adaptadorBluetooth = adaptadorBluetooth;
 		this.protocolo = handle;

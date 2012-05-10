@@ -1,8 +1,11 @@
 package br.ufcg.les.wow.bluetooth.server;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.io.Serializable;
 
 import br.ufcg.les.wow.bluetooth.Protocolo;
 
@@ -54,21 +57,45 @@ import android.util.Log;
             while (true) {
                 try {
                     bytes = streamDeEntrada.read(buffer);
-
                     this.protocolo.obtainMessage(Protocolo.RECEBER_MENSAGEM, bytes, -1, buffer).sendToTarget();
+                    buffer = new byte[1024];
                 } catch (IOException e) {
                 	Log.e(TAG, "Thread disconectada.", e);
                     break;
                 }
             }
         }
+        
+        private byte[] serialize(Object obj) {
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+			try {
+				ObjectOutputStream os = new ObjectOutputStream(out);
+				os.writeObject(obj);
+			} catch (IOException e) {
+				Log.e(TAG, "Falhou tentando serializar um objeto", e);
+			}
+            return out.toByteArray();
+        }
+        
+        private byte[] cabecalhoOperacao(byte[] buffer) {
+        	String operationInfo = Protocolo.CABECALHO_CONFIGURACOES_DA_PARTIDA+buffer.length;
+    		return operationInfo.getBytes();
+        }
+        
+        public void iniciarPartida(Serializable tempo) {
+        		byte[] buffer = serialize(tempo);
+        		byte[] bufferOperation = cabecalhoOperacao(buffer);
+        		enviar(bufferOperation);
+        		enviar(buffer);
+        		enviar(bufferOperation);
+        		enviar(buffer);
+        }
 
-        public void write(byte[] buffer) {
+
+        public void enviar(byte[] buffer) {
             try {
                 streamDeSaida.write(buffer);
-
-                this.protocolo.obtainMessage(Protocolo.ENVIAR_MENSAGEM, -1, -1, buffer)
-                        .sendToTarget();
+                this.protocolo.obtainMessage(Protocolo.ENVIAR_MENSAGEM, -1, -1, buffer).sendToTarget();
             } catch (IOException e) {
                 Log.e(TAG, "Exception during write", e);
             }

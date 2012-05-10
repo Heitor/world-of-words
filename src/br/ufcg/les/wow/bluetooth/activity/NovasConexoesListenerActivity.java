@@ -21,7 +21,7 @@ import br.ufcg.les.wow.bluetooth.server.ServidorThreadConectada;
 public class NovasConexoesListenerActivity extends Activity {
 	private final static String TAG = "[NovasConexoesListenerActivity]";
 	private BluetoothAdapter adaptadorBluetooth = adaptadorBluetooth();
-	private Servidor sst;
+	private Servidor servidor;
 	
 	private static final int CONECTAR_DISPOSITIVO = 1;
     private static final int HABILITA_BLUETOOTH = 2;
@@ -45,28 +45,23 @@ public class NovasConexoesListenerActivity extends Activity {
         
         adaptadorBluetooth();
         criaServidor();
-        botaoCriaServidorAction();
+        botaoIniciarAction();
 	}
-	
-	
 
-	private void botaoCriaServidorAction() {
+	private void botaoIniciarAction() {
 		Button botaoDicionario = (Button) findViewById(R.id.button_encerrar);
-		botaoDicionario.setOnClickListener(botaoEncerrarListener());
+		botaoDicionario.setOnClickListener(botaoIniciarListener());
 	}
 	
-	private OnClickListener botaoEncerrarListener() {
+	private OnClickListener botaoIniciarListener() {
 		return new OnClickListener() {
 
 			public void onClick(View v) {
 				Log.d(TAG, "Clicked on encerrar.");
-				encerraServidor();
+				encerraListenerNovasConexoesServidor();
 				Intent bluetoothStart = new Intent(NovasConexoesListenerActivity.this,
 						PreJogoAdedonhaActivity.class);
 				
-				// TODO 
-//				Intent bluetoothStart = new Intent(NovasConexoesListenerActivity.this,
-//						JogoAdedonhaActivity.class);
 				bluetoothStart.putExtra("jogo", jogo);
 				bluetoothStart.putExtra("tempoDesejado", tempoDesejado);
 				startActivity(bluetoothStart);
@@ -81,7 +76,6 @@ public class NovasConexoesListenerActivity extends Activity {
 			if(adaptadorBluetooth == null) {
 				Log.e(TAG, "Dispositivo bluetooth nao encontrado.");
 				habilitaBluetooth();
-				//throw new DispositivoNaoEncontradoException("O dispositivo de Bluetooth nao foi encontrado");
 			} else {
 				Log.d(TAG, "Dispositivo bluetooth encontrado.");
 			}
@@ -101,53 +95,29 @@ public class NovasConexoesListenerActivity extends Activity {
 		}
 	}
 	
-	/*private void connect(BluetoothDevice dispositivo) {
-		ConnectClientThread cct = new ConnectClientThread(dispositivo, this.handle);
-		cct.start();
-	}*/
-	
-	/*public void onActivityResult(int codigoDeRequisicao, int resultado, Intent data) {
-        Log.d(TAG, "onActivityResult: " + resultado);
-        switch (codigoDeRequisicao) {
-        case CONECTAR_DISPOSITIVO:
-            if (resultado == Activity.RESULT_OK) {
-                String address = data.getExtras().getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
-                BluetoothDevice device = adaptadorBluetooth().getRemoteDevice(address);
-                Log.d(TAG, "BluetoothDevice: Address -> " + device.getAddress() + " Name -> " + device.getName());
-                connect(device);
-            }
-            break;
-        }
-        finish();
-    }*/
-	
-	private void criaServidor() {
-		// FIXME adaptadorBluetooth() eh singleton agora, eu posso acessar isso
-		// de dentro da thread.
-		this.sst = new Servidor(adaptadorBluetooth(), this.handle);
-		this.sst.start();
-	}
-	
-	private void encerraServidor() {
-		Log.d(TAG, "Encerrando servidor...");
-		this.sst.encerrar();
-		Log.d(TAG, "Servidor encerrado com sucesso.");
-		
-		if(this.sst.threadsConectadas().size() == 0) {
-			
-		}
-		
-		// Teste
-		List<ServidorThreadConectada> t = this.sst.threadsConectadas();
-		Log.d(TAG, "Enviando Hello.");
-		for(ServidorThreadConectada c : t) {
-			String teste = "Hello =)";
-			c.write(teste.getBytes());
-		}
-		
-	}
-	
 	public boolean existeBluetooth() {
 		return adaptadorBluetooth() != null;
+	}
+	
+	private void criaServidor() {
+		this.servidor = new Servidor(adaptadorBluetooth(), this.handle);
+		this.servidor.start();
+	}
+	
+	private void encerraListenerNovasConexoesServidor() {
+		Log.d(TAG, "Encerrando listener de novas conexoes com o servidor...");
+		this.servidor.encerrar();
+		Log.d(TAG, "Listener encerrado com sucesso.");
+		if(this.servidor.threadsConectadas().size() == 0) {
+			Log.e(TAG, "Nenhum jogador se uniu a partida.");
+		}
+		enviarConfiguracoesDaPartida(this.servidor.threadsConectadas());
+	}
+	
+	private void enviarConfiguracoesDaPartida(List<ServidorThreadConectada> listenerClientThreads) {
+		Log.d(TAG, "Enviando configuracoes da patida.");
+		for(ServidorThreadConectada threadConectada : listenerClientThreads) {
+			threadConectada.iniciarPartida(this.jogo);
+		}
 	}
 }

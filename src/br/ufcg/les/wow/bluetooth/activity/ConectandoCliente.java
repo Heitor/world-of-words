@@ -79,7 +79,7 @@ public class ConectandoCliente extends Activity  {
 		ServidorThreadConectada f = cct.threadConectada();
 		String teste = "my_name";
 		if(f != null) {
-			f.write(teste.getBytes());
+			f.enviar(teste.getBytes());
 			Log.d(TAG, "CERINNNN = " + teste);
 		} else {
 			Log.e(TAG, "Nao conseguiu pegar uma thread conectada.");
