@@ -260,8 +260,7 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 					
 					/*Intent subMenuIntent = new Intent(SubMenuJogarAdedonhaActivity.this,
 							JogoAdedonhaActivity.class);*/
-					Intent subMenuIntent = new Intent(SubMenuJogarAdedonhaActivity.this,
-							NovasConexoesListenerActivity.class);
+					Intent subMenuIntent = new Intent(SubMenuJogarAdedonhaActivity.this, NovasConexoesListenerActivity.class);
 					
 					subMenuIntent.putExtra("tempoDesejado", tempoDesejado);
 					subMenuIntent.putExtra("jogo", jogo);

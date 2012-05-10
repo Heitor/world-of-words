@@ -1,9 +1,7 @@
 package br.ufcg.les.wow.bluetooth.activity;
 
 import br.ufcg.les.wow.R;
-import br.ufcg.les.wow.adedonha.activity.AdedonhaActivity;
 import android.app.Activity;
-import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,13 +13,13 @@ import android.widget.EditText;
 public class ConfiguraClienteActivity extends Activity {
 	private final static String TAG = "[ConfiguraClienteActivity]";
 	private static final String VAZIO = "";
+	private static final String GUEST = "Gue";
 	
 	private EditText caixaDeTextNomeDoJogador;
 	private String nomeJogador = VAZIO;
 	
 	private static final int REQUISICAO_CONEXAO_DISPOSITIVO = 1;
 	protected static final int REQUEST_ENABLE_BT = 1;
-	private BluetoothAdapter mBtAdapter = BluetoothAdapter.getDefaultAdapter();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +41,6 @@ public class ConfiguraClienteActivity extends Activity {
 	
 	private OnClickListener botaoLimparListener() {
 		return new OnClickListener() {
-			
 			public void onClick(View v) {
 				caixaDeTextNomeDoJogador.setText(VAZIO);
 				nomeJogador = VAZIO;
@@ -59,11 +56,7 @@ public class ConfiguraClienteActivity extends Activity {
 	
 	private OnClickListener botaoCancelarListener() {
 		return new OnClickListener() {
-
 			public void onClick(View v) {
-//				Intent cancelarIntent = new Intent(ConfiguraClienteActivity.this,
-//						AdedonhaActivity.class);
-//				startActivity(cancelarIntent);
 				finish();
 			}
 		};
@@ -78,14 +71,33 @@ public class ConfiguraClienteActivity extends Activity {
 		return new OnClickListener() {
 
 			public void onClick(View v) {
-
-				Intent listarDispositivos = new Intent(
-						ConfiguraClienteActivity.this, DeviceListActivity.class);
+				setJogador();
+				Intent listarDispositivos = new Intent(ConfiguraClienteActivity.this, DeviceListActivity.class);
 				listarDispositivos.putExtra("nomeJogador", nomeJogador);
-				startActivityForResult(listarDispositivos,
-						REQUISICAO_CONEXAO_DISPOSITIVO);
+				startActivityForResult(listarDispositivos, REQUISICAO_CONEXAO_DISPOSITIVO);
 				finish();
 			}
 		};
+	}
+	
+	private void setJogador() {
+		if (nomeInvalido()) {
+			setNomeJogador(GUEST + getRandon());
+		} else {
+			setNomeJogador(this.caixaDeTextNomeDoJogador.getText().toString());
+		}
+	}
+	
+	private boolean nomeInvalido() {
+		return this.caixaDeTextNomeDoJogador.getText().toString().trim().equals(VAZIO);
+	}
+	
+	private String getRandon() {
+		int aleatorio = (int) (1 + Math.random() * 100);
+		return String.valueOf(aleatorio);
+	}
+	
+	public void setNomeJogador(String nomeJogador) {
+		this.nomeJogador = nomeJogador;
 	}
 }

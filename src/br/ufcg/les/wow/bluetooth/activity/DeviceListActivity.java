@@ -42,16 +42,19 @@ public class DeviceListActivity extends Activity {
     private BluetoothAdapter mBtAdapter;
     private ArrayAdapter<String> mPairedDevicesArrayAdapter;
     private ArrayAdapter<String> mNewDevicesArrayAdapter;
+    
+    private String nomeJogador;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        this.nomeJogador = (String)intent.getSerializableExtra("nomeJogador");
         
         mBtAdapter = BluetoothAdapter.getDefaultAdapter();
         
         if (!mBtAdapter.isEnabled()) {
-			Intent enableBtIntent = new Intent(
-					BluetoothAdapter.ACTION_REQUEST_ENABLE);
+			Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
 			startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
 		}
 
@@ -169,12 +172,8 @@ public class DeviceListActivity extends Activity {
             //Intent intent = new Intent(DeviceListActivity.this, AdedonhaActivity.class);
             Intent intent = new Intent(DeviceListActivity.this, ConectandoCliente.class);
             intent.putExtra(EXTRA_DEVICE_ADDRESS, address);
+            intent.putExtra("nomeJogador", nomeJogador);
             
-            //BluetoothAdapter bluetoothAdapter = NovasConexoesListenerActivity.adaptadorBluetooth();
-            		//BluetoothDevice device = bluetoothAdapter.getRemoteDevice(address);
-            //Log.d(TAG, "BluetoothDevice: Address -> " + device.getAddress() + " Name -> " + device.getName());
-            //connect(device);
-            //startActivityForResult(intent, Activity.RESULT_OK);
             startActivity(intent);
             finish();
         }

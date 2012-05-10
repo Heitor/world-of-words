@@ -30,8 +30,7 @@ public class PreJogoAdedonhaActivity extends Activity {
 		jogo = (Jogo) intent.getSerializableExtra("jogo");
 		tempoDesejado = intent.getLongExtra("tempoDesejado", 180000);
 
-		preJogoIntent = new Intent(PreJogoAdedonhaActivity.this,
-				JogoAdedonhaActivity.class);
+		preJogoIntent = new Intent(PreJogoAdedonhaActivity.this, JogoAdedonhaActivity.class);
 
 		preJogoIntent.putExtra("jogo", jogo);
 		preJogoIntent.putExtra("tempoDesejado", tempoDesejado);

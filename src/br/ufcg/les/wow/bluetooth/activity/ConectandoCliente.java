@@ -3,7 +3,6 @@ package br.ufcg.les.wow.bluetooth.activity;
 import br.ufcg.les.wow.R;
 import br.ufcg.les.wow.bluetooth.Cliente;
 import br.ufcg.les.wow.bluetooth.Protocolo;
-import br.ufcg.les.wow.bluetooth.Servidor;
 import br.ufcg.les.wow.bluetooth.ThreadConectada;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
@@ -20,10 +19,14 @@ public class ConectandoCliente extends Activity  {
 	private final static String TAG = "[ConectandoCliente]";
 	private final Protocolo handle = new Protocolo();
 	private Cliente cliente;
+	private String nomeJogador;
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        Intent intent = getIntent();
+        this.nomeJogador = (String)intent.getSerializableExtra("nomeJogador");
         
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.conectando_cliente);
@@ -78,7 +81,7 @@ public class ConectandoCliente extends Activity  {
 			Log.e(TAG, "Falhou ao tentar fazer o join", e);
 		}
 		
-		enviarNome(this.cliente.threadConectada(), "my_name_du_mal");
+		enviarNome(this.cliente.threadConectada(), this.nomeJogador);
 	}
 	
 	private void enviarNome(ThreadConectada threadConectada, String nome) {
