@@ -3,6 +3,7 @@ package br.ufcg.les.wow.bluetooth.activity;
 import br.ufcg.les.wow.R;
 import br.ufcg.les.wow.bluetooth.Cliente;
 import br.ufcg.les.wow.bluetooth.Protocolo;
+import br.ufcg.les.wow.bluetooth.Servidor;
 import br.ufcg.les.wow.bluetooth.ThreadConectada;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
@@ -18,6 +19,7 @@ import android.widget.Button;
 public class ConectandoCliente extends Activity  {
 	private final static String TAG = "[ConectandoCliente]";
 	private final Protocolo handle = new Protocolo();
+	private Cliente cliente;
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,24 +69,24 @@ public class ConectandoCliente extends Activity  {
 	}
 	
 	private void connecte(BluetoothDevice device) {
-		Cliente cct = new Cliente(this, device, this.handle);
-		cct.start();
+		this.cliente = new Cliente(this, device, this.handle);
+		this.cliente.start();
 		try {
-			cct.join();
+			this.cliente.join();
 			Log.d(TAG, "deu certo");
 		} catch (InterruptedException e) {
 			Log.e(TAG, "Falhou ao tentar fazer o join", e);
 		}
 		
-		ThreadConectada f = cct.threadConectada();
-		String teste = "my_name";
-		if(f != null) {
-			f.enviar(teste.getBytes());
-			Log.d(TAG, "CERINNNN = " + teste);
-		} else {
-			Log.e(TAG, "Nao conseguiu pegar uma thread conectada.");
+		enviarNome(this.cliente.threadConectada(), "my_name_du_mal");
+	}
+	
+	private void enviarNome(ThreadConectada threadConectada, String nome) {
+		if(threadConectada == null ) {
+			Log.e(TAG, "Nao conseguiu uma ThreadConectada.");
+			return;
 		}
-		
+		threadConectada.enviarNome(nome);
 	}
 	
 	/*

@@ -41,7 +41,7 @@ public class Servidor extends Thread {
 		/* FIXME Esse while deve durar enquanto houver clientes para se conectar.
 		 * Hoje ele aceita apenas uma conexao.
 		 */
-		while (socketConectado == null || !this.encerrar) {
+		while (socketConectado == null || this.encerrar) {
 			try {
 				socketConectado = servidorSocket.accept();
 			} catch (IOException e) {

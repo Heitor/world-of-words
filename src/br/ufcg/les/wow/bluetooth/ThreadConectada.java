@@ -62,8 +62,28 @@ public class ThreadConectada extends Thread {
 		String operationInfo = Protocolo.CABECALHO_CONFIGURACOES_DA_PARTIDA + buffer.length;
 		return operationInfo.getBytes();
 	}
+	
+	private byte[] cabecalhoNome(byte[] buffer) {
+		String operationInfo = Protocolo.CABECALHO_NOME_JOGADOR + buffer.length;
+		return operationInfo.getBytes();
+	}
+	
+	public void enviarNome(Serializable nome) {
+		if(nome == null) {
+			Log.e(TAG, "Falhou tentando enviar um nome nulo.");
+			return;
+		}
+		byte[] buffer = Protocolo.serialize(nome);
+		byte[] bufferCabecalho = cabecalhoNome(buffer);
+		enviar(bufferCabecalho);
+		enviar(buffer);
+	}
 
 	public void iniciarPartida(Serializable configuracoesDaPartida) {
+		if(configuracoesDaPartida == null) {
+			Log.e(TAG, "Falhou tentando enviar configuracoes nulas da partida.");
+			return;
+		}
 		byte[] buffer = Protocolo.serialize(configuracoesDaPartida);
 		byte[] bufferCabecalho = cabecalhoConfigurarPartida(buffer);
 		enviar(bufferCabecalho);

@@ -12,16 +12,16 @@ public class Cliente extends Thread {
 	private static final UUID MY_UUID = UUID.fromString("fa87c0d0-afac-11de-8a39-0800200c9a69");
 	private static final String TAG = "[Cliente]";
 	
-	private final BluetoothSocket mmSocket;
+	private final BluetoothSocket clienteSocket;
 	private final BluetoothDevice mmDevice;
-	private final ConectandoCliente conecandoCliente;
+	private final ConectandoCliente conectandoClienteActivity;
 	private Protocolo handle;
-	private ThreadConectada ct;
+	private ThreadConectada threadConectada;
 
-	public Cliente(ConectandoCliente conecandoCliente, BluetoothDevice device, Protocolo handle) {
+	public Cliente(ConectandoCliente conectandoClienteActivity, BluetoothDevice device, Protocolo handle) {
 		mmDevice = device;
 		this.handle = handle;
-		this.conecandoCliente = conecandoCliente;
+		this.conectandoClienteActivity = conectandoClienteActivity;
 		BluetoothSocket tmp = null;
 
 		try {
@@ -29,7 +29,7 @@ public class Cliente extends Thread {
 		} catch (IOException e) {
 			Log.e(TAG, "Falhou ao tentar se conectar com o servidor bluetooth", e);
 		}
-		mmSocket = tmp;
+		clienteSocket = tmp;
 	}
 
 	public void run() {
@@ -38,36 +38,36 @@ public class Cliente extends Thread {
 
 		try {
 			Log.d(TAG, "Conectando-se ao server socket...");
-			mmSocket.connect();
+			clienteSocket.connect();
 			Log.d(TAG, "Conectado ao server socket com sucesso...");
 		} catch (IOException e) {
 			Log.e(TAG, "Falhou enquanto conectava-se ao server socket...", e);
-			cancel();
+			cancelarConexao();
 		}
 
 		// Start the connected thread
-		conecte(mmSocket, handle);
+		conecte(clienteSocket, handle);
 		return;
 	}
 
 	private void conecte(BluetoothSocket socket, Protocolo handle) {
-		ct = new ThreadConectada(socket, handle);
-		ct.start();
+		threadConectada = new ThreadConectada(socket, handle);
+		threadConectada.start();
 	}
 	
 	public ThreadConectada threadConectada() {
-		return ct;
+		return threadConectada;
 	}
 
-	public void cancel() {
+	public void cancelarConexao() {
 		try {
 			Log.d(TAG, "Cancelando o socket...");
-			mmSocket.close();
+			clienteSocket.close();
 			Log.d(TAG, "Socket cancelado com sucesso.");
 		} catch (IOException e) {
 			Log.e(TAG, "falhou enquanto cancelava o socket.", e);
 		} finally {
-			this.conecandoCliente.cancela();
+			this.conectandoClienteActivity.cancela();
 		}
 	}
 }

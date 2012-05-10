@@ -40,6 +40,8 @@ public class Protocolo extends Handler implements Serializable {
 	public static final int OPERACAO_INVALIDA = 0;
 	public static final int OPERACAO_CONFIGURACOES_DA_PARTIDA = 3;
 	public static final String CABECALHO_CONFIGURACOES_DA_PARTIDA = CABECALHO_OPERACAO + OPERACAO_CONFIGURACOES_DA_PARTIDA + "," + CABECALHO_TAMANHO;
+	public static final int OPERACAO_NOME_JOGADOR = 4;
+	public static final String CABECALHO_NOME_JOGADOR = CABECALHO_OPERACAO + OPERACAO_NOME_JOGADOR + "," + CABECALHO_TAMANHO;
 	
 	byte[] bufferOperacao = null;
 	
@@ -98,6 +100,11 @@ public class Protocolo extends Handler implements Serializable {
 			Log.d(TAG, "OPERACAO_CONFIGURACOES_DA_PARTIDA");
 			Jogo configuracaoesDaPartida = (Jogo) obj;
 			Log.d(TAG, "Nivel: " + configuracaoesDaPartida.getNivel());
+			break;
+		case OPERACAO_NOME_JOGADOR:
+			Log.d(TAG, "OPERACAO_NOME_JOGADOR");
+			String nome = (String) obj;
+			Log.d(TAG, "Jogador se conectou com nome: " + nome);
 			break;
 		default:
 			Log.e(TAG, "OPERACAO NAO SUPORTADA");
