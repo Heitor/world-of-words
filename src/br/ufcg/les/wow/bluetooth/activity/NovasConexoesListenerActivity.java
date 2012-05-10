@@ -1,8 +1,5 @@
 package br.ufcg.les.wow.bluetooth.activity;
 
-import java.io.Serializable;
-import java.util.List;
-
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
@@ -14,19 +11,16 @@ import android.view.Window;
 import android.widget.Button;
 import br.ufcg.les.wow.R;
 import br.ufcg.les.wow.adedonha.activity.PreJogoAdedonhaActivity;
-import br.ufcg.les.wow.bluetooth.Protocolo;
+import br.ufcg.les.wow.adedonha.model.Jogo;
 import br.ufcg.les.wow.bluetooth.Servidor;
-import br.ufcg.les.wow.bluetooth.ThreadConectada;
 
 public class NovasConexoesListenerActivity extends Activity {
 	private final static String TAG = "[NovasConexoesListenerActivity]";
-	private BluetoothAdapter adaptadorBluetooth = adaptadorBluetooth();
 	private Servidor servidor;
 	
     private static final int HABILITA_BLUETOOTH = 2;
 	
-	private Protocolo handle;
-	private Serializable jogo;
+	private Jogo jogo;
 	private long tempoDesejado;
 	
 	@Override
@@ -37,12 +31,9 @@ public class NovasConexoesListenerActivity extends Activity {
         setContentView(R.layout.conectando_server);
         
         Intent intent = getIntent();
-        handle =  (Protocolo)intent.getSerializableExtra("protocolo");
-        jogo = intent.getSerializableExtra("jogo");
+        jogo = (Jogo) intent.getSerializableExtra("jogo");
         tempoDesejado = intent.getLongExtra("tempoDesejado", 120000L);
         
-        
-        adaptadorBluetooth();
         criaServidor();
         botaoIniciarAction();
 	}
@@ -56,33 +47,21 @@ public class NovasConexoesListenerActivity extends Activity {
 		return new OnClickListener() {
 
 			public void onClick(View v) {
-				Log.d(TAG, "Clicked on encerrar.");
+				Log.d(TAG, "Iniciando jogo.");
 				encerraListenerNovasConexoesServidor();
 				Intent bluetoothStart = new Intent(NovasConexoesListenerActivity.this, PreJogoAdedonhaActivity.class);
 				
 				bluetoothStart.putExtra("jogo", jogo);
 				bluetoothStart.putExtra("tempoDesejado", tempoDesejado);
+				//bluetoothStart.putExtra("servidor", servidor);
 				startActivity(bluetoothStart);
 				finish();
 			}
 		};
 	}
 	
-	public BluetoothAdapter adaptadorBluetooth() {
-		if(adaptadorBluetooth == null) {
-			adaptadorBluetooth = BluetoothAdapter.getDefaultAdapter();
-			if(adaptadorBluetooth == null) {
-				Log.e(TAG, "Dispositivo bluetooth nao encontrado.");
-				habilitaBluetooth();
-			} else {
-				Log.d(TAG, "Dispositivo bluetooth encontrado.");
-			}
-		}
-		return adaptadorBluetooth;
-	}
-	
 	public void habilitaBluetooth() {
-		if(!adaptadorBluetooth().isEnabled()) {
+		if(!Servidor.adaptadorBluetooth().isEnabled()) {
 			Log.d(TAG, "Habilitando bluetooth...");
 			Intent habilitaBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
 			
@@ -94,11 +73,11 @@ public class NovasConexoesListenerActivity extends Activity {
 	}
 	
 	public boolean existeBluetooth() {
-		return adaptadorBluetooth() != null;
+		return Servidor.adaptadorBluetooth() != null;
 	}
 	
 	private void criaServidor() {
-		this.servidor = new Servidor(adaptadorBluetooth(), this.handle);
+		this.servidor = Servidor.newInstance();
 		this.servidor.start();
 	}
 	
@@ -109,13 +88,6 @@ public class NovasConexoesListenerActivity extends Activity {
 		if(this.servidor.threadsConectadas().size() == 0) {
 			Log.e(TAG, "Nenhum jogador se uniu a partida.");
 		}
-		enviarConfiguracoesDaPartida(this.servidor.threadsConectadas());
-	}
-	
-	private void enviarConfiguracoesDaPartida(List<ThreadConectada> listenerClientThreads) {
-		Log.d(TAG, "Enviando configuracoes da patida.");
-		for(ThreadConectada threadConectada : listenerClientThreads) {
-			threadConectada.iniciarPartida(this.jogo);
-		}
+		this.servidor.enviarConfiguracoesDaPartida(this.jogo);
 	}
 }

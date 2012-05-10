@@ -3,9 +3,6 @@ package br.ufcg.les.wow.bluetooth.activity;
 import java.util.Set;
 
 import br.ufcg.les.wow.R;
-import br.ufcg.les.wow.adedonha.activity.AdedonhaActivity;
-import br.ufcg.les.wow.bluetooth.Cliente;
-import br.ufcg.les.wow.bluetooth.Protocolo;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -156,20 +153,14 @@ public class DeviceListActivity extends Activity {
 
     // The on-click listener for all devices in the ListViews
     private OnItemClickListener mDeviceClickListener = new OnItemClickListener() {
-    	private final Protocolo handle = new Protocolo();
         public void onItemClick(AdapterView<?> av, View v, int arg2, long arg3) {
             // Cancel discovery because it's costly and we're about to connect
             mBtAdapter.cancelDiscovery();
 
             // Get the device MAC address, which is the last 17 chars in the View
             String info = ((TextView) v).getText().toString();
-            Log.d(TAG, "o que danado é isso ===> " + info);
             String address = info.substring(info.length() - 17);
-            Log.d(TAG, "E ISSO ===> " + address);
 
-            // Create the result Intent and include the MAC address
-            //FIXME That is an ugly thing, this class should not now handle or bluetooth adapters.
-            //Intent intent = new Intent(DeviceListActivity.this, AdedonhaActivity.class);
             Intent intent = new Intent(DeviceListActivity.this, ConectandoCliente.class);
             intent.putExtra(EXTRA_DEVICE_ADDRESS, address);
             intent.putExtra("nomeJogador", nomeJogador);

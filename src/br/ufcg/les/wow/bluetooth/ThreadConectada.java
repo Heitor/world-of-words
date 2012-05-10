@@ -14,9 +14,9 @@ public class ThreadConectada extends Thread {
 	private final BluetoothSocket socketConectado;
 	private final InputStream streamDeEntrada;
 	private final OutputStream streamDeSaida;
-	private final Protocolo handle;
+	private final ManipuladorProtocolo handle;
 
-	public ThreadConectada(BluetoothSocket socketConectado, Protocolo protocolo) {
+	public ThreadConectada(BluetoothSocket socketConectado, ManipuladorProtocolo protocolo) {
 		Log.d(TAG, "Thread criada.");
 		this.socketConectado = socketConectado;
 		this.handle = protocolo;
@@ -43,13 +43,17 @@ public class ThreadConectada extends Thread {
 
 	public void run() {
 		Log.d(TAG, "Iniciando listener...");
+		startListener();
+	}
+	
+	private synchronized void startListener() {
 		byte[] buffer = new byte[1024];
 		int tamanhoBuffer;
 
 		while (true) {
 			try {
 				tamanhoBuffer = streamDeEntrada.read(buffer);
-				this.handle.obtainMessage(Protocolo.RECEBER_MENSAGEM, tamanhoBuffer, -1, buffer).sendToTarget();
+				this.handle.obtainMessage(ManipuladorProtocolo.RECEBER_MENSAGEM, tamanhoBuffer, -1, buffer).sendToTarget();
 				buffer = new byte[1024];
 			} catch (IOException e) {
 				Log.e(TAG, "Um erro ocorreu enquanto recebia dados.", e);
@@ -59,12 +63,17 @@ public class ThreadConectada extends Thread {
 	}
 
 	private byte[] cabecalhoConfigurarPartida(byte[] buffer) {
-		String operationInfo = Protocolo.CABECALHO_CONFIGURACOES_DA_PARTIDA + buffer.length;
+		String operationInfo = ManipuladorProtocolo.CABECALHO_CONFIGURACOES_DA_PARTIDA + buffer.length;
 		return operationInfo.getBytes();
 	}
 	
 	private byte[] cabecalhoNome(byte[] buffer) {
-		String operationInfo = Protocolo.CABECALHO_NOME_JOGADOR + buffer.length;
+		String operationInfo = ManipuladorProtocolo.CABECALHO_NOME_JOGADOR + buffer.length;
+		return operationInfo.getBytes();
+	}
+	
+	private byte[] cabecalhoEncerrarPartida(byte[] buffer) {
+		String operationInfo = ManipuladorProtocolo.CABECALHO_ENCERRAR_PARTIDA + buffer.length;
 		return operationInfo.getBytes();
 	}
 	
@@ -73,7 +82,7 @@ public class ThreadConectada extends Thread {
 			Log.e(TAG, "Falhou tentando enviar um nome nulo.");
 			return;
 		}
-		byte[] buffer = Protocolo.serialize(nome);
+		byte[] buffer = ManipuladorProtocolo.serialize(nome);
 		byte[] bufferCabecalho = cabecalhoNome(buffer);
 		enviar(bufferCabecalho);
 		enviar(buffer);
@@ -84,8 +93,15 @@ public class ThreadConectada extends Thread {
 			Log.e(TAG, "Falhou tentando enviar configuracoes nulas da partida.");
 			return;
 		}
-		byte[] buffer = Protocolo.serialize(configuracoesDaPartida);
+		byte[] buffer = ManipuladorProtocolo.serialize(configuracoesDaPartida);
 		byte[] bufferCabecalho = cabecalhoConfigurarPartida(buffer);
+		enviar(bufferCabecalho);
+		enviar(buffer);
+	}
+	
+	public void encerrarPartida(Serializable tempoDaPartida) {
+		byte[] buffer = ManipuladorProtocolo.serialize(tempoDaPartida);
+		byte[] bufferCabecalho = cabecalhoEncerrarPartida(buffer);
 		enviar(bufferCabecalho);
 		enviar(buffer);
 	}
@@ -93,7 +109,7 @@ public class ThreadConectada extends Thread {
 	public void enviar(byte[] buffer) {
 		try {
 			streamDeSaida.write(buffer);
-			this.handle.obtainMessage(Protocolo.ENVIAR_MENSAGEM, buffer.length, -1, buffer).sendToTarget();
+			this.handle.obtainMessage(ManipuladorProtocolo.ENVIAR_MENSAGEM, buffer.length, -1, buffer).sendToTarget();
 		} catch (IOException e) {
 			Log.e(TAG, "Exception during write", e);
 		}

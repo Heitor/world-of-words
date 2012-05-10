@@ -2,7 +2,7 @@ package br.ufcg.les.wow.bluetooth.activity;
 
 import br.ufcg.les.wow.R;
 import br.ufcg.les.wow.adedonha.activity.SubMenuJogarAdedonhaActivity;
-import br.ufcg.les.wow.bluetooth.Protocolo;
+import br.ufcg.les.wow.bluetooth.ManipuladorProtocolo;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +13,7 @@ import android.widget.Button;
 
 public class ConfiguracoesDoJogoActivity extends Activity {
 	private final static String TAG = "[ConfiguracoesDoJogoActivity]";
-	private final Protocolo handle = new Protocolo();
+	private final ManipuladorProtocolo handle = new ManipuladorProtocolo();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

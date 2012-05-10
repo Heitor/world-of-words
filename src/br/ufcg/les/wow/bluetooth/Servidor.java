@@ -1,9 +1,12 @@
 package br.ufcg.les.wow.bluetooth;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import br.ufcg.les.wow.adedonha.model.Jogo;
 
 
 import android.bluetooth.BluetoothAdapter;
@@ -11,24 +14,24 @@ import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.util.Log;
 
-public class Servidor extends Thread {
+public class Servidor extends Thread implements Serializable {
+	private static final long serialVersionUID = 4880838429325379959L;
 	private static final UUID MY_UUID = UUID.fromString("fa87c0d0-afac-11de-8a39-0800200c9a69");
+	private final ManipuladorProtocolo handle = new ManipuladorProtocolo();
 	private static final String WOW = "wow";
 	private static final String TAG = "[Servidor]";
+	private static Servidor servidor = null;
+	private static BluetoothAdapter adaptadorBluetooth;
 
 	private final BluetoothServerSocket servidorSocket;
-	private BluetoothAdapter adaptadorBluetooth = null;
-	private Protocolo protocolo;
 	private boolean encerrar = false;
 
 	private final List<ThreadConectada> threadsConectadas = new ArrayList<ThreadConectada>();
 
-	public Servidor(BluetoothAdapter adaptadorBluetooth, Protocolo handle) {
+	private Servidor() {
 		BluetoothServerSocket servidorSocketTemporario = null;
-		this.adaptadorBluetooth = adaptadorBluetooth;
-		this.protocolo = handle;
 		try {
-			servidorSocketTemporario = this.adaptadorBluetooth.listenUsingRfcommWithServiceRecord(WOW, MY_UUID);
+			servidorSocketTemporario = adaptadorBluetooth().listenUsingRfcommWithServiceRecord(WOW, MY_UUID);
 		} catch (IOException e) {
 			Log.e(TAG, "Falhou enquanto levantava o listener server.", e);
 		}
@@ -52,7 +55,7 @@ public class Servidor extends Thread {
 		if (socketConectado != null) {
 			Log.d(TAG, "Conexao estabelecida");
 			encerrarServidor();
-			connectar(socketConectado, this.protocolo);
+			connectar(socketConectado, this.handle);
 		}
 
 		if (this.encerrar) {
@@ -63,12 +66,26 @@ public class Servidor extends Thread {
 	public void encerrar() {
 		this.encerrar = true;
 	}
+	
+	public void enviarConfiguracoesDaPartida(Jogo configuracoesDaPartida) {
+		Log.d(TAG, "Enviando configuracoes da partida.");
+		for(ThreadConectada threadConectada : this.threadsConectadas) {
+			threadConectada.iniciarPartida(configuracoesDaPartida);
+		}
+	}
+	
+	public void encerrarPartida(Long tempoDaPartida) {
+		Log.d(TAG, "Encerrando partida: " + this.threadsConectadas.size());
+		for(ThreadConectada threadConectada : this.threadsConectadas) {
+			threadConectada.encerrarPartida(tempoDaPartida);
+		}
+	}
 
 	public List<ThreadConectada> threadsConectadas() {
 		return this.threadsConectadas;
 	}
 	
-	private void connectar(BluetoothSocket socket, Protocolo handle) {
+	private void connectar(BluetoothSocket socket, ManipuladorProtocolo handle) {
 		ThreadConectada threadsConectadas = new ThreadConectada(socket, handle);
 		threadsConectadas.start();
 		this.threadsConectadas.add(threadsConectadas);
@@ -82,5 +99,30 @@ public class Servidor extends Thread {
 		} catch (IOException e) {
 			Log.e(TAG, "Servidor falhou enquanto encerrava o listener server.", e);
 		}
+	}
+	
+	public static synchronized Servidor instance() {
+        if (servidor == null) {
+        	servidor = new Servidor();
+        }
+        return servidor;
+	}
+	
+	public static synchronized Servidor newInstance() {
+        	servidor = new Servidor();
+        return servidor;
+	}
+	
+	public static BluetoothAdapter adaptadorBluetooth() {
+		if(adaptadorBluetooth == null) {
+			adaptadorBluetooth = BluetoothAdapter.getDefaultAdapter();
+			if(adaptadorBluetooth == null) {
+				Log.e(TAG, "Dispositivo bluetooth nao encontrado.");
+				//habilitaBluetooth();
+			} else {
+				Log.d(TAG, "Dispositivo bluetooth encontrado.");
+			}
+		}
+		return adaptadorBluetooth;
 	}
 }

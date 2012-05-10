@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.graphics.LightingColorFilter;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -26,6 +27,7 @@ import br.ufcg.les.wow.R;
 import br.ufcg.les.wow.adedonha.model.Letra;
 import br.ufcg.les.wow.adedonha.model.Jogo;
 import br.ufcg.les.wow.adedonha.model.User;
+import br.ufcg.les.wow.bluetooth.Servidor;
 
 public class JogoAdedonhaActivity extends Activity {
 
@@ -76,8 +78,7 @@ public class JogoAdedonhaActivity extends Activity {
 		
 		setContador(inicializaContador());
 		
-		intentRespostas = new Intent(
-				JogoAdedonhaActivity.this, RespostaActivity.class);
+		intentRespostas = new Intent(JogoAdedonhaActivity.this, RespostaActivity.class);
 
 	}
 	
@@ -182,6 +183,7 @@ public class JogoAdedonhaActivity extends Activity {
 		     }
 
 		     public void onFinish() {
+		    	 Servidor.instance().encerrarPartida(getTempoInicial());
 		    	 if (!marcouFim) {
 		    		 tempoRestante = 0L;
 		    		 contadorTextView.setText("Fim de jogo!");
@@ -212,10 +214,6 @@ public class JogoAdedonhaActivity extends Activity {
 		contadorTextView = (TextView) findViewById(R.id.contador_adedonha);
 	}
 
-	
-	
-
-
 	private void iniciaBotaoSair() {
 		botaoSair = (ImageButton) findViewById(R.id.imageBotaoSair_adedonha);
 		botaoSair.setBackgroundResource(R.drawable.close);
@@ -232,6 +230,7 @@ public class JogoAdedonhaActivity extends Activity {
 		return new OnClickListener() {
 			
 			public void onClick(View v) {
+				Servidor.instance().encerrarPartida(getTempoInicial());
 				finalizaVariaveisJogo();
 				mostraDialogSairJogo(msgFimJogo(), listenerSair());
 			}
@@ -282,10 +281,8 @@ public class JogoAdedonhaActivity extends Activity {
 		};
 	}
 	
-	private void mostraDialogSairJogo(String msg,
-			DialogInterface.OnClickListener listener) {
-		AlertDialog alerta = new AlertDialog.
-				Builder(JogoAdedonhaActivity.this).create();
+	private void mostraDialogSairJogo(String msg, DialogInterface.OnClickListener listener) {
+		AlertDialog alerta = new AlertDialog.Builder(JogoAdedonhaActivity.this).create();
 		alerta.setMessage(msg);
 		alerta.setButton("Ok", listener);
 		alerta.show();
@@ -332,9 +329,10 @@ public class JogoAdedonhaActivity extends Activity {
 		return new OnClickListener() {
 
 			public void onClick(View v) {
-				Intent botaoSairIntent = new Intent(
-						JogoAdedonhaActivity.this, AdedonhaActivity.class);
+				Intent botaoSairIntent = new Intent(JogoAdedonhaActivity.this, AdedonhaActivity.class);
+				
 				// fimIntent.putExtra("usuario", usuario);
+				Servidor.instance().encerrarPartida(getTempoInicial());
 				finalizaVariaveisJogo();
 				startActivity(botaoSairIntent);
 				finish();

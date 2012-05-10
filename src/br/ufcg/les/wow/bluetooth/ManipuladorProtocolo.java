@@ -17,7 +17,7 @@ import android.os.Message;
 import android.util.Log;
 
 // TODO mudar esse nome.
-public class Protocolo extends Handler implements Serializable {
+public class ManipuladorProtocolo extends Handler implements Serializable {
 	private static final long serialVersionUID = 3527073534967975662L;
 	public static final int RECEBER_MENSAGEM = 1;
 	public static final int ENVIAR_MENSAGEM = 2;
@@ -42,6 +42,8 @@ public class Protocolo extends Handler implements Serializable {
 	public static final String CABECALHO_CONFIGURACOES_DA_PARTIDA = CABECALHO_OPERACAO + OPERACAO_CONFIGURACOES_DA_PARTIDA + "," + CABECALHO_TAMANHO;
 	public static final int OPERACAO_NOME_JOGADOR = 4;
 	public static final String CABECALHO_NOME_JOGADOR = CABECALHO_OPERACAO + OPERACAO_NOME_JOGADOR + "," + CABECALHO_TAMANHO;
+	public static final int OPERACAO_ENCERRAR_PARTIDA = 5;
+	public static final String CABECALHO_ENCERRAR_PARTIDA = CABECALHO_OPERACAO + OPERACAO_ENCERRAR_PARTIDA + "," + CABECALHO_TAMANHO;
 	
 	byte[] bufferOperacao = null;
 	
@@ -105,6 +107,11 @@ public class Protocolo extends Handler implements Serializable {
 			Log.d(TAG, "OPERACAO_NOME_JOGADOR");
 			String nome = (String) obj;
 			Log.d(TAG, "Jogador se conectou com nome: " + nome);
+			break;
+		case OPERACAO_ENCERRAR_PARTIDA:
+			Log.d(TAG, "OPERACAO_ENCERRAR_PARTIDA");
+			Long tempoDapartida = (Long) obj;
+			Log.d(TAG, "Encerrando com tempo: " + tempoDapartida);
 			break;
 		default:
 			Log.e(TAG, "OPERACAO NAO SUPORTADA");

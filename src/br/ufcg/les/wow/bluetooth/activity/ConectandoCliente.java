@@ -2,7 +2,8 @@ package br.ufcg.les.wow.bluetooth.activity;
 
 import br.ufcg.les.wow.R;
 import br.ufcg.les.wow.bluetooth.Cliente;
-import br.ufcg.les.wow.bluetooth.Protocolo;
+import br.ufcg.les.wow.bluetooth.ManipuladorProtocolo;
+import br.ufcg.les.wow.bluetooth.Servidor;
 import br.ufcg.les.wow.bluetooth.ThreadConectada;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
@@ -17,7 +18,7 @@ import android.widget.Button;
 
 public class ConectandoCliente extends Activity  {
 	private final static String TAG = "[ConectandoCliente]";
-	private final Protocolo handle = new Protocolo();
+	private final ManipuladorProtocolo handle = new ManipuladorProtocolo();
 	private Cliente cliente;
 	private String nomeJogador;
 	
@@ -64,8 +65,7 @@ public class ConectandoCliente extends Activity  {
 	}
 	
 	private void iniciaConexao(String endereco) {
-		NovasConexoesListenerActivity teste = new NovasConexoesListenerActivity();
-		BluetoothAdapter adaptadorBluetooth = teste.adaptadorBluetooth();
+		BluetoothAdapter adaptadorBluetooth = Servidor.adaptadorBluetooth();
 		BluetoothDevice device = adaptadorBluetooth.getRemoteDevice(endereco);
 		Log.d(TAG, "BluetoothDevice: Address -> " + device.getAddress() + " Name -> " + device.getName());
 		connecte(device);

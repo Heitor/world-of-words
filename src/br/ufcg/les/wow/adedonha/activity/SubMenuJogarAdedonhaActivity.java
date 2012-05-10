@@ -20,7 +20,7 @@ import android.widget.Toast;
 import br.ufcg.les.wow.R;
 import br.ufcg.les.wow.adedonha.model.Letra;
 import br.ufcg.les.wow.adedonha.model.Jogo;
-import br.ufcg.les.wow.bluetooth.Protocolo;
+import br.ufcg.les.wow.bluetooth.ManipuladorProtocolo;
 import br.ufcg.les.wow.bluetooth.activity.NovasConexoesListenerActivity;
 
 // FIXME o nome dessa classe deveria se tornar ConfiguracoesDoServidorActivity
@@ -40,7 +40,7 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 	private static final String VAZIO = "";
 	protected static final String ESCOLHA_TEMPO = "Tempo escolhido: ";
 	private static final String AVISO_ITEM = "Nenhum item foi selecionado!";
-	private Protocolo protocolo;
+	private ManipuladorProtocolo protocolo;
 	
 	private ArrayAdapter<Letra> letras;
 	private ArrayAdapter<Letra> itens;
@@ -55,7 +55,7 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 		editText = (EditText) findViewById(R.id.edittext_adedonha);
 		
 		Intent intent = getIntent();
-		this.protocolo = (Protocolo)intent.getSerializableExtra("protocolo");
+		this.protocolo = (ManipuladorProtocolo)intent.getSerializableExtra("protocolo");
 		
 		botaoOkAction();
 		botaoLimparAction();

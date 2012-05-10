@@ -13,13 +13,11 @@ public class Cliente extends Thread {
 	private static final String TAG = "[Cliente]";
 	
 	private final BluetoothSocket clienteSocket;
-	private final BluetoothDevice mmDevice;
 	private final ConectandoCliente conectandoClienteActivity;
-	private Protocolo handle;
+	private ManipuladorProtocolo handle;
 	private ThreadConectada threadConectada;
 
-	public Cliente(ConectandoCliente conectandoClienteActivity, BluetoothDevice device, Protocolo handle) {
-		mmDevice = device;
+	public Cliente(ConectandoCliente conectandoClienteActivity, BluetoothDevice device, ManipuladorProtocolo handle) {
 		this.handle = handle;
 		this.conectandoClienteActivity = conectandoClienteActivity;
 		BluetoothSocket tmp = null;
@@ -50,7 +48,7 @@ public class Cliente extends Thread {
 		return;
 	}
 
-	private void conecte(BluetoothSocket socket, Protocolo handle) {
+	private void conecte(BluetoothSocket socket, ManipuladorProtocolo handle) {
 		threadConectada = new ThreadConectada(socket, handle);
 		threadConectada.start();
 	}
