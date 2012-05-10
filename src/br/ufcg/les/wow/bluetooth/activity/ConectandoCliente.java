@@ -1,9 +1,9 @@
 package br.ufcg.les.wow.bluetooth.activity;
 
 import br.ufcg.les.wow.R;
+import br.ufcg.les.wow.bluetooth.Cliente;
 import br.ufcg.les.wow.bluetooth.Protocolo;
-import br.ufcg.les.wow.bluetooth.client.Cliente;
-import br.ufcg.les.wow.bluetooth.server.ServidorThreadConectada;
+import br.ufcg.les.wow.bluetooth.ThreadConectada;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -76,7 +76,7 @@ public class ConectandoCliente extends Activity  {
 			Log.e(TAG, "Falhou ao tentar fazer o join", e);
 		}
 		
-		ServidorThreadConectada f = cct.threadConectada();
+		ThreadConectada f = cct.threadConectada();
 		String teste = "my_name";
 		if(f != null) {
 			f.enviar(teste.getBytes());

@@ -4,8 +4,8 @@ import java.util.Set;
 
 import br.ufcg.les.wow.R;
 import br.ufcg.les.wow.adedonha.activity.AdedonhaActivity;
+import br.ufcg.les.wow.bluetooth.Cliente;
 import br.ufcg.les.wow.bluetooth.Protocolo;
-import br.ufcg.les.wow.bluetooth.client.Cliente;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;

@@ -15,15 +15,14 @@ import android.widget.Button;
 import br.ufcg.les.wow.R;
 import br.ufcg.les.wow.adedonha.activity.PreJogoAdedonhaActivity;
 import br.ufcg.les.wow.bluetooth.Protocolo;
-import br.ufcg.les.wow.bluetooth.server.Servidor;
-import br.ufcg.les.wow.bluetooth.server.ServidorThreadConectada;
+import br.ufcg.les.wow.bluetooth.Servidor;
+import br.ufcg.les.wow.bluetooth.ThreadConectada;
 
 public class NovasConexoesListenerActivity extends Activity {
 	private final static String TAG = "[NovasConexoesListenerActivity]";
 	private BluetoothAdapter adaptadorBluetooth = adaptadorBluetooth();
 	private Servidor servidor;
 	
-	private static final int CONECTAR_DISPOSITIVO = 1;
     private static final int HABILITA_BLUETOOTH = 2;
 	
 	private Protocolo handle;
@@ -59,8 +58,7 @@ public class NovasConexoesListenerActivity extends Activity {
 			public void onClick(View v) {
 				Log.d(TAG, "Clicked on encerrar.");
 				encerraListenerNovasConexoesServidor();
-				Intent bluetoothStart = new Intent(NovasConexoesListenerActivity.this,
-						PreJogoAdedonhaActivity.class);
+				Intent bluetoothStart = new Intent(NovasConexoesListenerActivity.this, PreJogoAdedonhaActivity.class);
 				
 				bluetoothStart.putExtra("jogo", jogo);
 				bluetoothStart.putExtra("tempoDesejado", tempoDesejado);
@@ -114,9 +112,9 @@ public class NovasConexoesListenerActivity extends Activity {
 		enviarConfiguracoesDaPartida(this.servidor.threadsConectadas());
 	}
 	
-	private void enviarConfiguracoesDaPartida(List<ServidorThreadConectada> listenerClientThreads) {
+	private void enviarConfiguracoesDaPartida(List<ThreadConectada> listenerClientThreads) {
 		Log.d(TAG, "Enviando configuracoes da patida.");
-		for(ServidorThreadConectada threadConectada : listenerClientThreads) {
+		for(ThreadConectada threadConectada : listenerClientThreads) {
 			threadConectada.iniciarPartida(this.jogo);
 		}
 	}

@@ -1,8 +1,10 @@
 package br.ufcg.les.wow.bluetooth;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.io.StreamCorruptedException;
 import java.util.HashMap;
@@ -48,7 +50,7 @@ public class Protocolo extends Handler implements Serializable {
 		switch (msg.what) {
 		case ENVIAR_MENSAGEM:
 			Log.d(TAG, "ENVIAR_MENSAGEM");
-			byte[] writeBuf = (byte[]) msg.obj;
+			Log.d(TAG, "Enviando Mensagem: Tamanho="+msg.arg1);
 			break;
 		case RECEBER_MENSAGEM:
 			Log.d(TAG, "RECEBER_MENSAGEM");
@@ -170,6 +172,17 @@ public class Protocolo extends Handler implements Serializable {
 			return false;
 		}
 	}
+	
+	public static byte[] serialize(Object obj) {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+		try {
+			ObjectOutputStream os = new ObjectOutputStream(out);
+			os.writeObject(obj);
+		} catch (IOException e) {
+			Log.e(TAG, "Falhou tentando serializar um objeto", e);
+		}
+        return out.toByteArray();
+    }
 	
 	public static Object deserialize(byte[] data) {
 	    ByteArrayInputStream in = new ByteArrayInputStream(data);
