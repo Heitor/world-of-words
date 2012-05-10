@@ -3,6 +3,7 @@ package br.ufcg.les.wow.adedonha.activity;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -289,9 +290,23 @@ public class JogoAdedonhaActivity extends Activity {
 		alerta.setButton("Ok", listener);
 		alerta.show();
 	}
+	
+	private void carregaLetra() {
+		List<Letra> letras = jogo.getLetrasDesejadas();
+		letra = retornaLetra(letras).getDescricao();
+	}
+	
+	private static Letra retornaLetra(List<Letra> letrasDoTema) {
+		Random posicao = new Random();
+		if (letrasDoTema.size() > 1) {
+			return letrasDoTema.get(posicao.nextInt(letrasDoTema.size()));
+		}
+		return letrasDoTema.get(0);
+	}
 
 	private void atualizaLetraSelecionada() {
 		letraTextView = (TextView) findViewById(R.id.text_view_letra_adedonha);
+		carregaLetra();
 		letraTextView.setText("Letra selecionada: " + letra.toUpperCase());
 	}
 
