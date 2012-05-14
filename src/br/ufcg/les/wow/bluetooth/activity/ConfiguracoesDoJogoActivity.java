@@ -13,7 +13,7 @@ import android.widget.Button;
 
 public class ConfiguracoesDoJogoActivity extends Activity {
 	private final static String TAG = "[ConfiguracoesDoJogoActivity]";
-	private final ManipuladorProtocolo handle = new ManipuladorProtocolo();
+	private final ManipuladorProtocolo handle = ManipuladorProtocolo.instance();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

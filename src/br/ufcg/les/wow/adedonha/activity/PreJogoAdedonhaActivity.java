@@ -1,7 +1,5 @@
 package br.ufcg.les.wow.adedonha.activity;
 
-import java.io.Serializable;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,8 +15,6 @@ public class PreJogoAdedonhaActivity extends Activity {
 	private Jogo jogo;
 	private long tempoDesejado;
 	private Intent preJogoIntent;
-	// FIXME concertar servidos
-	//private Serializable servidor;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,15 +28,12 @@ public class PreJogoAdedonhaActivity extends Activity {
 		Intent intent = getIntent();
 
 		jogo = (Jogo) intent.getSerializableExtra("jogo");
-		//servidor = intent.getSerializableExtra("servidor");
 		tempoDesejado = intent.getLongExtra("tempoDesejado", 180000);
 
 		preJogoIntent = new Intent(PreJogoAdedonhaActivity.this, JogoAdedonhaActivity.class);
 
 		preJogoIntent.putExtra("jogo", jogo);
 		preJogoIntent.putExtra("tempoDesejado", tempoDesejado);
-		//preJogoIntent.putExtra("servidor", servidor);
-
 	}
 
 	private CountDownTimer inicializaContador() {

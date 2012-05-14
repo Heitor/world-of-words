@@ -10,8 +10,13 @@ import java.io.StreamCorruptedException;
 import java.util.HashMap;
 import java.util.Map;
 
+import br.ufcg.les.wow.adedonha.activity.JogoAdedonhaActivity;
 import br.ufcg.les.wow.adedonha.model.Jogo;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -46,6 +51,15 @@ public class ManipuladorProtocolo extends Handler implements Serializable {
 	public static final String CABECALHO_ENCERRAR_PARTIDA = CABECALHO_OPERACAO + OPERACAO_ENCERRAR_PARTIDA + "," + CABECALHO_TAMANHO;
 	
 	byte[] bufferOperacao = null;
+	private static ManipuladorProtocolo thisInstance = null;
+	// Usados para iniciar a tela de contagem regressiva.
+	private Intent iniciarPartidaIntent;
+	private Context iniciarPartidaContext;
+	
+	// Usado para bloquear a tela quando uma requisicao de encerrar partida vem do servidor.
+	private Intent encerrarPartidaIntent;
+	private Context encerrarPartidaContext;
+	private JogoAdedonhaActivity jogoAdedonhaActivity;
 	
 	private Map<String, String> dadosDaOperacao = new HashMap<String, String>();
 	
@@ -101,7 +115,7 @@ public class ManipuladorProtocolo extends Handler implements Serializable {
 		case OPERACAO_CONFIGURACOES_DA_PARTIDA:
 			Log.d(TAG, "OPERACAO_CONFIGURACOES_DA_PARTIDA");
 			Jogo configuracaoesDaPartida = (Jogo) obj;
-			Log.d(TAG, "Nivel: " + configuracaoesDaPartida.getNivel());
+			iniciarPartida(configuracaoesDaPartida);
 			break;
 		case OPERACAO_NOME_JOGADOR:
 			Log.d(TAG, "OPERACAO_NOME_JOGADOR");
@@ -112,10 +126,45 @@ public class ManipuladorProtocolo extends Handler implements Serializable {
 			Log.d(TAG, "OPERACAO_ENCERRAR_PARTIDA");
 			Long tempoDapartida = (Long) obj;
 			Log.d(TAG, "Encerrando com tempo: " + tempoDapartida);
+			encerrarPartida();
 			break;
 		default:
 			Log.e(TAG, "OPERACAO NAO SUPORTADA");
 			break;
+		}
+	}
+	
+	private void encerrarPartida() {
+		if(this.encerrarPartidaIntent != null && this.encerrarPartidaContext != null) {
+			this.jogoAdedonhaActivity.configurarRespostas();
+			//this.encerrarPartidaIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			//this.encerrarPartidaContext.startActivity(this.encerrarPartidaIntent);
+		} else {
+			if(this.encerrarPartidaIntent == null) {
+				Log.e(TAG, "encerrarPartidaIntent is null" );
+			}
+			if(this.encerrarPartidaContext == null) {
+				Log.e(TAG, "encerrarPartidaContext is null" );
+			}
+		}
+	}
+
+	private void iniciarPartida(Jogo configuracaoesDaPartida) {
+		if(this.iniciarPartidaIntent != null && this.iniciarPartidaContext != null && configuracaoesDaPartida != null) {
+			iniciarPartidaIntent.putExtra("jogo", configuracaoesDaPartida);
+			iniciarPartidaIntent.putExtra("tempoDesejado", configuracaoesDaPartida);
+			iniciarPartidaIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			iniciarPartidaContext.startActivity(iniciarPartidaIntent);
+		} else {
+			if(this.iniciarPartidaIntent == null) {
+				Log.e(TAG, "startGameIntent is null" );
+			}
+			if(this.iniciarPartidaContext == null) {
+				Log.e(TAG, "startGameContext is null" );
+			}
+			if(configuracaoesDaPartida == null) {
+				Log.e(TAG, "configuracaoesDaPartida is null" );
+			}
 		}
 	}
 	
@@ -212,5 +261,22 @@ public class ManipuladorProtocolo extends Handler implements Serializable {
 		}
 		return null;
 	}
-
+	
+	public synchronized void setIniciarPartidaActivity(Intent startGameIntent, Context startGameContext) {
+		this.iniciarPartidaIntent = startGameIntent;
+		this.iniciarPartidaContext = startGameContext;
+	}
+	
+	public synchronized void setEncerrarPartidaActivity(Intent encerrarPartidaIntent, Context encerrarPartidaContext, JogoAdedonhaActivity jogoAdedonhaActivity) {
+		this.encerrarPartidaIntent = encerrarPartidaIntent;
+		this.encerrarPartidaContext = encerrarPartidaContext;
+		this.jogoAdedonhaActivity = jogoAdedonhaActivity;
+	}
+	
+	public static synchronized ManipuladorProtocolo instance() {
+		if(thisInstance == null) {
+			thisInstance = new ManipuladorProtocolo();
+		}
+		return thisInstance;
+	}
 }

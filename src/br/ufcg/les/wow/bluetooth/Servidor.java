@@ -17,7 +17,7 @@ import android.util.Log;
 public class Servidor extends Thread implements Serializable {
 	private static final long serialVersionUID = 4880838429325379959L;
 	private static final UUID MY_UUID = UUID.fromString("fa87c0d0-afac-11de-8a39-0800200c9a69");
-	private final ManipuladorProtocolo handle = new ManipuladorProtocolo();
+	private final ManipuladorProtocolo handle = ManipuladorProtocolo.instance();
 	private static final String WOW = "wow";
 	private static final String TAG = "[Servidor]";
 	private static Servidor servidor = null;

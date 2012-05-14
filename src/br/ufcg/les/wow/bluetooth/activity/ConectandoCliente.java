@@ -1,6 +1,7 @@
 package br.ufcg.les.wow.bluetooth.activity;
 
 import br.ufcg.les.wow.R;
+import br.ufcg.les.wow.adedonha.activity.PreJogoAdedonhaActivity;
 import br.ufcg.les.wow.bluetooth.Cliente;
 import br.ufcg.les.wow.bluetooth.ManipuladorProtocolo;
 import br.ufcg.les.wow.bluetooth.Servidor;
@@ -18,7 +19,7 @@ import android.widget.Button;
 
 public class ConectandoCliente extends Activity  {
 	private final static String TAG = "[ConectandoCliente]";
-	private final ManipuladorProtocolo handle = new ManipuladorProtocolo();
+	private final ManipuladorProtocolo handle = ManipuladorProtocolo.instance();
 	private Cliente cliente;
 	private String nomeJogador;
 	
@@ -37,6 +38,9 @@ public class ConectandoCliente extends Activity  {
         
         Log.d(TAG, "Endereco escolhido: " + enderecoServidor);
         iniciaConexao(enderecoServidor);
+        
+        Intent startGameIntent = new Intent(getApplicationContext(), PreJogoAdedonhaActivity.class);
+        ManipuladorProtocolo.instance().setIniciarPartidaActivity(startGameIntent, getApplicationContext());
         
         botaoCancelarAction();
 	}

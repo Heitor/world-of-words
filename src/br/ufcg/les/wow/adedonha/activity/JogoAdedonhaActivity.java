@@ -13,7 +13,6 @@ import android.content.Intent;
 import android.graphics.LightingColorFilter;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -27,6 +26,7 @@ import br.ufcg.les.wow.R;
 import br.ufcg.les.wow.adedonha.model.Letra;
 import br.ufcg.les.wow.adedonha.model.Jogo;
 import br.ufcg.les.wow.adedonha.model.User;
+import br.ufcg.les.wow.bluetooth.ManipuladorProtocolo;
 import br.ufcg.les.wow.bluetooth.Servidor;
 
 public class JogoAdedonhaActivity extends Activity {
@@ -78,7 +78,8 @@ public class JogoAdedonhaActivity extends Activity {
 		
 		setContador(inicializaContador());
 		
-		intentRespostas = new Intent(JogoAdedonhaActivity.this, RespostaActivity.class);
+		intentRespostas = new Intent(getApplicationContext(), RespostaActivity.class);
+		ManipuladorProtocolo.instance().setEncerrarPartidaActivity(intentRespostas, getApplicationContext(), this);
 
 	}
 	
@@ -97,8 +98,7 @@ public class JogoAdedonhaActivity extends Activity {
 			botaoItem.setVisibility(Button.VISIBLE);
 			botaoItem.setText(itensDesejados.get(i).getDescricao());
 			botaoItem.setTextSize(24);
-			botaoItem.setLayoutParams(new TableRow.
-					LayoutParams(LARGURA_CAIXINHA, ALTURA_CAIXINHA));
+			botaoItem.setLayoutParams(new TableRow.LayoutParams(LARGURA_CAIXINHA, ALTURA_CAIXINHA));
 			
 			vTblRow.addView(botaoItem);
 			listaBotoesItens.add(botaoItem);
@@ -242,6 +242,14 @@ public class JogoAdedonhaActivity extends Activity {
 		contadorTextView.setText("Fim de jogo!");
 		System.out.println("TEMPO NO FINALIZAR VARIAVEIS =" + tempoRestante);
 		
+		configurarRespostas();
+		
+	}
+
+	public void configurarRespostas() {
+		marcouFim = true;
+		contadorTextView.setText("Fim de jogo!");
+		System.out.println("TEMPO NO FINALIZAR VARIAVEIS =" + tempoRestante);
 		String nivelJogo = jogo.getNivelString();
 		
 		User jogador = new User(jogo.getNomeJogador(), 0, tempoRestante, TIPO_ADEDONHA);
@@ -251,7 +259,8 @@ public class JogoAdedonhaActivity extends Activity {
 		intentRespostas.putExtra("nivelJogo", nivelJogo);
 		intentRespostas.putExtra("letraJogo", letra);
 		intentRespostas.putExtra("respostas", mapaResultados);
-		
+		mostraDialogSairJogo(msgFimJogo(), fimDeJogoListener());
+		//startActivity(intentRespostas);
 	}
 	
 	private DialogInterface.OnClickListener fimDeJogoListener() {
@@ -307,11 +316,6 @@ public class JogoAdedonhaActivity extends Activity {
 		letraTextView.setText("Letra selecionada: " + letra.toUpperCase());
 	}
 
-//	private void atualizaNivelJogada() {
-//		nivelTextView = (TextView) findViewById(R.id.text_view_nivel_adedonha);
-//		nivelTextView.setText("Nível do jogo: " + jogo.getNivelString());
-//	}
-
 	private void atualizaNomeJogador() {
 		nomeJogadorTextView = (TextView) findViewById(R.id.text_view_jogador_adedonha);
 		nomeJogadorTextView.setText("Boa sorte, " + jogo.getNomeJogador());
@@ -329,9 +333,8 @@ public class JogoAdedonhaActivity extends Activity {
 		return new OnClickListener() {
 
 			public void onClick(View v) {
-				Intent botaoSairIntent = new Intent(JogoAdedonhaActivity.this, AdedonhaActivity.class);
+				Intent botaoSairIntent = new Intent(getApplicationContext(), AdedonhaActivity.class);
 				
-				// fimIntent.putExtra("usuario", usuario);
 				Servidor.instance().encerrarPartida(getTempoInicial());
 				finalizaVariaveisJogo();
 				startActivity(botaoSairIntent);
