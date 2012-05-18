@@ -85,6 +85,11 @@ public class ThreadConectada extends Thread {
 		byte[] buffer = ManipuladorProtocolo.serialize(nome);
 		byte[] bufferCabecalho = cabecalhoNome(buffer);
 		enviar(bufferCabecalho);
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		enviar(buffer);
 	}
 

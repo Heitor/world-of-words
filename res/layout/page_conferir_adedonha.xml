@@ -28,6 +28,7 @@
             android:textStyle="bold"
             android:layout_marginLeft="7dp"
        	    android:textSize="18dp" />
+
         
         <TextView
             android:id="@+id/pontos_jogador_adedonha"
