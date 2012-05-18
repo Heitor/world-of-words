@@ -4,6 +4,7 @@ import br.ufcg.les.wow.R;
 import br.ufcg.les.wow.adedonha.activity.PreJogoAdedonhaActivity;
 import br.ufcg.les.wow.adedonha.model.Jogador;
 import br.ufcg.les.wow.bluetooth.Cliente;
+import br.ufcg.les.wow.bluetooth.ThreadConectadaCliente;
 import br.ufcg.les.wow.bluetooth.ManipuladorProtocolo;
 import br.ufcg.les.wow.bluetooth.Servidor;
 import br.ufcg.les.wow.bluetooth.ThreadConectada;
@@ -78,24 +79,9 @@ public class ConectandoCliente extends Activity  {
 	}
 	
 	private void connecte(BluetoothDevice device) {
-		this.cliente = new Cliente(this, device, this.handle);
-		this.cliente.start();
-		try {
-			this.cliente.join();
-			Log.d(TAG, "deu certo");
-		} catch (InterruptedException e) {
-			Log.e(TAG, "Falhou ao tentar fazer o join", e);
-		}
-		
-		enviarNome(this.cliente.threadConectada(), this.jogador.nome());
-	}
-	
-	private void enviarNome(ThreadConectada threadConectada, String nome) {
-		if(threadConectada == null ) {
-			Log.e(TAG, "Nao conseguiu uma ThreadConectada.");
-			return;
-		}
-		threadConectada.enviarNome(nome);
+		this.cliente = Cliente.newInstance(this, device, this.handle);// new ThreadConectadaCliente(this, device, this.handle);
+		this.cliente.conectar();
+		this.cliente.enviarNome(this.jogador.nome());
 	}
 	
 	/*

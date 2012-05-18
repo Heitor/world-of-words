@@ -12,6 +12,7 @@ import java.util.Map;
 
 import br.ufcg.les.wow.adedonha.activity.JogoAdedonhaActivity;
 import br.ufcg.les.wow.adedonha.model.ConfiguracaoParatida;
+import br.ufcg.les.wow.adedonha.model.Jogador;
 
 import android.content.Context;
 import android.content.Intent;
@@ -47,6 +48,8 @@ public class ManipuladorProtocolo extends Handler implements Serializable {
 	public static final String CABECALHO_NOME_JOGADOR = CABECALHO_OPERACAO + OPERACAO_NOME_JOGADOR + "," + CABECALHO_TAMANHO;
 	public static final int OPERACAO_ENCERRAR_PARTIDA = 5;
 	public static final String CABECALHO_ENCERRAR_PARTIDA = CABECALHO_OPERACAO + OPERACAO_ENCERRAR_PARTIDA + "," + CABECALHO_TAMANHO;
+	public static final int OPERACAO_JOGADOR = 6;
+	public static final String CABECALHO_JOGADOR = CABECALHO_OPERACAO + OPERACAO_JOGADOR + "," + CABECALHO_TAMANHO;
 	
 	byte[] bufferOperacao = null;
 	private static ManipuladorProtocolo thisInstance = null;
@@ -55,8 +58,8 @@ public class ManipuladorProtocolo extends Handler implements Serializable {
 	private Context iniciarPartidaContext;
 	
 	// Usado para bloquear a tela quando uma requisicao de encerrar partida vem do servidor.
-	private Intent encerrarPartidaIntent;
-	private Context encerrarPartidaContext;
+	//private Intent encerrarPartidaIntent;
+	//private Context encerrarPartidaContext;
 	private JogoAdedonhaActivity jogoAdedonhaActivity;
 	
 	private Map<String, String> dadosDaOperacao = new HashMap<String, String>();
@@ -126,21 +129,27 @@ public class ManipuladorProtocolo extends Handler implements Serializable {
 			Log.d(TAG, "Encerrando com tempo: " + tempoDapartida);
 			encerrarPartida();
 			break;
+		case OPERACAO_JOGADOR:
+			Log.d(TAG, "OPERACAO_JOGADOR");
+			Jogador jogador = (Jogador) obj;
+			recebeJogador(jogador);
+			break;
 		default:
 			Log.e(TAG, "OPERACAO NAO SUPORTADA");
 			break;
 		}
 	}
 	
+	private void recebeJogador(Jogador jogador) {
+		Log.d(TAG, "NOME_DO_JOGADOR: " + jogador.nome());
+	}
+	
 	private void encerrarPartida() {
-		if(this.encerrarPartidaIntent != null && this.encerrarPartidaContext != null) {
+		if(this.jogoAdedonhaActivity != null ) {
 			this.jogoAdedonhaActivity.configurarRespostas();
 		} else {
-			if(this.encerrarPartidaIntent == null) {
-				Log.e(TAG, "encerrarPartidaIntent is null" );
-			}
-			if(this.encerrarPartidaContext == null) {
-				Log.e(TAG, "encerrarPartidaContext is null" );
+			if(this.jogoAdedonhaActivity == null) {
+				Log.e(TAG, "jogoAdedonhaActivity is null" );
 			}
 		}
 	}
@@ -264,9 +273,7 @@ public class ManipuladorProtocolo extends Handler implements Serializable {
 		this.iniciarPartidaContext = startGameContext;
 	}
 	
-	public synchronized void setEncerrarPartidaActivity(Intent encerrarPartidaIntent, Context encerrarPartidaContext, JogoAdedonhaActivity jogoAdedonhaActivity) {
-		this.encerrarPartidaIntent = encerrarPartidaIntent;
-		this.encerrarPartidaContext = encerrarPartidaContext;
+	public synchronized void setEncerrarPartidaActivity(JogoAdedonhaActivity jogoAdedonhaActivity) {
 		this.jogoAdedonhaActivity = jogoAdedonhaActivity;
 	}
 	

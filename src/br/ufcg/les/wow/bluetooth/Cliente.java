@@ -1,71 +1,56 @@
 package br.ufcg.les.wow.bluetooth;
 
-import java.io.IOException;
-import java.util.UUID;
-
-import br.ufcg.les.wow.bluetooth.activity.ConectandoCliente;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothSocket;
 import android.util.Log;
+import br.ufcg.les.wow.adedonha.model.Jogador;
+import br.ufcg.les.wow.bluetooth.activity.ConectandoCliente;
 
-public class Cliente extends Thread {
-	private static final UUID MY_UUID = UUID.fromString("fa87c0d0-afac-11de-8a39-0800200c9a69");
+public class Cliente {
 	private static final String TAG = "[Cliente]";
+	private ThreadConectadaCliente threadConectadaCliente;
+	private static Cliente thisInstance;
 	
-	private final BluetoothSocket clienteSocket;
-	private final ConectandoCliente conectandoClienteActivity;
-	private ManipuladorProtocolo handle;
-	private ThreadConectada threadConectada;
-
-	public Cliente(ConectandoCliente conectandoClienteActivity, BluetoothDevice device, ManipuladorProtocolo handle) {
-		this.handle = handle;
-		this.conectandoClienteActivity = conectandoClienteActivity;
-		BluetoothSocket tmp = null;
-
-		try {
-			tmp = device.createRfcommSocketToServiceRecord(MY_UUID);
-		} catch (IOException e) {
-			Log.e(TAG, "Falhou ao tentar se conectar com o servidor bluetooth", e);
-		}
-		clienteSocket = tmp;
-	}
-
-	public void run() {
-		Log.i(TAG, "BEGIN mConnectThread");
-		setName("ConnectThread");
-
-		try {
-			Log.d(TAG, "Conectando-se ao server socket...");
-			clienteSocket.connect();
-			Log.d(TAG, "Conectado ao server socket com sucesso...");
-		} catch (IOException e) {
-			Log.e(TAG, "Falhou enquanto conectava-se ao server socket...", e);
-			cancelarConexao();
-		}
-
-		// Start the connected thread
-		conecte(clienteSocket, handle);
-		return;
-	}
-
-	private void conecte(BluetoothSocket socket, ManipuladorProtocolo handle) {
-		threadConectada = new ThreadConectada(socket, handle);
-		threadConectada.start();
+	private Cliente(ConectandoCliente conectandoClienteActivity,
+			BluetoothDevice device, ManipuladorProtocolo handle) {
+		this.threadConectadaCliente = new ThreadConectadaCliente(conectandoClienteActivity, device, handle);
 	}
 	
-	public ThreadConectada threadConectada() {
-		return threadConectada;
-	}
-
-	public void cancelarConexao() {
-		try {
-			Log.d(TAG, "Cancelando o socket...");
-			clienteSocket.close();
-			Log.d(TAG, "Socket cancelado com sucesso.");
-		} catch (IOException e) {
-			Log.e(TAG, "falhou enquanto cancelava o socket.", e);
-		} finally {
-			this.conectandoClienteActivity.cancela();
+	public static synchronized Cliente newInstance(
+			ConectandoCliente conectandoClienteActivity,
+			BluetoothDevice device, ManipuladorProtocolo handle) {
+		if(thisInstance == null) {
+			thisInstance = new Cliente(conectandoClienteActivity, device, handle);	
 		}
+		return thisInstance;
+	}
+	
+	public static synchronized Cliente instance() {
+		return thisInstance;
+	}
+	
+	public void conectar() {
+		this.threadConectadaCliente.start();
+		try {
+			this.threadConectadaCliente.join();
+			Log.d(TAG, "deu certo");
+		} catch (InterruptedException e) {
+			Log.e(TAG, "Falhou ao tentar fazer o join", e);
+		}
+	}
+	
+	public void enviarNome(String nome) {
+		if(threadConectadaCliente == null || threadConectadaCliente.threadConectada() == null) {
+			Log.e(TAG, "Nao conseguiu uma ThreadConectada.");
+			return;
+		}
+		threadConectadaCliente.threadConectada().enviarNome(nome);
+	}
+	
+	public void enviarJogador(Jogador jogador) {
+		if(threadConectadaCliente == null || threadConectadaCliente.threadConectada() == null) {
+			Log.e(TAG, "Nao conseguiu uma ThreadConectada.");
+			return;
+		}
+		threadConectadaCliente.threadConectada().enviarJogador(jogador);
 	}
 }

@@ -1,9 +1,7 @@
 package br.ufcg.les.wow.adedonha.activity;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-//import java.util.Random;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -13,6 +11,7 @@ import android.content.Intent;
 import android.graphics.LightingColorFilter;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -26,11 +25,12 @@ import br.ufcg.les.wow.R;
 import br.ufcg.les.wow.adedonha.model.ConfiguracaoParatida;
 import br.ufcg.les.wow.adedonha.model.Letra;
 import br.ufcg.les.wow.adedonha.model.Jogador;
+import br.ufcg.les.wow.bluetooth.Cliente;
 import br.ufcg.les.wow.bluetooth.ManipuladorProtocolo;
 import br.ufcg.les.wow.bluetooth.Servidor;
 
 public class JogoAdedonhaActivity extends Activity {
-
+	private static final String TAG = "[JogoAdedonhaActivity]";
 
 	private String letra = "";
 	
@@ -81,7 +81,7 @@ public class JogoAdedonhaActivity extends Activity {
 		setContador(inicializaContador());
 		
 		intentRespostas = new Intent(getApplicationContext(), RespostaActivity.class);
-		ManipuladorProtocolo.instance().setEncerrarPartidaActivity(intentRespostas, getApplicationContext(), this);
+		ManipuladorProtocolo.instance().setEncerrarPartidaActivity(this);
 
 	}
 	
@@ -236,7 +236,7 @@ public class JogoAdedonhaActivity extends Activity {
 			public void onClick(View v) {
 				Servidor.instance().encerrarPartida(configuracao.tempo());
 				finalizaVariaveisJogo();
-				mostraDialogSairJogo(msgFimJogo(), listenerSair());
+				//mostraDialogSairJogo(msgFimJogo(), listenerSair());
 			}
 		};
 	}
@@ -257,10 +257,18 @@ public class JogoAdedonhaActivity extends Activity {
 		
 		//Jogador jogador = new Jogador(jogo.getNomeJogador(), 0, tempoRestante, TIPO_ADEDONHA);
 		
+		this.jogador.setTempo(tempoRestante);
 		intentRespostas.putExtra(Jogador.JOGADOR, this.jogador);
 		//intentRespostas.putExtra("tempoJogo", tempoRestante);
 		intentRespostas.putExtra(ConfiguracaoParatida.CONFIGURACAO, this.configuracao);
 		//intentRespostas.putExtra("respostas", mapaResultados);
+		Cliente cliente = Cliente.instance();
+		// Se o cliente for null, quer dizer que esse é o servidor
+		// Deve haver uma solução melhor pra isso.
+		if(cliente != null) {
+			Log.d(TAG, "Enviando mensagem teste de fim de jogo.");
+			cliente.enviarJogador(this.jogador);
+		}
 		mostraDialogSairJogo(msgFimJogo(), fimDeJogoListener());
 		//startActivity(intentRespostas);
 	}
@@ -269,7 +277,7 @@ public class JogoAdedonhaActivity extends Activity {
 		return new DialogInterface.OnClickListener() {
 
 			public void onClick(DialogInterface dialog, int which) {
-				finalizaVariaveisJogo();
+				//finalizaVariaveisJogo();
 				startActivity(intentRespostas);
 				finish();
 			}
@@ -287,7 +295,7 @@ public class JogoAdedonhaActivity extends Activity {
 
 			public void onClick(DialogInterface dialog, int which) {
 				startActivity(intentRespostas);
-				finish();
+				//finish();
 			}
 		};
 	}
@@ -332,8 +340,7 @@ public class JogoAdedonhaActivity extends Activity {
 				Servidor.instance().encerrarPartida(configuracao.tempo());
 				finalizaVariaveisJogo();
 				startActivity(botaoSairIntent);
-				finish();
-				
+				//finish();
 			}
 		};
 	}

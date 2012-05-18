@@ -5,6 +5,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
 
+import br.ufcg.les.wow.adedonha.model.Jogador;
+
 
 import android.bluetooth.BluetoothSocket;
 import android.util.Log;
@@ -75,6 +77,22 @@ public class ThreadConectada extends Thread {
 	private byte[] cabecalhoEncerrarPartida(byte[] buffer) {
 		String operationInfo = ManipuladorProtocolo.CABECALHO_ENCERRAR_PARTIDA + buffer.length;
 		return operationInfo.getBytes();
+	}
+	
+	private byte[] cabecalhoEnviarJogador(byte[] buffer) {
+		String operationInfo = ManipuladorProtocolo.CABECALHO_JOGADOR + buffer.length;
+		return operationInfo.getBytes();
+	}
+	
+	public void enviarJogador(Jogador jogador) {
+		if(jogador == null) {
+			Log.e(TAG, "Falhou tentando enviar um jogador nulo.");
+			return;
+		}
+		byte[] buffer = ManipuladorProtocolo.serialize(jogador);
+		byte[] bufferCabecalho = cabecalhoEnviarJogador(buffer);
+		enviar(bufferCabecalho);
+		enviar(buffer);
 	}
 	
 	public void enviarNome(Serializable nome) {
