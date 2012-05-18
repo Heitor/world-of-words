@@ -22,7 +22,7 @@
 
         <Button
             android:id="@+id/confirmar_dialog_adedonha"
-            android:layout_width="100dp"
+            android:layout_width="89dp"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:text="@string/confirmar"
@@ -31,7 +31,7 @@
 
         <Button
             android:id="@+id/cancelar_dialog_adedonha"
-            android:layout_width="100dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:text="@string/cancelar"

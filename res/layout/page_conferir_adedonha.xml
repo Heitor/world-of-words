@@ -18,44 +18,58 @@
             android:textColor="#363636"
             android:textStyle="bold"
             android:textSize="22dp" />
+        
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal" >
 
-        <TextView
-            android:id="@+id/saida_jogador_adedonha"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:textColor="#363636"
-            android:textStyle="bold"
-            android:layout_marginLeft="7dp"
-       	    android:textSize="18dp" />
+            <TextView
+                android:id="@+id/saida_jogador_adedonha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="7dp"
+                android:textColor="#363636"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+            
+              <TextView
+                android:id="@+id/saida_tempo_adedonha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="45dp"
+                android:textColor="#363636"
+                android:textSize="18dp"
+                android:textStyle="bold" />
 
+           
+        </LinearLayout>
         
-        <TextView
-            android:id="@+id/pontos_jogador_adedonha"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="7dp"
-            android:textColor="#363636"
-            android:textSize="18dp"
-            android:textStyle="bold" />
-        
-        <TextView
-            android:id="@+id/saida_tempo_adedonha"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="7dp"
-            android:textColor="#363636"
-            android:textSize="18dp"
-            android:textStyle="bold" />
-        
-         <TextView
-            android:id="@+id/saida_letra_adedonha"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="7dp"
-            android:textColor="#363636"
-            android:textSize="18dp"
-            android:textStyle="bold" />
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal" >
+            
+             <TextView
+                android:id="@+id/pontos_jogador_adedonha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="7dp"
+                android:textColor="#363636"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/saida_letra_adedonha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="60dp"
+                android:textColor="#363636"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+        </LinearLayout>
         
          <ImageButton
                 android:id="@+id/botao_verificado_adedonha"
