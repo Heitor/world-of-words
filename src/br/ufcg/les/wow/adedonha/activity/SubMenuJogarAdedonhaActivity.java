@@ -2,6 +2,7 @@ package br.ufcg.les.wow.adedonha.activity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -18,9 +19,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 import br.ufcg.les.wow.R;
+import br.ufcg.les.wow.adedonha.model.ConfiguracaoParatida;
+import br.ufcg.les.wow.adedonha.model.Jogador;
 import br.ufcg.les.wow.adedonha.model.Letra;
-import br.ufcg.les.wow.adedonha.model.Jogo;
-import br.ufcg.les.wow.bluetooth.ManipuladorProtocolo;
 import br.ufcg.les.wow.bluetooth.activity.NovasConexoesListenerActivity;
 
 // FIXME o nome dessa classe deveria se tornar ConfiguracoesDoServidorActivity
@@ -28,7 +29,6 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 	
 	private EditText editText;
 	private String nomeJogador = "";
-	private String nivel = "";
 	private Spinner spinnerTempo;
 	
 	private List<Letra> letrasDesejadas;
@@ -40,7 +40,6 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 	private static final String VAZIO = "";
 	protected static final String ESCOLHA_TEMPO = "Tempo escolhido: ";
 	private static final String AVISO_ITEM = "Nenhum item foi selecionado!";
-	private ManipuladorProtocolo protocolo;
 	
 	private ArrayAdapter<Letra> letras;
 	private ArrayAdapter<Letra> itens;
@@ -53,9 +52,6 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 		totalChamadasTempo = 0;
 		
 		editText = (EditText) findViewById(R.id.edittext_adedonha);
-		
-		Intent intent = getIntent();
-		this.protocolo = (ManipuladorProtocolo)intent.getSerializableExtra("protocolo");
 		
 		botaoOkAction();
 		botaoLimparAction();
@@ -248,6 +244,14 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 		Button botaoOk = (Button) findViewById(R.id.botao_confirmar_adedonha);
 		botaoOk.setOnClickListener(botaoConfirmarListener());
 	}
+	
+	private static Letra escolheLetra(List<Letra> letrasDoTema) {
+		Random posicao = new Random();
+		if (letrasDoTema.size() > 1) {
+			return letrasDoTema.get(posicao.nextInt(letrasDoTema.size()));
+		}
+		return letrasDoTema.get(0);
+	}
 
 	private OnClickListener botaoConfirmarListener() {
 		return new OnClickListener() {
@@ -256,15 +260,20 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 				if (itensDesejados.size() > 0) {
 					
 					setJogador();
-					Jogo jogo = new Jogo(nomeJogador, nivel, letrasDesejadas, itensDesejados);
+					//Jogo jogo = new Jogo(nomeJogador, nivel, letrasDesejadas, itensDesejados);
+					
+					ConfiguracaoParatida configuracoes = new ConfiguracaoParatida(tempoDesejado, escolheLetra(letrasDesejadas), itensDesejados);
+					Jogador jogador = new Jogador(nomeJogador);
 					
 					/*Intent subMenuIntent = new Intent(SubMenuJogarAdedonhaActivity.this,
 							JogoAdedonhaActivity.class);*/
 					Intent subMenuIntent = new Intent(SubMenuJogarAdedonhaActivity.this, NovasConexoesListenerActivity.class);
 					
-					subMenuIntent.putExtra("tempoDesejado", tempoDesejado);
-					subMenuIntent.putExtra("jogo", jogo);
-					subMenuIntent.putExtra("protocolo", protocolo);
+					//subMenuIntent.putExtra("tempoDesejado", tempoDesejado);
+					//
+					//subMenuIntent.putExtra("protocolo", protocolo);
+					subMenuIntent.putExtra(Jogador.JOGADOR, jogador);
+					subMenuIntent.putExtra(ConfiguracaoParatida.CONFIGURACAO, configuracoes); 
 					startActivity(subMenuIntent);
 					finish();
 				
@@ -336,7 +345,6 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 		int aleatorio = (int) (1 + Math.random() * 100);
 		return String.valueOf(aleatorio);
 	}
-
 
 	public String getNomeJogador() {
 		return nomeJogador;

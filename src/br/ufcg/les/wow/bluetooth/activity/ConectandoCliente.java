@@ -2,6 +2,7 @@ package br.ufcg.les.wow.bluetooth.activity;
 
 import br.ufcg.les.wow.R;
 import br.ufcg.les.wow.adedonha.activity.PreJogoAdedonhaActivity;
+import br.ufcg.les.wow.adedonha.model.Jogador;
 import br.ufcg.les.wow.bluetooth.Cliente;
 import br.ufcg.les.wow.bluetooth.ManipuladorProtocolo;
 import br.ufcg.les.wow.bluetooth.Servidor;
@@ -21,14 +22,14 @@ public class ConectandoCliente extends Activity  {
 	private final static String TAG = "[ConectandoCliente]";
 	private final ManipuladorProtocolo handle = ManipuladorProtocolo.instance();
 	private Cliente cliente;
-	private String nomeJogador;
+	private Jogador jogador;
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
         Intent intent = getIntent();
-        this.nomeJogador = (String)intent.getSerializableExtra("nomeJogador");
+        this.jogador = (Jogador) intent.getSerializableExtra(Jogador.JOGADOR);
         
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.conectando_cliente);
@@ -40,6 +41,7 @@ public class ConectandoCliente extends Activity  {
         iniciaConexao(enderecoServidor);
         
         Intent startGameIntent = new Intent(getApplicationContext(), PreJogoAdedonhaActivity.class);
+        startGameIntent.putExtra(Jogador.JOGADOR, this.jogador);
         ManipuladorProtocolo.instance().setIniciarPartidaActivity(startGameIntent, getApplicationContext());
         
         botaoCancelarAction();
@@ -85,7 +87,7 @@ public class ConectandoCliente extends Activity  {
 			Log.e(TAG, "Falhou ao tentar fazer o join", e);
 		}
 		
-		enviarNome(this.cliente.threadConectada(), this.nomeJogador);
+		enviarNome(this.cliente.threadConectada(), this.jogador.nome());
 	}
 	
 	private void enviarNome(ThreadConectada threadConectada, String nome) {

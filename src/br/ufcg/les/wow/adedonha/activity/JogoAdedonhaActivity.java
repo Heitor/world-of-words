@@ -3,7 +3,7 @@ package br.ufcg.les.wow.adedonha.activity;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
+//import java.util.Random;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -23,9 +23,9 @@ import android.widget.ScrollView;
 import android.widget.TableRow;
 import android.widget.TextView;
 import br.ufcg.les.wow.R;
+import br.ufcg.les.wow.adedonha.model.ConfiguracaoParatida;
 import br.ufcg.les.wow.adedonha.model.Letra;
-import br.ufcg.les.wow.adedonha.model.Jogo;
-import br.ufcg.les.wow.adedonha.model.User;
+import br.ufcg.les.wow.adedonha.model.Jogador;
 import br.ufcg.les.wow.bluetooth.ManipuladorProtocolo;
 import br.ufcg.les.wow.bluetooth.Servidor;
 
@@ -41,18 +41,20 @@ public class JogoAdedonhaActivity extends Activity {
 	private ImageButton botaoSair;
 	private ImageButton botaoVerificar;
 	
-	private HashMap<String, String> mapaResultados = new HashMap<String, String>();
+	//private HashMap<String, String> mapaResultados = new HashMap<String, String>();
 	private List<Button> listaBotoesItens = new ArrayList<Button>();
 	
 	private Intent intentRespostas;
 	private CountDownTimer contador; 
 	
-	private Jogo jogo;
+	//private Jogo jogo;
+	private Jogador jogador;
+	private ConfiguracaoParatida configuracao;
 	private Long tempoRestante = 0L;
 	private boolean marcouFim = false;
 	
-	private static final int TIPO_ADEDONHA = 1;
-	private long tempoInicial = 12000;
+	//private static final int TIPO_ADEDONHA = 1;
+	//private long tempoInicial = 12000;
 
 	private Dialog dialog;
 
@@ -85,7 +87,7 @@ public class JogoAdedonhaActivity extends Activity {
 	
 	private ScrollView carregaBotoesItens() {
 		
-		List<Letra> itensDesejados = jogo.getItensDesejados();
+		List<Letra> itensDesejados = this.configuracao.itensDesejados();
 		
 		ScrollView layout = (ScrollView) View.inflate(this,
 				R.layout.page_jogo_adedonha, null);
@@ -149,7 +151,8 @@ public class JogoAdedonhaActivity extends Activity {
 			public void onClick(View v) {
 				String valorInserido = valorItem.getText().toString();
 				if (entradaValida(valorInserido)) {
-					mapaResultados.put(botaoItem.getText().toString(), valorInserido);
+					jogador.putResultado(botaoItem.getText().toString(), valorInserido);
+					//mapaResultados.put(botaoItem.getText().toString(), valorInserido);
 					botaoItem.getBackground().setColorFilter(
 							new LightingColorFilter(0xFFFFFFFF, 0xff0000ff));
 					dialog.dismiss();
@@ -172,7 +175,7 @@ public class JogoAdedonhaActivity extends Activity {
 	}
 
 	private CountDownTimer inicializaContador() {
-		return new CountDownTimer(tempoInicial, 1000) {
+		return new CountDownTimer(configuracao.tempo(), 1000) {
 
 			public void onTick(long tempoMiliseconds) {
 				if (!marcouFim) {
@@ -183,11 +186,12 @@ public class JogoAdedonhaActivity extends Activity {
 		     }
 
 		     public void onFinish() {
-		    	 Servidor.instance().encerrarPartida(getTempoInicial());
+		    	 Servidor.instance().encerrarPartida(configuracao.tempo());
 		    	 if (!marcouFim) {
 		    		 tempoRestante = 0L;
 		    		 contadorTextView.setText("Fim de jogo!");
-		    		 jogo.setTempo(tempoRestante);
+		    		 //jogo.setTempo(tempoRestante);
+		    		 jogador.setTempo(tempoRestante);
 		    		 mostraDialogSairJogo(msgFimJogo(), fimDeJogoListener());
 		    	 }
 		     }
@@ -230,7 +234,7 @@ public class JogoAdedonhaActivity extends Activity {
 		return new OnClickListener() {
 			
 			public void onClick(View v) {
-				Servidor.instance().encerrarPartida(getTempoInicial());
+				Servidor.instance().encerrarPartida(configuracao.tempo());
 				finalizaVariaveisJogo();
 				mostraDialogSairJogo(msgFimJogo(), listenerSair());
 			}
@@ -250,15 +254,13 @@ public class JogoAdedonhaActivity extends Activity {
 		marcouFim = true;
 		contadorTextView.setText("Fim de jogo!");
 		System.out.println("TEMPO NO FINALIZAR VARIAVEIS =" + tempoRestante);
-		String nivelJogo = jogo.getNivelString();
 		
-		User jogador = new User(jogo.getNomeJogador(), 0, tempoRestante, TIPO_ADEDONHA);
+		//Jogador jogador = new Jogador(jogo.getNomeJogador(), 0, tempoRestante, TIPO_ADEDONHA);
 		
-		intentRespostas.putExtra("jogador", jogador);
-		intentRespostas.putExtra("tempoJogo", tempoRestante);
-		intentRespostas.putExtra("nivelJogo", nivelJogo);
-		intentRespostas.putExtra("letraJogo", letra);
-		intentRespostas.putExtra("respostas", mapaResultados);
+		intentRespostas.putExtra(Jogador.JOGADOR, this.jogador);
+		//intentRespostas.putExtra("tempoJogo", tempoRestante);
+		intentRespostas.putExtra(ConfiguracaoParatida.CONFIGURACAO, this.configuracao);
+		//intentRespostas.putExtra("respostas", mapaResultados);
 		mostraDialogSairJogo(msgFimJogo(), fimDeJogoListener());
 		//startActivity(intentRespostas);
 	}
@@ -276,7 +278,7 @@ public class JogoAdedonhaActivity extends Activity {
 	
 	public String msgFimJogo() {
 		return "FIM DE JOGO" + "\n\n Parabéns: "
-				+ jogo.getNomeJogador() + "\n Tempo restante: "
+				+ this.jogador.nome() + "\n Tempo restante: "
 				+ tempoRestante + "s";
 	}
 	
@@ -298,16 +300,8 @@ public class JogoAdedonhaActivity extends Activity {
 	}
 	
 	private void carregaLetra() {
-		List<Letra> letras = jogo.getLetrasDesejadas();
-		letra = retornaLetra(letras).getDescricao();
-	}
-	
-	private static Letra retornaLetra(List<Letra> letrasDoTema) {
-		Random posicao = new Random();
-		if (letrasDoTema.size() > 1) {
-			return letrasDoTema.get(posicao.nextInt(letrasDoTema.size()));
-		}
-		return letrasDoTema.get(0);
+		//List<Letra> letras = ;
+		letra = this.configuracao.letraDaPartida().getDescricao();
 	}
 
 	private void atualizaLetraSelecionada() {
@@ -318,7 +312,7 @@ public class JogoAdedonhaActivity extends Activity {
 
 	private void atualizaNomeJogador() {
 		nomeJogadorTextView = (TextView) findViewById(R.id.text_view_jogador_adedonha);
-		nomeJogadorTextView.setText("Boa sorte, " + jogo.getNomeJogador());
+		nomeJogadorTextView.setText("Boa sorte, " + this.jogador.nome());
 		
 		nomeJogadorTextView.setFocusableInTouchMode(true);
 		nomeJogadorTextView.requestFocus();
@@ -335,7 +329,7 @@ public class JogoAdedonhaActivity extends Activity {
 			public void onClick(View v) {
 				Intent botaoSairIntent = new Intent(getApplicationContext(), AdedonhaActivity.class);
 				
-				Servidor.instance().encerrarPartida(getTempoInicial());
+				Servidor.instance().encerrarPartida(configuracao.tempo());
 				finalizaVariaveisJogo();
 				startActivity(botaoSairIntent);
 				finish();
@@ -346,16 +340,18 @@ public class JogoAdedonhaActivity extends Activity {
 
 	private void recuperaIntent() {
 		Intent intent = getIntent();
-		jogo = (Jogo) intent.getSerializableExtra("jogo");
-		setTempoInicial(intent.getLongExtra("tempoDesejado", 120000L));
+		this.configuracao = (ConfiguracaoParatida) intent.getSerializableExtra(ConfiguracaoParatida.CONFIGURACAO);
+		this.jogador = (Jogador) intent.getSerializableExtra(Jogador.JOGADOR);
+		//jogo = (Jogo) intent.getSerializableExtra("jogo");
+		//setTempoInicial(this.configuracao.tempo());
 	}
 
-	public Jogo getJogo() {
-		return jogo;
+	public Jogador jogador() {
+		return this.jogador;
 	}
 
-	public void setJogo(Jogo jogo) {
-		this.jogo = jogo;
+	public void setJogador(Jogador jogador) {
+		this.jogador = jogador;
 	}
 
 	public TextView getContadorTextView() {
@@ -382,20 +378,12 @@ public class JogoAdedonhaActivity extends Activity {
 		this.marcouFim = marcouFim;
 	}
 
-	public long getTempoInicial() {
-		return tempoInicial;
-	}
-
-	public void setTempoInicial(long tempoInicial) {
-		this.tempoInicial = tempoInicial;
-	}
-
-	public HashMap<String, String> getMapaResultados() {
-		return mapaResultados;
-	}
-
-	public void setMapaResultados(HashMap<String, String> mapaResultados) {
-		this.mapaResultados = mapaResultados;
-	}
+//	public HashMap<String, String> getMapaResultados() {
+//		return mapaResultados;
+//	}
+//
+//	public void setMapaResultados(HashMap<String, String> mapaResultados) {
+//		this.mapaResultados = mapaResultados;
+//	}
 
 }

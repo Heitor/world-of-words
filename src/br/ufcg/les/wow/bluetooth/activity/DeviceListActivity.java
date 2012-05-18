@@ -3,6 +3,7 @@ package br.ufcg.les.wow.bluetooth.activity;
 import java.util.Set;
 
 import br.ufcg.les.wow.R;
+import br.ufcg.les.wow.adedonha.model.Jogador;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -40,13 +41,13 @@ public class DeviceListActivity extends Activity {
     private ArrayAdapter<String> mPairedDevicesArrayAdapter;
     private ArrayAdapter<String> mNewDevicesArrayAdapter;
     
-    private String nomeJogador;
+    private Jogador jogador;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
-        this.nomeJogador = (String)intent.getSerializableExtra("nomeJogador");
+        this.jogador = (Jogador) intent.getSerializableExtra(Jogador.JOGADOR);
         
         mBtAdapter = BluetoothAdapter.getDefaultAdapter();
         
@@ -163,7 +164,7 @@ public class DeviceListActivity extends Activity {
 
             Intent intent = new Intent(DeviceListActivity.this, ConectandoCliente.class);
             intent.putExtra(EXTRA_DEVICE_ADDRESS, address);
-            intent.putExtra("nomeJogador", nomeJogador);
+            intent.putExtra(Jogador.JOGADOR, jogador);
             
             startActivity(intent);
             finish();

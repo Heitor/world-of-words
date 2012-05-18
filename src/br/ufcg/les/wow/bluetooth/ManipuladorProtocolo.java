@@ -11,12 +11,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import br.ufcg.les.wow.adedonha.activity.JogoAdedonhaActivity;
-import br.ufcg.les.wow.adedonha.model.Jogo;
+import br.ufcg.les.wow.adedonha.model.ConfiguracaoParatida;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -114,7 +112,7 @@ public class ManipuladorProtocolo extends Handler implements Serializable {
 		switch (operacao) {
 		case OPERACAO_CONFIGURACOES_DA_PARTIDA:
 			Log.d(TAG, "OPERACAO_CONFIGURACOES_DA_PARTIDA");
-			Jogo configuracaoesDaPartida = (Jogo) obj;
+			ConfiguracaoParatida configuracaoesDaPartida = (ConfiguracaoParatida) obj;
 			iniciarPartida(configuracaoesDaPartida);
 			break;
 		case OPERACAO_NOME_JOGADOR:
@@ -137,8 +135,6 @@ public class ManipuladorProtocolo extends Handler implements Serializable {
 	private void encerrarPartida() {
 		if(this.encerrarPartidaIntent != null && this.encerrarPartidaContext != null) {
 			this.jogoAdedonhaActivity.configurarRespostas();
-			//this.encerrarPartidaIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			//this.encerrarPartidaContext.startActivity(this.encerrarPartidaIntent);
 		} else {
 			if(this.encerrarPartidaIntent == null) {
 				Log.e(TAG, "encerrarPartidaIntent is null" );
@@ -149,10 +145,11 @@ public class ManipuladorProtocolo extends Handler implements Serializable {
 		}
 	}
 
-	private void iniciarPartida(Jogo configuracaoesDaPartida) {
+	private void iniciarPartida(ConfiguracaoParatida configuracaoesDaPartida) {
 		if(this.iniciarPartidaIntent != null && this.iniciarPartidaContext != null && configuracaoesDaPartida != null) {
-			iniciarPartidaIntent.putExtra("jogo", configuracaoesDaPartida);
-			iniciarPartidaIntent.putExtra("tempoDesejado", configuracaoesDaPartida);
+			//iniciarPartidaIntent.putExtra("jogo", configuracaoesDaPartida);
+			//iniciarPartidaIntent.putExtra("tempoDesejado", configuracaoesDaPartida);
+			iniciarPartidaIntent.putExtra(ConfiguracaoParatida.CONFIGURACAO, configuracaoesDaPartida);
 			iniciarPartidaIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			iniciarPartidaContext.startActivity(iniciarPartidaIntent);
 		} else {
@@ -257,7 +254,7 @@ public class ManipuladorProtocolo extends Handler implements Serializable {
 		} catch (IOException e) {
 			Log.e(TAG, "Falhou tentando deserializar um objeto", e);
 		} catch (ClassNotFoundException e) {
-			Log.e(TAG, "Falhou tentando deserializar um objeto", e);
+			Log.e(TAG, "Falhou tentando deserializar um objeto.", e);
 		}
 		return null;
 	}

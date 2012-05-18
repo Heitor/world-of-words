@@ -6,8 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import br.ufcg.les.wow.adedonha.model.Jogo;
-
+import br.ufcg.les.wow.adedonha.model.ConfiguracaoParatida;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothServerSocket;
@@ -67,7 +66,7 @@ public class Servidor extends Thread implements Serializable {
 		this.encerrar = true;
 	}
 	
-	public void enviarConfiguracoesDaPartida(Jogo configuracoesDaPartida) {
+	public void enviarConfiguracoesDaPartida(ConfiguracaoParatida configuracoesDaPartida) {
 		Log.d(TAG, "Enviando configuracoes da partida.");
 		for(ThreadConectada threadConectada : this.threadsConectadas) {
 			threadConectada.iniciarPartida(configuracoesDaPartida);

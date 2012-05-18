@@ -6,14 +6,15 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.widget.TextView;
 import br.ufcg.les.wow.R;
-import br.ufcg.les.wow.adedonha.model.Jogo;
+import br.ufcg.les.wow.adedonha.model.ConfiguracaoParatida;
+import br.ufcg.les.wow.adedonha.model.Jogador;
 
 public class PreJogoAdedonhaActivity extends Activity {
 
 	private CountDownTimer contador;
 	private TextView contadorTextView;
-	private Jogo jogo;
-	private long tempoDesejado;
+	//private Jogo jogo;
+	//private long tempoDesejado;
 	private Intent preJogoIntent;
 
 	@Override
@@ -27,13 +28,17 @@ public class PreJogoAdedonhaActivity extends Activity {
 
 		Intent intent = getIntent();
 
-		jogo = (Jogo) intent.getSerializableExtra("jogo");
-		tempoDesejado = intent.getLongExtra("tempoDesejado", 180000);
+		//jogo = (Jogo) intent.getSerializableExtra("jogo");
+		//tempoDesejado = intent.getLongExtra("tempoDesejado", 180000);
+		ConfiguracaoParatida configuracao = (ConfiguracaoParatida) intent.getSerializableExtra(ConfiguracaoParatida.CONFIGURACAO);
+		Jogador jogador = (Jogador) intent.getSerializableExtra(Jogador.JOGADOR);
 
-		preJogoIntent = new Intent(PreJogoAdedonhaActivity.this, JogoAdedonhaActivity.class);
+		this.preJogoIntent = new Intent(PreJogoAdedonhaActivity.this, JogoAdedonhaActivity.class);
 
-		preJogoIntent.putExtra("jogo", jogo);
-		preJogoIntent.putExtra("tempoDesejado", tempoDesejado);
+		//preJogoIntent.putExtra("jogo", jogo);
+		//preJogoIntent.putExtra("tempoDesejado", tempoDesejado);
+		this.preJogoIntent.putExtra(Jogador.JOGADOR, jogador);
+		this.preJogoIntent.putExtra(ConfiguracaoParatida.CONFIGURACAO, configuracao);
 	}
 
 	private CountDownTimer inicializaContador() {

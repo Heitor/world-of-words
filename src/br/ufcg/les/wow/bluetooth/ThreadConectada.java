@@ -90,7 +90,7 @@ public class ThreadConectada extends Thread {
 
 	public void iniciarPartida(Serializable configuracoesDaPartida) {
 		if(configuracoesDaPartida == null) {
-			Log.e(TAG, "Falhou tentando enviar configuracoes nulas da partida.");
+			Log.e(TAG, "Falhou tentando enviar configuracoes nulas da partida..");
 			return;
 		}
 		byte[] buffer = ManipuladorProtocolo.serialize(configuracoesDaPartida);

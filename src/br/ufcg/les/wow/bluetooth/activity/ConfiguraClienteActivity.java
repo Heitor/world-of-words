@@ -1,6 +1,7 @@
 package br.ufcg.les.wow.bluetooth.activity;
 
 import br.ufcg.les.wow.R;
+import br.ufcg.les.wow.adedonha.model.Jogador;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -72,8 +73,10 @@ public class ConfiguraClienteActivity extends Activity {
 
 			public void onClick(View v) {
 				setJogador();
+				Jogador jogador = new Jogador(nomeJogador);
 				Intent listarDispositivos = new Intent(ConfiguraClienteActivity.this, DeviceListActivity.class);
-				listarDispositivos.putExtra("nomeJogador", nomeJogador);
+				//listarDispositivos.putExtra("nomeJogador", nomeJogador);
+				listarDispositivos.putExtra(Jogador.JOGADOR, jogador);
 				startActivityForResult(listarDispositivos, REQUISICAO_CONEXAO_DISPOSITIVO);
 				finish();
 			}
