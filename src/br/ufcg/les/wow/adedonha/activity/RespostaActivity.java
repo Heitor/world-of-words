@@ -2,7 +2,6 @@ package br.ufcg.les.wow.adedonha.activity;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -11,10 +10,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 import br.ufcg.les.wow.R;
 import br.ufcg.les.wow.adedonha.model.ConfiguracaoParatida;
 import br.ufcg.les.wow.adedonha.model.Jogador;
@@ -23,6 +25,18 @@ public class RespostaActivity extends Activity {
 	
 	private ConfiguracaoParatida configuracao;
 	private Jogador jogador;
+	private List<ToggleButton> evaluations = new ArrayList<ToggleButton>();
+	
+	private int pontuation = 0;
+	private TextView pontuationTextView;
+	private static final int VALID_ANSWER = 20;
+	private static final int INVALID_ANSWER = 20;
+	private static final String PONTUATION_TEXT = "Pontuação: ";
+	
+	private static final String VALID = "Válida";
+	private static final String INVALID = "Inválida";
+	private static final String EVALUATION = "Avaliação";
+	private static final int TEXT_SIZE_TOGGLE = 20;
 //	private int pontos;
 //	private Long tempoRestante = 0L;
 //	
@@ -81,15 +95,59 @@ public class RespostaActivity extends Activity {
 		}
 
 		for (int i = 0; i < jogador.resultado().size(); i++) {
-			TextView resultadoTextView = new TextView(this);
-			resultadoTextView.setText(itensList.get(i) + ": " + valoresList.get(i));
-			resultadoTextView.setTextAppearance(getApplicationContext(), R.style.negrito);
+			TextView resultadoTextView = insertAnswerTextView(itensList,
+					valoresList, i);
 			
 			vTblRow.addView(resultadoTextView);
+			
+			ToggleButton evaluationToggle = insertToggleButton();
+			vTblRow.addView(evaluationToggle);
 		}
 		
 		
 		return layout;
+	}
+
+
+	private TextView insertAnswerTextView(List<String> itensList,
+			List<String> valoresList, int i) {
+		TextView resultadoTextView = new TextView(this);
+		resultadoTextView.setText(itensList.get(i) + ": " + valoresList.get(i));
+		resultadoTextView.setTextAppearance(getApplicationContext(), R.style.negrito);
+		return resultadoTextView;
+	}
+
+
+	private ToggleButton insertToggleButton() {
+		ToggleButton evaluationToggle = new ToggleButton(this);
+		evaluationToggle.setText(EVALUATION);
+		evaluationToggle.setTextOff(INVALID);
+		evaluationToggle.setTextOn(VALID);
+		evaluationToggle.setTextSize(TEXT_SIZE_TOGGLE);
+		
+		evaluationToggle.setOnCheckedChangeListener(evaluationToggleListener());
+		
+		this.evaluations.add(evaluationToggle);
+		
+		return evaluationToggle;
+	}
+
+
+	private OnCheckedChangeListener evaluationToggleListener() {
+		return new OnCheckedChangeListener() {
+			
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				if (isChecked) {
+					pontuation += VALID_ANSWER;
+					
+				} else {
+					if (pontuation >= VALID_ANSWER) {
+						pontuation -= INVALID_ANSWER; 
+					}
+				}
+				pontuationTextView.setText(PONTUATION_TEXT + pontuation);
+			}
+		};
 	}
 	
 	
@@ -125,8 +183,8 @@ public class RespostaActivity extends Activity {
 		TextView tempoText = (TextView) findViewById(R.id.saida_tempo_adedonha);
 		tempoText.setText("Tempo: " + this.jogador.tempo() + "s");
 		
-		TextView pontuacao = (TextView) findViewById(R.id.pontos_jogador_adedonha);
-		pontuacao.setText("Pontuação: " + this.jogador.pontuacao());
+		pontuationTextView = (TextView) findViewById(R.id.pontos_jogador_adedonha);
+		pontuationTextView.setText(PONTUATION_TEXT + this.jogador.pontuacao());
 		
 		TextView letraText = (TextView) findViewById(R.id.saida_letra_adedonha);
 		letraText.setText("Letra: " + this.configuracao.letraDaPartida());
