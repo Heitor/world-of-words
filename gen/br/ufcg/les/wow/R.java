@@ -124,7 +124,7 @@ public final class R {
         public static final int opcoes=0x7f08002c;
         public static final int opcoes_dicionario=0x7f080031;
         public static final int paired_devices=0x7f08001d;
-        public static final int pontos_jogador_adedonha=0x7f080037;
+        public static final int pontos_jogador_adedonha=0x7f080038;
         public static final int pre_jogo_contador=0x7f080060;
         public static final int primeiro=0x7f080006;
         public static final int progressBar1=0x7f08000b;
@@ -141,7 +141,7 @@ public final class R {
         public static final int resposta=0x7f08004a;
         public static final int saida_jogador_adedonha=0x7f080036;
         public static final int saida_letra_adedonha=0x7f080039;
-        public static final int saida_tempo_adedonha=0x7f080038;
+        public static final int saida_tempo_adedonha=0x7f080037;
         public static final int sair=0x7f08002e;
         public static final int sair_adedonha=0x7f080028;
         public static final int sair_dicionario=0x7f080033;

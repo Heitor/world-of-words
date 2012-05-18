@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 import br.ufcg.les.wow.adedonha.model.ConfiguracaoParatida;
+import br.ufcg.les.wow.adedonha.model.Jogador;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothServerSocket;
@@ -73,10 +74,10 @@ public class Servidor extends Thread implements Serializable {
 		}
 	}
 	
-	public void encerrarPartida(Long tempoDaPartida) {
+	public void encerrarPartida(Jogador jogador) {
 		Log.d(TAG, "Encerrando partida: " + this.threadsConectadas.size());
 		for(ThreadConectada threadConectada : this.threadsConectadas) {
-			threadConectada.encerrarPartida(tempoDaPartida);
+			threadConectada.encerrarPartida(jogador);
 		}
 	}
 

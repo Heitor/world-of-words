@@ -2,6 +2,7 @@ package br.ufcg.les.wow.bluetooth.activity;
 
 import br.ufcg.les.wow.R;
 import br.ufcg.les.wow.adedonha.activity.PreJogoAdedonhaActivity;
+import br.ufcg.les.wow.adedonha.model.ConfiguracaoParatida;
 import br.ufcg.les.wow.adedonha.model.Jogador;
 import br.ufcg.les.wow.bluetooth.Cliente;
 import br.ufcg.les.wow.bluetooth.ThreadConectadaCliente;
@@ -24,6 +25,7 @@ public class ConectandoCliente extends Activity  {
 	private final ManipuladorProtocolo handle = ManipuladorProtocolo.instance();
 	private Cliente cliente;
 	private Jogador jogador;
+	private Intent startGameIntent;
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +43,9 @@ public class ConectandoCliente extends Activity  {
         Log.d(TAG, "Endereco escolhido: " + enderecoServidor);
         iniciaConexao(enderecoServidor);
         
-        Intent startGameIntent = new Intent(getApplicationContext(), PreJogoAdedonhaActivity.class);
-        startGameIntent.putExtra(Jogador.JOGADOR, this.jogador);
-        ManipuladorProtocolo.instance().setIniciarPartidaActivity(startGameIntent, getApplicationContext());
+        this.startGameIntent = new Intent(getApplicationContext(), PreJogoAdedonhaActivity.class);
+        this.startGameIntent.putExtra(Jogador.JOGADOR, this.jogador);
+        ManipuladorProtocolo.instance().setIniciarPartidaActivity(this);
         
         botaoCancelarAction();
 	}
@@ -52,6 +54,12 @@ public class ConectandoCliente extends Activity  {
 		Button botaoCancelar = (Button) findViewById(R.id.botao_cancelar);
 		botaoCancelar.setOnClickListener(botaoCancelarListener());
 
+	}
+	
+	public void iniciarPartida(ConfiguracaoParatida configuracao) {
+		this.startGameIntent.putExtra(ConfiguracaoParatida.CONFIGURACAO, configuracao);
+		startActivity(this.startGameIntent);
+		finish();
 	}
 	
 	private OnClickListener botaoCancelarListener() {

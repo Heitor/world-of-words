@@ -13,6 +13,7 @@ import java.util.Map;
 import br.ufcg.les.wow.adedonha.activity.JogoAdedonhaActivity;
 import br.ufcg.les.wow.adedonha.model.ConfiguracaoParatida;
 import br.ufcg.les.wow.adedonha.model.Jogador;
+import br.ufcg.les.wow.bluetooth.activity.ConectandoCliente;
 
 import android.content.Context;
 import android.content.Intent;
@@ -54,13 +55,14 @@ public class ManipuladorProtocolo extends Handler implements Serializable {
 	byte[] bufferOperacao = null;
 	private static ManipuladorProtocolo thisInstance = null;
 	// Usados para iniciar a tela de contagem regressiva.
-	private Intent iniciarPartidaIntent;
-	private Context iniciarPartidaContext;
+	//private Intent iniciarPartidaIntent;
+	//private Context iniciarPartidaContext;
 	
 	// Usado para bloquear a tela quando uma requisicao de encerrar partida vem do servidor.
 	//private Intent encerrarPartidaIntent;
 	//private Context encerrarPartidaContext;
 	private JogoAdedonhaActivity jogoAdedonhaActivity;
+	private ConectandoCliente conectandoClientActivity;
 	
 	private Map<String, String> dadosDaOperacao = new HashMap<String, String>();
 	
@@ -125,48 +127,53 @@ public class ManipuladorProtocolo extends Handler implements Serializable {
 			break;
 		case OPERACAO_ENCERRAR_PARTIDA:
 			Log.d(TAG, "OPERACAO_ENCERRAR_PARTIDA");
-			Long tempoDapartida = (Long) obj;
-			Log.d(TAG, "Encerrando com tempo: " + tempoDapartida);
-			encerrarPartida();
+			Jogador jogador = (Jogador) obj;
+			Log.d(TAG, "Encerrando com tempo: " + jogador.tempo());
+			encerrarPartida(jogador);
 			break;
 		case OPERACAO_JOGADOR:
 			Log.d(TAG, "OPERACAO_JOGADOR");
-			Jogador jogador = (Jogador) obj;
+			jogador = (Jogador) obj;
 			recebeJogador(jogador);
 			break;
 		default:
-			Log.e(TAG, "OPERACAO NAO SUPORTADA");
+			Log.e(TAG, "OPERACAO NAO SUPORTADA!!");
 			break;
 		}
 	}
 	
 	private void recebeJogador(Jogador jogador) {
 		Log.d(TAG, "NOME_DO_JOGADOR: " + jogador.nome());
-	}
-	
-	private void encerrarPartida() {
 		if(this.jogoAdedonhaActivity != null ) {
-			this.jogoAdedonhaActivity.configurarRespostas();
+			this.jogoAdedonhaActivity.configurarRespostas(jogador);
 		} else {
 			if(this.jogoAdedonhaActivity == null) {
 				Log.e(TAG, "jogoAdedonhaActivity is null" );
 			}
 		}
 	}
+	
+	private void encerrarPartida(Jogador jogador) {
+		if(this.jogoAdedonhaActivity != null ) {
+			this.jogoAdedonhaActivity.configurarRespostas(jogador);
+		} else {
+			if(this.jogoAdedonhaActivity == null) {
+				Log.e(TAG, "jogoAdedonhaActivity is null." );
+			}
+		}
+	}
 
 	private void iniciarPartida(ConfiguracaoParatida configuracaoesDaPartida) {
-		if(this.iniciarPartidaIntent != null && this.iniciarPartidaContext != null && configuracaoesDaPartida != null) {
+		if(this.conectandoClientActivity != null && configuracaoesDaPartida != null) {
 			//iniciarPartidaIntent.putExtra("jogo", configuracaoesDaPartida);
 			//iniciarPartidaIntent.putExtra("tempoDesejado", configuracaoesDaPartida);
-			iniciarPartidaIntent.putExtra(ConfiguracaoParatida.CONFIGURACAO, configuracaoesDaPartida);
-			iniciarPartidaIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			iniciarPartidaContext.startActivity(iniciarPartidaIntent);
+			this.conectandoClientActivity.iniciarPartida(configuracaoesDaPartida);
+			//iniciarPartidaIntent.putExtra(ConfiguracaoParatida.CONFIGURACAO, configuracaoesDaPartida);
+			//iniciarPartidaIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			//iniciarPartidaContext.startActivity(iniciarPartidaIntent);
 		} else {
-			if(this.iniciarPartidaIntent == null) {
-				Log.e(TAG, "startGameIntent is null" );
-			}
-			if(this.iniciarPartidaContext == null) {
-				Log.e(TAG, "startGameContext is null" );
+			if(this.conectandoClientActivity == null) {
+				Log.e(TAG, "conectandoClientActivity is null" );
 			}
 			if(configuracaoesDaPartida == null) {
 				Log.e(TAG, "configuracaoesDaPartida is null" );
@@ -268,14 +275,17 @@ public class ManipuladorProtocolo extends Handler implements Serializable {
 		return null;
 	}
 	
-	public synchronized void setIniciarPartidaActivity(Intent startGameIntent, Context startGameContext) {
-		this.iniciarPartidaIntent = startGameIntent;
-		this.iniciarPartidaContext = startGameContext;
+	public synchronized void setIniciarPartidaActivity(ConectandoCliente conectandoClientActivity) {
+		this.conectandoClientActivity = conectandoClientActivity;
 	}
 	
 	public synchronized void setEncerrarPartidaActivity(JogoAdedonhaActivity jogoAdedonhaActivity) {
 		this.jogoAdedonhaActivity = jogoAdedonhaActivity;
 	}
+	
+	//public synchronized void setIniciarRespostasActivity(JogoAdedonhaActivity jogoAdedonhaActivity) {
+		//this.jogoAdedonhaActivity = jogoAdedonhaActivity;
+	//}
 	
 	public static synchronized ManipuladorProtocolo instance() {
 		if(thisInstance == null) {

@@ -186,7 +186,7 @@ public class JogoAdedonhaActivity extends Activity {
 		     }
 
 		     public void onFinish() {
-		    	 Servidor.instance().encerrarPartida(configuracao.tempo());
+		    	 Servidor.instance().encerrarPartida(jogador);
 		    	 if (!marcouFim) {
 		    		 tempoRestante = 0L;
 		    		 contadorTextView.setText("Fim de jogo!");
@@ -234,11 +234,15 @@ public class JogoAdedonhaActivity extends Activity {
 		return new OnClickListener() {
 			
 			public void onClick(View v) {
-				Servidor.instance().encerrarPartida(configuracao.tempo());
 				finalizaVariaveisJogo();
+				Servidor.instance().encerrarPartida(jogador);
 				//mostraDialogSairJogo(msgFimJogo(), listenerSair());
 			}
 		};
+	}
+	
+	public void setJogadorOnRespostasIntent(Jogador jogador) {
+		intentRespostas.putExtra(Jogador.JOGADOR, jogador);
 	}
 	
 	private void finalizaVariaveisJogo() {
@@ -246,11 +250,11 @@ public class JogoAdedonhaActivity extends Activity {
 		contadorTextView.setText("Fim de jogo!");
 		System.out.println("TEMPO NO FINALIZAR VARIAVEIS =" + tempoRestante);
 		
-		configurarRespostas();
+		configurarRespostas(this.jogador);
 		
 	}
 
-	public void configurarRespostas() {
+	public void configurarRespostas(Jogador jogador) {
 		marcouFim = true;
 		contadorTextView.setText("Fim de jogo!");
 		System.out.println("TEMPO NO FINALIZAR VARIAVEIS =" + tempoRestante);
@@ -258,7 +262,7 @@ public class JogoAdedonhaActivity extends Activity {
 		//Jogador jogador = new Jogador(jogo.getNomeJogador(), 0, tempoRestante, TIPO_ADEDONHA);
 		
 		this.jogador.setTempo(tempoRestante);
-		intentRespostas.putExtra(Jogador.JOGADOR, this.jogador);
+		intentRespostas.putExtra(Jogador.JOGADOR, jogador);
 		//intentRespostas.putExtra("tempoJogo", tempoRestante);
 		intentRespostas.putExtra(ConfiguracaoParatida.CONFIGURACAO, this.configuracao);
 		//intentRespostas.putExtra("respostas", mapaResultados);
@@ -337,8 +341,8 @@ public class JogoAdedonhaActivity extends Activity {
 			public void onClick(View v) {
 				Intent botaoSairIntent = new Intent(getApplicationContext(), AdedonhaActivity.class);
 				
-				Servidor.instance().encerrarPartida(configuracao.tempo());
 				finalizaVariaveisJogo();
+				Servidor.instance().encerrarPartida(jogador);
 				startActivity(botaoSairIntent);
 				//finish();
 			}

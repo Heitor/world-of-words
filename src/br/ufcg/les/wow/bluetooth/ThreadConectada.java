@@ -122,8 +122,8 @@ public class ThreadConectada extends Thread {
 		enviar(buffer);
 	}
 	
-	public void encerrarPartida(Serializable tempoDaPartida) {
-		byte[] buffer = ManipuladorProtocolo.serialize(tempoDaPartida);
+	public void encerrarPartida(Serializable jogador) {
+		byte[] buffer = ManipuladorProtocolo.serialize(jogador);
 		byte[] bufferCabecalho = cabecalhoEncerrarPartida(buffer);
 		enviar(bufferCabecalho);
 		enviar(buffer);
