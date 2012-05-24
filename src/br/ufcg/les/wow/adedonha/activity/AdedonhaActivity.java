@@ -11,12 +11,15 @@ import android.view.Window;
 import android.widget.Button;
 import br.ufcg.les.wow.R;
 import br.ufcg.les.wow.bluetooth.activity.ConfiguracoesDoJogoActivity;
+import br.ufcg.les.wow.persistence.dao.FactoryDao;
+import br.ufcg.les.wow.persistence.dao.RankingDAO;
 
 public class AdedonhaActivity extends Activity {
 	
 	private BluetoothAdapter mBluetoothAdapter = null;
 	private static final String TAG = "AdedonhaActivity";
 	private static final boolean D = true;
+	private RankingDAO rankingDAO = FactoryDao.getRankingDaoInstance();
 
 	// Intent request codes
 	private static final int REQUEST_CONNECT_DEVICE = 1;
@@ -46,6 +49,7 @@ public class AdedonhaActivity extends Activity {
 		
 		botaoJogarAction();
 		botaoSairAction();
+		loadRankingButton();
 		
 //		AdedonhaDAOImpl adedonhaDao = new AdedonhaDAOImpl(getApplicationContext());
 //		try {
@@ -62,7 +66,23 @@ public class AdedonhaActivity extends Activity {
 
 	}
 	
-	 @Override
+	 private void loadRankingButton() {
+		 Button rankingButton = (Button) findViewById(R.id.ranking_adedonha);
+		 rankingButton.setOnClickListener(rankingButtonListener());
+	}
+
+	private OnClickListener rankingButtonListener() {
+		return new OnClickListener() {
+			
+			public void onClick(View arg0) {
+				Intent rankingIntent = new Intent(AdedonhaActivity.this, RankingActivity.class);
+				rankingIntent.putExtra("rankingDao", rankingDAO);
+				startActivity(rankingIntent);
+			}
+		};
+	}
+
+	@Override
 	    public void onStart() {
 	        super.onStart();
 	        if(D) Log.e(TAG, "++ ON START ++");

@@ -7,9 +7,11 @@ public class Jogador implements Comparable<Jogador>, Serializable {
 	public static final String JOGADOR = "jogador";
 	
 	private static final long serialVersionUID = -6252383088422660695L;
-	private final String nome;
+	private String nome;
+
 	private int pontuacao;
 	private Long tempo = 0L;
+	private long id;
 	private final HashMap<String, String> resultados;
 	
 	public Jogador(String nome) {
@@ -66,5 +68,21 @@ public class Jogador implements Comparable<Jogador>, Serializable {
 	@Override
 	public String toString() {
 		return  this.nome + " --- "+ this.pontuacao + " pontos ";
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+	
+	public String getNome() {
+		return nome;
+	}
+	
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 }

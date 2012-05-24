@@ -1,0 +1,14 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@drawable/bg_respostas"
+    android:layout_height="wrap_content" >
+
+    <LinearLayout
+        android:id="@+id/group_ranking_adedonha"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+        
+    </LinearLayout>
+
+</ScrollView>
