@@ -10,6 +10,9 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 import br.ufcg.les.wow.R;
+import br.ufcg.les.wow.bluetooth.Cliente;
+import br.ufcg.les.wow.bluetooth.ManipuladorProtocolo;
+import br.ufcg.les.wow.bluetooth.Servidor;
 import br.ufcg.les.wow.bluetooth.activity.ConfiguracoesDoJogoActivity;
 import br.ufcg.les.wow.persistence.dao.FactoryDao;
 import br.ufcg.les.wow.persistence.dao.RankingDAO;
@@ -63,7 +66,19 @@ public class AdedonhaActivity extends Activity {
 //			e.printStackTrace();
 //		}
 //		adedonhaDao.close();
-
+		
+	}
+	
+	private void clearBluetooth() {
+		ManipuladorProtocolo.newInstance();
+		if(Servidor.instance() != null) {
+			Log.d(TAG, "cancelando servidor...");
+			Servidor.instance().cancelar();
+		}
+		if(Cliente.instance() != null) {
+			Log.d(TAG, "cancelando cliente...");
+			Cliente.instance().cancelar();
+		}
 	}
 	
 	 private void loadRankingButton() {
@@ -86,7 +101,7 @@ public class AdedonhaActivity extends Activity {
 	    public void onStart() {
 	        super.onStart();
 	        if(D) Log.e(TAG, "++ ON START ++");
-
+	        clearBluetooth();
 	        // If BT is not on, request that it be enabled.
 	        // setupChat() will then be called during onActivityResult
 //	        if (!mBluetoothAdapter.isEnabled()) {
@@ -131,7 +146,7 @@ public class AdedonhaActivity extends Activity {
 				Intent outButton = new Intent(AdedonhaActivity.this,
 						telaDestino);
 				startActivity(outButton);
-				//finish();
+				finish();
 			}
 		};
 	}

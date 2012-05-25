@@ -52,7 +52,7 @@ public class RespostaActivity extends Activity {
 		Intent intent = getIntent();
 		
 		this.configuracao = (ConfiguracaoParatida) intent.getSerializableExtra(ConfiguracaoParatida.CONFIGURACAO);
-		this.jogador = (Jogador) intent.getSerializableExtra(Jogador.JOGADOR);
+		this.jogador = (Jogador) intent.getSerializableExtra(Jogador.JOGADOR+"2");
 		
 		//setLetraJogo(intent.getStringExtra("letraJogo"));
 		

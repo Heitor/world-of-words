@@ -97,7 +97,7 @@ public class ThreadConectada extends Thread {
 	
 	public void enviarNome(Serializable nome) {
 		if(nome == null) {
-			Log.e(TAG, "Falhou tentando enviar um nome nulo.");
+			Log.e(TAG, "Falhou tentando enviar um nome nulo.a");
 			return;
 		}
 		byte[] buffer = ManipuladorProtocolo.serialize(nome);
@@ -134,6 +134,7 @@ public class ThreadConectada extends Thread {
 			streamDeSaida.write(buffer);
 			this.handle.obtainMessage(ManipuladorProtocolo.ENVIAR_MENSAGEM, buffer.length, -1, buffer).sendToTarget();
 		} catch (IOException e) {
+			this.handle.obtainMessage(ManipuladorProtocolo.RECEBER_MENSAGEM, buffer.length, -1, buffer).sendToTarget();
 			Log.e(TAG, "Exception during write", e);
 		}
 	}

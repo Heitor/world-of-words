@@ -10,10 +10,12 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 import br.ufcg.les.wow.R;
+import br.ufcg.les.wow.adedonha.activity.AdedonhaActivity;
 import br.ufcg.les.wow.adedonha.activity.PreJogoAdedonhaActivity;
 import br.ufcg.les.wow.adedonha.model.ConfiguracaoParatida;
 import br.ufcg.les.wow.adedonha.model.Jogador;
 import br.ufcg.les.wow.bluetooth.Servidor;
+import br.ufcg.les.wow.bluetooth.ThreadConectada;
 
 public class NovasConexoesListenerActivity extends Activity {
 	private final static String TAG = "[NovasConexoesListenerActivity]";
@@ -35,8 +37,6 @@ public class NovasConexoesListenerActivity extends Activity {
         Intent intent = getIntent();
         this.configuracao = (ConfiguracaoParatida) intent.getSerializableExtra(ConfiguracaoParatida.CONFIGURACAO);
         this.jogador = (Jogador) intent.getSerializableExtra(Jogador.JOGADOR);
-        //jogo = (Jogo) intent.getSerializableExtra("jogo");
-        //tempoDesejado = intent.getLongExtra("tempoDesejado", 120000L);
         
         criaServidor();
         botaoIniciarAction();
@@ -57,9 +57,6 @@ public class NovasConexoesListenerActivity extends Activity {
 				
 				bluetoothStart.putExtra(ConfiguracaoParatida.CONFIGURACAO, configuracao);
 				bluetoothStart.putExtra(Jogador.JOGADOR, jogador);
-				//bluetoothStart.putExtra("jogo", jogo);
-				//bluetoothStart.putExtra("tempoDesejado", tempoDesejado);
-				//bluetoothStart.putExtra("servidor", servidor);
 				startActivity(bluetoothStart);
 				finish();
 			}
@@ -93,6 +90,8 @@ public class NovasConexoesListenerActivity extends Activity {
 		Log.d(TAG, "Listener encerrado com sucesso.");
 		if(this.servidor.threadsConectadas().size() == 0) {
 			Log.e(TAG, "Nenhum jogador se uniu a partida.");
+			Intent bluetoothStart = new Intent(NovasConexoesListenerActivity.this, AdedonhaActivity.class);
+			startActivity(bluetoothStart);
 		}
 		this.servidor.enviarConfiguracoesDaPartida(this.configuracao);
 	}

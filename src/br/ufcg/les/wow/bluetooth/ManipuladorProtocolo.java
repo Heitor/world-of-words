@@ -15,8 +15,6 @@ import br.ufcg.les.wow.adedonha.model.ConfiguracaoParatida;
 import br.ufcg.les.wow.adedonha.model.Jogador;
 import br.ufcg.les.wow.bluetooth.activity.ConectandoCliente;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -54,14 +52,10 @@ public class ManipuladorProtocolo extends Handler implements Serializable {
 	
 	byte[] bufferOperacao = null;
 	private static ManipuladorProtocolo thisInstance = null;
-	// Usados para iniciar a tela de contagem regressiva.
-	//private Intent iniciarPartidaIntent;
-	//private Context iniciarPartidaContext;
-	
+
 	// Usado para bloquear a tela quando uma requisicao de encerrar partida vem do servidor.
-	//private Intent encerrarPartidaIntent;
-	//private Context encerrarPartidaContext;
 	private JogoAdedonhaActivity jogoAdedonhaActivity;
+	// Usados para iniciar a tela de contagem regressiva.
 	private ConectandoCliente conectandoClientActivity;
 	
 	private Map<String, String> dadosDaOperacao = new HashMap<String, String>();
@@ -142,10 +136,12 @@ public class ManipuladorProtocolo extends Handler implements Serializable {
 		}
 	}
 	
-	private void recebeJogador(Jogador jogador) {
-		Log.d(TAG, "NOME_DO_JOGADOR: " + jogador.nome());
+	public void recebeJogador(Jogador jogador) {
+		Log.d(TAG, "NOME_DO_JOGADORa: " + jogador.nome());
 		if(this.jogoAdedonhaActivity != null ) {
-			this.jogoAdedonhaActivity.configurarRespostas(jogador);
+			if(!this.jogoAdedonhaActivity.ready()) {
+				this.jogoAdedonhaActivity.configurarRespostas(jogador);
+			}
 		} else {
 			if(this.jogoAdedonhaActivity == null) {
 				Log.e(TAG, "jogoAdedonhaActivity is null" );
@@ -153,9 +149,23 @@ public class ManipuladorProtocolo extends Handler implements Serializable {
 		}
 	}
 	
-	private void encerrarPartida(Jogador jogador) {
+	public void encerrarPartida(Jogador jogador) {
+		Log.d(TAG, "encerrrando partida...");
 		if(this.jogoAdedonhaActivity != null ) {
-			this.jogoAdedonhaActivity.configurarRespostas(jogador);
+			Log.d(TAG, "activity is not null...");
+			if(!this.jogoAdedonhaActivity.ready()) {
+				Log.d(TAG, "activity is not ready. Goooooood...a");
+				if(Cliente.instance() != null) {
+					Cliente.instance().enviarJogador(this.jogoAdedonhaActivity.jogador());
+				} else {
+					if(Servidor.instance() != null) {
+						Servidor.instance().enviarJogador(this.jogoAdedonhaActivity.jogador());
+					}
+				}
+				Log.d(TAG, "player was sent. :" + this.jogoAdedonhaActivity.jogador());
+				this.jogoAdedonhaActivity.configurarRespostas(jogador);
+				Log.d(TAG, "configurarRespostas foi.");
+			}
 		} else {
 			if(this.jogoAdedonhaActivity == null) {
 				Log.e(TAG, "jogoAdedonhaActivity is null." );
@@ -163,14 +173,9 @@ public class ManipuladorProtocolo extends Handler implements Serializable {
 		}
 	}
 
-	private void iniciarPartida(ConfiguracaoParatida configuracaoesDaPartida) {
+	public void iniciarPartida(ConfiguracaoParatida configuracaoesDaPartida) {
 		if(this.conectandoClientActivity != null && configuracaoesDaPartida != null) {
-			//iniciarPartidaIntent.putExtra("jogo", configuracaoesDaPartida);
-			//iniciarPartidaIntent.putExtra("tempoDesejado", configuracaoesDaPartida);
 			this.conectandoClientActivity.iniciarPartida(configuracaoesDaPartida);
-			//iniciarPartidaIntent.putExtra(ConfiguracaoParatida.CONFIGURACAO, configuracaoesDaPartida);
-			//iniciarPartidaIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			//iniciarPartidaContext.startActivity(iniciarPartidaIntent);
 		} else {
 			if(this.conectandoClientActivity == null) {
 				Log.e(TAG, "conectandoClientActivity is null" );
@@ -286,6 +291,11 @@ public class ManipuladorProtocolo extends Handler implements Serializable {
 	//public synchronized void setIniciarRespostasActivity(JogoAdedonhaActivity jogoAdedonhaActivity) {
 		//this.jogoAdedonhaActivity = jogoAdedonhaActivity;
 	//}
+	
+	public static synchronized ManipuladorProtocolo newInstance() {
+		thisInstance = new ManipuladorProtocolo();
+		return thisInstance;
+	}
 	
 	public static synchronized ManipuladorProtocolo instance() {
 		if(thisInstance == null) {
