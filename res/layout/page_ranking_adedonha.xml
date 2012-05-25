@@ -2,13 +2,34 @@
     android:layout_width="match_parent"
     android:background="@drawable/bg_respostas"
     android:layout_height="wrap_content" >
+    
 
     <LinearLayout
-        android:id="@+id/group_ranking_adedonha"
-        android:layout_width="match_parent"
+        android:id="@+id/main_group_adedonha"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:orientation="vertical" >
         
-    </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/ranking_text"
+            android:textColor="#363636"
+            android:layout_marginTop="5dp"
+            android:textSize="21dp"
+            android:textStyle="bold" />
+        
+        <LinearLayout
+            android:id="@+id/group_ranking_adedonha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal"
+            android:orientation="vertical" >
+        </LinearLayout>
+        
+</LinearLayout>
 
 </ScrollView>

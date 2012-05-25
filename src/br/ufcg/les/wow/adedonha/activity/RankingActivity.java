@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -55,8 +56,9 @@ public class RankingActivity extends Activity {
 		int count = 1;
 		for (Jogador player : playerList) {
 			TextView playerTextView = new TextView(this);
-			playerTextView.setText(count + SEPARATOR + player.getNome());
+			playerTextView.setText(count + SEPARATOR + player.toString());
 			playerTextView.setTextSize(20);
+			playerTextView.setTextColor(Color.parseColor("#363636"));
 			vTblRow.addView(playerTextView);
 			count++;
 		}

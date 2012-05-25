@@ -45,7 +45,7 @@ public class Jogador implements Comparable<Jogador>, Serializable {
 		this.pontuacao = pontuacao; 
 	}
 	
-	public int pontuacao() {
+	public int getPontuacao() {
 		return this.pontuacao;
 	}
 	
@@ -58,11 +58,11 @@ public class Jogador implements Comparable<Jogador>, Serializable {
 	}
 
 	public int compareTo(Jogador jogador) {
-		if(jogador.pontuacao() == this.pontuacao()) {
+		if(jogador.getPontuacao() == this.getPontuacao()) {
 			return (int) (this.tempo() - jogador.tempo());
 		} 
 		
-		return jogador.pontuacao() - this.pontuacao(); 
+		return jogador.getPontuacao() - this.getPontuacao(); 
 	}
 	
 	@Override

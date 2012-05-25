@@ -23,6 +23,10 @@ public class RankingDAO implements Serializable {
 		Collections.sort(listJogador);
 	}
 	
+	public void sortRanking() {
+		Collections.sort(listJogador);
+	}
+	
 	public List<Jogador> getRanking() {
 		return listJogador;
 	}
@@ -42,12 +46,11 @@ public class RankingDAO implements Serializable {
 	}
 	
 	//@Deprecated
-	public List<Jogador> carregaRankingDefault() {
-		List<Jogador> listaJogadorsDefault = new ArrayList<Jogador>(TAMANHO_DO_RANKING);
+	public void carregaRankingDefault() {
+		listJogador = new ArrayList<Jogador>(TAMANHO_DO_RANKING);
 		for (int i = 0; i < TAMANHO_DO_RANKING; i++) {
-			listaJogadorsDefault.add(new Jogador("Default0"+i, i * 10));
+			listJogador.add(new Jogador("Default0"+i, i * 10));
 		}
-		
-		return listaJogadorsDefault;
+		sortRanking();
 	}
 }

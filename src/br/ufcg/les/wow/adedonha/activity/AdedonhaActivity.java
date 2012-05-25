@@ -50,6 +50,7 @@ public class AdedonhaActivity extends Activity {
 		botaoJogarAction();
 		botaoSairAction();
 		loadRankingButton();
+		loadHelpButton();
 		
 //		AdedonhaDAOImpl adedonhaDao = new AdedonhaDAOImpl(getApplicationContext());
 //		try {
@@ -66,7 +67,23 @@ public class AdedonhaActivity extends Activity {
 
 	}
 	
-	 private void loadRankingButton() {
+	 private void loadHelpButton() {
+		 Button helpButton = (Button) findViewById(R.id.ajuda_adedonha);
+		 helpButton.setOnClickListener(helpButtonListener());
+		
+	}
+
+	private OnClickListener helpButtonListener() {
+		return new OnClickListener() {
+			
+			public void onClick(View arg0) {
+				Intent rankingIntent = new Intent(AdedonhaActivity.this, HelpActivity.class);
+				startActivity(rankingIntent);
+			}
+		};
+	}
+
+	private void loadRankingButton() {
 		 Button rankingButton = (Button) findViewById(R.id.ranking_adedonha);
 		 rankingButton.setOnClickListener(rankingButtonListener());
 	}

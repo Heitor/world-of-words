@@ -68,9 +68,10 @@
     <string name="encerrar">Encerrar</string>
     <string name="aguarda_jogadores">Aguardando Conexões</string>
     <string name="iniciar_partida">Iniciar</string>
+    <string name="ranking_text">Melhores Jogadores</string>
     
     <!--  DeviceListActivity -->
-    <string name="scanning">Buscando por dispositivos...</string>
+    <string name="scanning">Buscando por dispositivos&#8230;</string>
     <string name="select_device">Selecione o dispositivo servidor</string>
     <string name="none_paired">Nenhum dispositivo foi pareado</string>
     <string name="none_found">Nenhum dispositivo encontrado</string>

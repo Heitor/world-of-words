@@ -184,7 +184,7 @@ public class RespostaActivity extends Activity {
 		tempoText.setText("Tempo: " + this.jogador.tempo() + "s");
 		
 		pontuationTextView = (TextView) findViewById(R.id.pontos_jogador_adedonha);
-		pontuationTextView.setText(PONTUATION_TEXT + this.jogador.pontuacao());
+		pontuationTextView.setText(PONTUATION_TEXT + this.jogador.getPontuacao());
 		
 		TextView letraText = (TextView) findViewById(R.id.saida_letra_adedonha);
 		letraText.setText("Letra: " + this.configuracao.letraDaPartida());

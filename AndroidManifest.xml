@@ -40,9 +40,27 @@
             android:name=".adedonha.activity.ListaItemActivity"
             android:screenOrientation="portrait" 
             android:label="@string/opcao_marcar_adedonha" >
+        </activity> 
+        
+         <activity 
+            android:name=".adedonha.activity.AboutUsActivity"
+            android:screenOrientation="portrait" 
+            android:label="@string/app_name_adedonha" >
         </activity>
         
-        <activity
+        <activity 
+            android:name=".adedonha.activity.HelpActivity"
+            android:screenOrientation="portrait" 
+            android:label="@string/app_name_adedonha" >
+        </activity>
+        
+        <activity 
+            android:name=".adedonha.activity.AboutTheGameActivity"
+            android:screenOrientation="portrait" 
+            android:label="@string/app_name_adedonha" >
+        </activity>
+        
+        <activity 
             android:name=".adedonha.activity.ListaLetraActivity"
             android:screenOrientation="portrait" 
             android:label="@string/opcao_excluir_adedonha" >
