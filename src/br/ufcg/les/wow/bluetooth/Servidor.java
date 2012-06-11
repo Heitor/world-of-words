@@ -26,7 +26,7 @@ public class Servidor extends Thread implements Serializable {
 	private final BluetoothServerSocket servidorSocket;
 	private boolean encerrar = false;
 
-	private final List<ThreadConectada> threadsConectadas = new ArrayList<ThreadConectada>();
+	private List<ThreadConectada> threadsConectadas = new ArrayList<ThreadConectada>();
 
 	private Servidor() {
 		BluetoothServerSocket servidorSocketTemporario = null;
@@ -49,6 +49,7 @@ public class Servidor extends Thread implements Serializable {
 				socketConectado = servidorSocket.accept();
 			} catch (IOException e) {
 				Log.e(TAG, "Falhou enquanto aceitava uma conexao socket.", e);
+				break;
 			}
 		}
 
@@ -76,8 +77,24 @@ public class Servidor extends Thread implements Serializable {
 	
 	public void encerrarPartida(Jogador jogador) {
 		Log.d(TAG, "Encerrando partida: " + this.threadsConectadas.size());
+		if(this.threadsConectadas.isEmpty()) {
+			
+			ManipuladorProtocolo h = ManipuladorProtocolo.instance();
+			h.encerrarPartida(jogador);
+			
+		}
 		for(ThreadConectada threadConectada : this.threadsConectadas) {
 			threadConectada.encerrarPartida(jogador);
+		}
+	}
+	
+	public void enviarJogador(Jogador jogador) {
+		if(this.threadsConectadas == null || this.threadsConectadas.size() < 1) {
+			Log.e(TAG, "Nao conseguiu uma ThreadConectada.");
+			return;
+		}
+		for(ThreadConectada threadConectada : this.threadsConectadas) {
+			threadConectada.enviarJogador(jogador);
 		}
 	}
 
@@ -89,6 +106,26 @@ public class Servidor extends Thread implements Serializable {
 		ThreadConectada threadsConectadas = new ThreadConectada(socket, handle);
 		threadsConectadas.start();
 		this.threadsConectadas.add(threadsConectadas);
+	}
+	
+	public void cancelar() {
+		try {
+			for (ThreadConectada threadsConectada : this.threadsConectadas) {
+				try {
+					Log.d(TAG, "cancelando...");
+					threadsConectada.cancelar();
+				} catch(Exception ex) {}
+				threadsConectada.stop();
+			}
+			encerrarServidor();
+		} catch (Exception ex) {
+			
+		}
+		finally {
+			this.threadsConectadas.clear();
+			this.threadsConectadas = null;
+			servidor = null;
+		}
 	}
 
 	private void encerrarServidor() {
@@ -118,7 +155,6 @@ public class Servidor extends Thread implements Serializable {
 			adaptadorBluetooth = BluetoothAdapter.getDefaultAdapter();
 			if(adaptadorBluetooth == null) {
 				Log.e(TAG, "Dispositivo bluetooth nao encontrado.");
-				//habilitaBluetooth();
 			} else {
 				Log.d(TAG, "Dispositivo bluetooth encontrado.");
 			}

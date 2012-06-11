@@ -12,7 +12,7 @@ public class Cliente {
 	
 	private Cliente(ConectandoCliente conectandoClienteActivity,
 			BluetoothDevice device, ManipuladorProtocolo handle) {
-		this.threadConectadaCliente = new ThreadConectadaCliente(conectandoClienteActivity, device, handle);
+		this.threadConectadaCliente = new ThreadConectadaCliente(device, handle);
 	}
 	
 	public static synchronized Cliente newInstance(
@@ -46,11 +46,26 @@ public class Cliente {
 		threadConectadaCliente.threadConectada().enviarNome(nome);
 	}
 	
+	public void encerrarPartida(Jogador jogador) {
+		if(threadConectadaCliente == null || threadConectadaCliente.threadConectada() == null) {
+			Log.e(TAG, "Nao conseguiu uma ThreadConectada.");
+			return;
+		}
+		threadConectadaCliente.threadConectada().encerrarPartida(jogador);
+	}
+	
 	public void enviarJogador(Jogador jogador) {
 		if(threadConectadaCliente == null || threadConectadaCliente.threadConectada() == null) {
 			Log.e(TAG, "Nao conseguiu uma ThreadConectada.");
 			return;
 		}
 		threadConectadaCliente.threadConectada().enviarJogador(jogador);
+	}
+	
+	public void cancelar() {
+		if(threadConectadaCliente != null && threadConectadaCliente.threadConectada() != null) {
+			threadConectadaCliente.cancelarConexao();
+		}
+		thisInstance = null;
 	}
 }

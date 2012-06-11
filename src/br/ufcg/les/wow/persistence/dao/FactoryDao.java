@@ -4,6 +4,8 @@ public class FactoryDao {
 	
 	private static RankingDAO instance;
 	
+	private static UsuarioDAO instanceUsuario;
+	
 	private FactoryDao() {
 	}
 	
@@ -12,6 +14,13 @@ public class FactoryDao {
 			instance = new RankingDAO();
 		}
 		return instance;
+	}
+	
+	public static synchronized UsuarioDAO getUsuarioDaoInstance() {
+		if (instanceUsuario == null) {
+			instanceUsuario = new UsuarioDAO(null);
+		}
+		return instanceUsuario;
 	}
 
 }

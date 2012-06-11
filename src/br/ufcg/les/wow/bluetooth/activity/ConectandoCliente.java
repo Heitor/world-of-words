@@ -1,14 +1,13 @@
 package br.ufcg.les.wow.bluetooth.activity;
 
 import br.ufcg.les.wow.R;
+import br.ufcg.les.wow.adedonha.activity.AdedonhaActivity;
 import br.ufcg.les.wow.adedonha.activity.PreJogoAdedonhaActivity;
 import br.ufcg.les.wow.adedonha.model.ConfiguracaoParatida;
 import br.ufcg.les.wow.adedonha.model.Jogador;
 import br.ufcg.les.wow.bluetooth.Cliente;
-import br.ufcg.les.wow.bluetooth.ThreadConectadaCliente;
 import br.ufcg.les.wow.bluetooth.ManipuladorProtocolo;
 import br.ufcg.les.wow.bluetooth.Servidor;
-import br.ufcg.les.wow.bluetooth.ThreadConectada;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -67,9 +66,13 @@ public class ConectandoCliente extends Activity  {
 
 			public void onClick(View v) {
 				Intent cancelarIntent = new Intent(ConectandoCliente.this,
-						ConfiguraClienteActivity.class);
-				startActivity(cancelarIntent);
-				finish();
+						AdedonhaActivity.class);
+				try {
+					cancela();
+				} finally {
+					startActivity(cancelarIntent);
+					finish();
+				}
 			}
 		};
 	}
@@ -97,12 +100,36 @@ public class ConectandoCliente extends Activity  {
 	 * Ele devia mostrar uma telinha dizendo que deu merda.
 	 */
 	public void cancela() {
-		Log.e(TAG, "Deu erro, e cancela foi chamado com sucesso.");
-		Intent cancelarIntent = new Intent(ConectandoCliente.this,
-				ConfiguraClienteActivity.class);
-		startActivity(cancelarIntent);
-		Log.e(TAG, "Deu erro, e cancela foi chamado com sucesso. lol");
-		finish();
+		
+		if(this.cliente != null) {
+			this.cliente.encerrarPartida(jogador);
+			this.cliente.cancelar();
+			clearBluetooth();
+		} else {
+			this.cliente = Cliente.instance();
+			if(this.cliente != null) {
+				this.cliente.encerrarPartida(jogador);
+				this.cliente.cancelar();
+			}
+			clearBluetooth();
+		}
+		
+//		Log.e(TAG, "Deu erro, e cancela foi chamado com sucesso.");
+//		Intent cancelarIntent = new Intent(ConectandoCliente.this,
+//				AdedonhaActivity.class);
+//		startActivity(cancelarIntent);
+//		Log.e(TAG, "Deu erro, e cancela foi chamado com sucesso. lol");
+//		finish();
 	}
-	
+	private void clearBluetooth() {
+		ManipuladorProtocolo.newInstance();
+		if(Servidor.instance() != null) {
+			Log.d(TAG, "cancelando servidor...");
+			Servidor.instance().cancelar();
+		}
+		if(Cliente.instance() != null) {
+			Log.d(TAG, "cancelando cliente...");
+			Cliente.instance().cancelar();
+		}
+	}
 }

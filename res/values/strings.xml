@@ -79,6 +79,32 @@
     <string name="title_other_devices">Outros dispositivos disponiveis</string>
     <string name="button_scan">Busque dispositivos.</string>
     
+    <string name="name_tiago">Tiago Leite</string>
+    <string name="name_heitor">Heitor Meira</string>
+    <string name="name_gui">Guilherme Viegas (Designer)</string>
+    
+    
     <color name="cor_jogo">#363636</color>
+    
+    <string name="about_us">Nós somos alunos da Universidade Federal de Campina Grande (UFCG) e fizemos 
+        este aplicativo para a disciplina de Laboratório de Engenharia de Software onde temos o Professor 
+        Tiago Massoni. 
+            Obs.:Guilherme Viegas é o Designer do jogo.</string>
+        
+    
+    <string name="about_the_game">Adedonha é um jogo destinado a pessoas que desejam 
+        voltar um pouco no passado. Conhecido como "porrinha" em algumas cidades, "Stop" 
+        em outras e Adedonha, na sua grande maioria, este jogo faz com que o jogador tente 
+        lembrar o máximo de itens possíveis para uma determinada letra escolhida aleatoriamente. 
+        
+        Para isso, haverá um tempo (que poderá ser configurado) para que os jogadores coloquem 
+        os seus palpites. Os itens pelos quais os jogadores deverão inserir seus palpites também 
+        poderão ser configurados pelo criador do jogo. Por fim, o jogador que primeiro terminar 
+        terá seus dados enviados para a tela dos outros jogadores e estes serão julgadores dos 
+        palpites enviados por ele. Cada palpite desse poderá ser marcado como "Válido" ou "Inválido". 
+        Para cada palpite válido, haverá um aumento na pontuação do jogador, caso contrário, uma 
+        certa pontuação será reduzida da sua pontuação total.
+        </string>
+    
     
 </resources>

@@ -12,7 +12,7 @@ public class RankingDAO implements Serializable {
 	private static final long serialVersionUID = 7679503695040563323L;
 	
 	private List<Jogador> listJogador;
-	private static final int TAMANHO_DO_RANKING = 5; 
+	private static final int TAMANHO_DO_RANKING = 10; 
 	
 	public RankingDAO() {
 		listJogador = new ArrayList<Jogador>();

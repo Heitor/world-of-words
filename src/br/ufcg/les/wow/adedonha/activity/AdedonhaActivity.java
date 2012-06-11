@@ -1,5 +1,7 @@
 package br.ufcg.les.wow.adedonha.activity;
 
+import java.sql.SQLException;
+
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
@@ -10,21 +12,22 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 import br.ufcg.les.wow.R;
+import br.ufcg.les.wow.adedonha.model.Jogador;
+import br.ufcg.les.wow.bluetooth.Cliente;
+import br.ufcg.les.wow.bluetooth.ManipuladorProtocolo;
+import br.ufcg.les.wow.bluetooth.Servidor;
 import br.ufcg.les.wow.bluetooth.activity.ConfiguracoesDoJogoActivity;
 import br.ufcg.les.wow.persistence.dao.FactoryDao;
 import br.ufcg.les.wow.persistence.dao.RankingDAO;
+import br.ufcg.les.wow.persistence.dao.UsuarioDAO;
 
 public class AdedonhaActivity extends Activity {
 	
-	private BluetoothAdapter mBluetoothAdapter = null;
 	private static final String TAG = "AdedonhaActivity";
 	private static final boolean D = true;
+	private static final int REQUEST_ENABLE_BT = 0;
 	private RankingDAO rankingDAO = FactoryDao.getRankingDaoInstance();
-
-	// Intent request codes
-	private static final int REQUEST_CONNECT_DEVICE = 1;
-	private static final int REQUEST_ENABLE_BT = 2;
-	//private BluetoothChatService mChatService = null;
+	private UsuarioDAO usuarioDAO = new UsuarioDAO(this);
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,37 +37,54 @@ public class AdedonhaActivity extends Activity {
 		
 		setContentView(R.layout.main_adedonha);
 		
-		//getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.bluetooth);
-		
-		 // Get local Bluetooth adapter
-//        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-//
-//        // If the adapter is null, then Bluetooth is not supported
-//        if (mBluetoothAdapter == null) {
-//            Toast.makeText(this, "Bluetooth is not available", Toast.LENGTH_LONG).show();
-//            finish();
-//            return;
-//        }
-		
+		activateBluetooth();
 		
 		botaoJogarAction();
 		botaoSairAction();
 		loadRankingButton();
 		loadHelpButton();
-		
-//		AdedonhaDAOImpl adedonhaDao = new AdedonhaDAOImpl(getApplicationContext());
-//		try {
-//			adedonhaDao.open();
-//			if (adedonhaDao.listarObjetos().size() == 0) {
-//				List<Palavra> palavras = GeradorStrings.povoaBanco();
-//				adedonhaDao.inserirObjeto(palavras);
-//			}
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		adedonhaDao.close();
+	}
 
+	private void activateBluetooth() {
+		BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+		if (!mBluetoothAdapter.isEnabled()) {
+		    Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+		    startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+		}
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		
+		Intent usuarioIntent = getIntent();
+        Jogador usuario = (Jogador) usuarioIntent.getSerializableExtra("jogador");
+        
+        if (usuario != null) {
+        	if(rankingDAO.addJogador(usuario)) {
+        		try {
+    				usuarioDAO.open();
+    				usuarioDAO.inserirObjeto(usuario.getNome(), usuario.getPontuacao(),
+    						0);
+    			} catch (SQLException e) {
+    				// TODO Auto-generated catch block
+    				e.printStackTrace();
+    			}
+    			usuarioDAO.close();
+        	}
+        }
+	}
+	
+	private void clearBluetooth() {
+		ManipuladorProtocolo.newInstance();
+		if(Servidor.instance() != null) {
+			Log.d(TAG, "cancelando servidor...");
+			Servidor.instance().cancelar();
+		}
+		if(Cliente.instance() != null) {
+			Log.d(TAG, "cancelando cliente...");
+			Cliente.instance().cancelar();
+		}
 	}
 	
 	 private void loadHelpButton() {
@@ -103,7 +123,7 @@ public class AdedonhaActivity extends Activity {
 	    public void onStart() {
 	        super.onStart();
 	        if(D) Log.e(TAG, "++ ON START ++");
-
+	        clearBluetooth();
 	        // If BT is not on, request that it be enabled.
 	        // setupChat() will then be called during onActivityResult
 //	        if (!mBluetoothAdapter.isEnabled()) {
@@ -148,7 +168,7 @@ public class AdedonhaActivity extends Activity {
 				Intent outButton = new Intent(AdedonhaActivity.this,
 						telaDestino);
 				startActivity(outButton);
-				//finish();
+				finish();
 			}
 		};
 	}

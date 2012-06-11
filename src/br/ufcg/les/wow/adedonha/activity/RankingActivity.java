@@ -4,12 +4,17 @@ import java.sql.SQLException;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import br.ufcg.les.wow.R;
 import br.ufcg.les.wow.adedonha.model.Jogador;
@@ -41,8 +46,52 @@ public class RankingActivity extends Activity {
         	rankingDao.carregaRanking(playerList);
         }
         
-        ScrollView layout = loadInformation();
+        ScrollView layout = loadInformation2();
 		setContentView(layout);
+		
+	}
+	
+	private View cria() {
+		View line = new View(this);
+		line.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, 2));
+		line.setBackgroundColor(Color.rgb(51, 51, 51));
+		
+		return line;
+	}
+	
+	private ScrollView loadInformation2() {
+		ScrollView layout = (ScrollView) View.inflate(this,
+				R.layout.teste_table, null);
+		
+		TableLayout table = (TableLayout)layout.
+				findViewById(R.id.teste);
+		
+		//TableLayout table = new TableLayout(this); 
+		table.setStretchAllColumns(true);  
+	    table.setShrinkAllColumns(true); 
+	    table.setBaselineAligned(true);
+		
+		int count = 1;
+		for (Jogador player : playerList) {
+			TableRow rowTitle = new TableRow(this);
+			rowTitle.setGravity(Gravity.CENTER_HORIZONTAL); 
+			
+			TextView playerTextView = new TextView(this);
+			playerTextView.setText(count + SEPARATOR + player.toString());
+			playerTextView.setTextSize(20);
+			playerTextView.setTextColor(Color.parseColor("#363636"));
+			TableRow.LayoutParams params = new TableRow.LayoutParams();  
+		    params.span = 6;  
+			rowTitle.addView(playerTextView, params);
+			View v = cria();
+			table.addView(rowTitle);
+			table.addView(v);
+//			vTblRow.addView(playerTextView);
+			count++;
+		}
+		
+		return layout;
+		
 		
 	}
 	

@@ -1,6 +1,8 @@
 package br.ufcg.les.wow.bluetooth.activity;
 
 import br.ufcg.les.wow.R;
+import br.ufcg.les.wow.adedonha.activity.AdedonhaActivity;
+import br.ufcg.les.wow.adedonha.activity.SubMenuJogarAdedonhaActivity;
 import br.ufcg.les.wow.adedonha.model.Jogador;
 import android.app.Activity;
 import android.content.Intent;
@@ -58,6 +60,9 @@ public class ConfiguraClienteActivity extends Activity {
 	private OnClickListener botaoCancelarListener() {
 		return new OnClickListener() {
 			public void onClick(View v) {
+				Intent intent = new Intent(ConfiguraClienteActivity.this,
+						AdedonhaActivity.class);
+				startActivity(intent);
 				finish();
 			}
 		};

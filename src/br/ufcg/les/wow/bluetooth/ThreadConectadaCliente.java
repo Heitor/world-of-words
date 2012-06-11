@@ -13,13 +13,11 @@ public class ThreadConectadaCliente extends Thread {
 	private static final String TAG = "[Cliente]";
 	
 	private final BluetoothSocket clienteSocket;
-	private final ConectandoCliente conectandoClienteActivity;
 	private ManipuladorProtocolo handle;
 	private ThreadConectada threadConectada;
 
-	public ThreadConectadaCliente(ConectandoCliente conectandoClienteActivity, BluetoothDevice device, ManipuladorProtocolo handle) {
+	public ThreadConectadaCliente(BluetoothDevice device, ManipuladorProtocolo handle) {
 		this.handle = handle;
-		this.conectandoClienteActivity = conectandoClienteActivity;
 		BluetoothSocket tmp = null;
 
 		try {
@@ -61,11 +59,15 @@ public class ThreadConectadaCliente extends Thread {
 		try {
 			Log.d(TAG, "Cancelando o socket...");
 			clienteSocket.close();
+			if(threadConectada != null) {
+				threadConectada.cancelar();
+				threadConectada.stop();
+			}
 			Log.d(TAG, "Socket cancelado com sucesso.");
 		} catch (IOException e) {
 			Log.e(TAG, "falhou enquanto cancelava o socket.", e);
 		} finally {
-			this.conectandoClienteActivity.cancela();
+			threadConectada = null;
 		}
 	}
 }
