@@ -4,14 +4,12 @@ import java.sql.SQLException;
 import java.util.List;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -31,7 +29,6 @@ public class RankingActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.page_ranking_anagrama);
 		
 		Intent usuarioIntent = getIntent();
 
@@ -41,6 +38,11 @@ public class RankingActivity extends Activity {
         if (playerList.size() == 0) {
         	rankingDao.carregaRankingDefault();
         	playerList = rankingDao.getRanking();
+        	try {
+				inserirJogadores();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
         
         } else {
         	rankingDao.carregaRanking(playerList);
@@ -51,9 +53,18 @@ public class RankingActivity extends Activity {
 		
 	}
 	
-	private View cria() {
+	private void inserirJogadores() throws SQLException {
+		usuariosDAO.open();
+		for (Jogador jogador : playerList) {
+			usuariosDAO.inserirObjeto(jogador.getNome(), jogador.getPontuacao(), jogador.tempo());
+		}
+		usuariosDAO.close();
+		
+	}
+
+	private View createLine() {
 		View line = new View(this);
-		line.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, 2));
+		line.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, 1));
 		line.setBackgroundColor(Color.rgb(51, 51, 51));
 		
 		return line;
@@ -66,7 +77,6 @@ public class RankingActivity extends Activity {
 		TableLayout table = (TableLayout)layout.
 				findViewById(R.id.teste);
 		
-		//TableLayout table = new TableLayout(this); 
 		table.setStretchAllColumns(true);  
 	    table.setShrinkAllColumns(true); 
 	    table.setBaselineAligned(true);
@@ -76,45 +86,36 @@ public class RankingActivity extends Activity {
 			TableRow rowTitle = new TableRow(this);
 			rowTitle.setGravity(Gravity.CENTER_HORIZONTAL); 
 			
-			TextView playerTextView = new TextView(this);
-			playerTextView.setText(count + SEPARATOR + player.toString());
-			playerTextView.setTextSize(20);
-			playerTextView.setTextColor(Color.parseColor("#363636"));
-			TableRow.LayoutParams params = new TableRow.LayoutParams();  
-		    params.span = 6;  
-			rowTitle.addView(playerTextView, params);
-			View v = cria();
+			TextView playerTextView = createTextView(count + SEPARATOR + player.getNome());
+			rowTitle.addView(playerTextView);
+			
+			TextView pontuation = createTextView(player.getPontuacao() + " Pontos");
+			pontuation.setGravity(Gravity.RIGHT);
+			
+			rowTitle.addView(pontuation);
+			
+			View v = createLine();
 			table.addView(rowTitle);
 			table.addView(v);
-//			vTblRow.addView(playerTextView);
 			count++;
+			if (count == 11) {
+				break;
+			}
 		}
 		
 		return layout;
 		
 		
-	}
-	
-	private ScrollView loadInformation() {
-		ScrollView layout = (ScrollView) View.inflate(this,
-				R.layout.page_ranking_adedonha, null);
-		
-		LinearLayout vTblRow = (LinearLayout)layout.
-				findViewById(R.id.group_ranking_adedonha);
-		
-		int count = 1;
-		for (Jogador player : playerList) {
-			TextView playerTextView = new TextView(this);
-			playerTextView.setText(count + SEPARATOR + player.toString());
-			playerTextView.setTextSize(20);
-			playerTextView.setTextColor(Color.parseColor("#363636"));
-			vTblRow.addView(playerTextView);
-			count++;
-		}
-		
-		return layout;
 	}
 
+	private TextView createTextView(String text) {
+		TextView textView = new TextView(this);
+		textView.setText(text);
+		textView.setTextSize(20);
+		textView.setTextColor(Color.parseColor("#363636"));
+		return textView;
+	}
+	
 	private void loadPlayers() {
 		try {
 			usuariosDAO.open();

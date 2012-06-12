@@ -1,5 +1,6 @@
 package br.ufcg.les.wow.adedonha.activity;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -22,10 +23,12 @@ import android.widget.ToggleButton;
 import br.ufcg.les.wow.R;
 import br.ufcg.les.wow.adedonha.model.ConfiguracaoParatida;
 import br.ufcg.les.wow.adedonha.model.Jogador;
+import br.ufcg.les.wow.persistence.dao.UsuarioDAO;
 
 public class RespostaActivity extends Activity {
 
 	private ConfiguracaoParatida configuracao;
+	private UsuarioDAO usuarioDAO = new UsuarioDAO(this);
 	private Jogador jogador;
 	private List<ToggleButton> evaluations = new ArrayList<ToggleButton>();
 
@@ -49,23 +52,12 @@ public class RespostaActivity extends Activity {
 
 		this.configuracao = (ConfiguracaoParatida) intent
 				.getSerializableExtra(ConfiguracaoParatida.CONFIGURACAO);
+		
 		this.jogador = (Jogador) intent.getSerializableExtra(Jogador.JOGADOR
 				+ "2");
 
-		// setLetraJogo(intent.getStringExtra("letraJogo"));
-
-		// respostas = (HashMap<String, String>)
-		// intent.getSerializableExtra("respostas");
 
 		ScrollView layout = carregaRespostas();
-
-		// System.out.println("Tamanho do mapa nas respostas = "
-		// +respostas.size());
-
-		// Jogador jogador = (Jogador) intent.getSerializableExtra("jogador");
-		// tempoRestante = intent.getLongExtra("tempoJogo", 0L);
-
-		// apresentaPalavras(respostas);
 
 		setContentView(layout);
 		apresentaDadosJogador();
@@ -81,7 +73,6 @@ public class RespostaActivity extends Activity {
 				.findViewById(R.id.group_respostas_adedonha);
 
 		List<String> itensList = new ArrayList<String>();
-		// Set<String> itens = respostas.keySet();
 		Set<String> itens = jogador.resultado().keySet();
 		for (String iten : itens) {
 			itensList.add(iten);
@@ -159,13 +150,7 @@ public class RespostaActivity extends Activity {
 		return new OnClickListener() {
 
 			public void onClick(View v) {
-//				// TODO PASSAR OS DADOS PARA O RANKING
-//				Intent sairIntent = new Intent(RespostaActivity.this,
-//				 AdedonhaActivity.class);
-//				sairIntent.putExtra("jogador", jogador);
-//				sendBroadcast(sairIntent);
-//				// startActivity(sairIntent);
-//				finish();
+				addPlayerOnRanking(pontuation);
 				mostraDialogSairJogo("Parabéns " + jogador.getNome() + "\n" +
 						"Você fez " + pontuation + " Pontos", alertaFimListener() , listenerShare());
 
@@ -205,36 +190,6 @@ public class RespostaActivity extends Activity {
 		};
 	}
 	
-	private void sairDoJogo() {
-//		Intent fimIntent = new Intent(RespostaActivity.this,
-//				AdedonhaActivity.class);
-//		fimIntent.putExtra("usuario", usuario);
-//		startActivity(fimIntent);
-		finish();
-	}
-
-	@Override
-	protected void onDestroy() {
-//		jogador.setPontuacao(pontuation);
-//		System.out
-//				.println("CHAMOU AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII");
-//		if (FactoryDao.getRankingDaoInstance().addJogador(jogador)) {
-//			try {
-//				FactoryDao.getUsuarioDaoInstance().open();
-//				FactoryDao.getUsuarioDaoInstance().inserirObjeto(jogador);
-//				usuarioDAO.open();
-//				usuarioDAO.inserirObjeto(usuario.getNome(),
-//						usuario.getPontucao(), usuario.getTempo());
-//			} catch (SQLException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//			usuarioDAO.close();
-//		}
-//		;
-		super.onDestroy();
-
-	}
 	
 	private void mostraDialogSairJogo(String msg,
 			DialogInterface.OnClickListener listener,
@@ -246,6 +201,17 @@ public class RespostaActivity extends Activity {
 		alerta.setButton("Ok", listener);
 		alerta.show();
 	}
+	
+	public void addPlayerOnRanking(int pontuation) {
+		try {
+			usuarioDAO.open();
+			usuarioDAO.inserirObjeto(jogador.getNome(), pontuation,	0);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		usuarioDAO.close();
+	}
+	
 	
 	private void apresentaDadosJogador() {
 		// TODO Contabilizar o tempo

@@ -6,6 +6,7 @@ import java.util.List;
 import android.app.ListActivity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
+import br.ufcg.les.wow.R;
 import br.ufcg.les.wow.adedonha.model.Letra;
 import br.ufcg.les.wow.util.InteractiveArrayAdapter;
 
@@ -38,25 +39,25 @@ public class ListaItemActivity extends ListActivity {
 	
 	public List<Letra> povoaItens() {
 		List<Letra> itens = new ArrayList<Letra>();
-		itens.add(new Letra("Nome"));
-		itens.add(new Letra("Objeto"));
-		itens.add(new Letra("Animal"));
-		itens.add(new Letra("Fruta"));
-		itens.add(new Letra("Profissão"));
-		itens.add(new Letra("Carro"));
-		itens.add(new Letra("País"));
-		itens.add(new Letra("Cidade"));
-		itens.add(new Letra("Serie"));
-		itens.add(new Letra("Novela"));
-		itens.add(new Letra("Filme"));
-		itens.add(new Letra("Ator"));
-		itens.add(new Letra("Atriz"));
-		itens.add(new Letra("Cor"));
-		itens.add(new Letra("Jogo"));
-		itens.add(new Letra("Time"));
-		itens.add(new Letra("Jogador"));
-		itens.add(new Letra("Cantor"));
-		itens.add(new Letra("Cantora"));
+		itens.add(new Letra("Nome", R.drawable.name));
+		itens.add(new Letra("Objeto", R.drawable.objeto));
+		itens.add(new Letra("Animal", R.drawable.animal));
+		itens.add(new Letra("Fruta", R.drawable.fruta));
+		itens.add(new Letra("Profissão", R.drawable.profissao));
+		itens.add(new Letra("Carro", R.drawable.carro));
+		itens.add(new Letra("País", R.drawable.pais));
+		itens.add(new Letra("Cidade", R.drawable.cidade));
+		itens.add(new Letra("Serie", R.drawable.serie));
+		itens.add(new Letra("Novela", R.drawable.novela));
+		itens.add(new Letra("Filme", R.drawable.filme));
+		itens.add(new Letra("Ator", R.drawable.ator));
+		itens.add(new Letra("Atriz", R.drawable.atriz));
+		itens.add(new Letra("Cor", R.drawable.cor));
+		itens.add(new Letra("Jogo", R.drawable.jogo));
+		itens.add(new Letra("Time", R.drawable.time));
+		itens.add(new Letra("Jogador", R.drawable.jogador));
+		itens.add(new Letra("Cantor", R.drawable.cantor));
+		itens.add(new Letra("Cantora", R.drawable.cantora));
 	
 		return itens;
 	}

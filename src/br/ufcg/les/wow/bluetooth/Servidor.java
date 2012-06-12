@@ -15,8 +15,9 @@ import android.bluetooth.BluetoothSocket;
 import android.util.Log;
 
 public class Servidor extends Thread implements Serializable {
+	
 	private static final long serialVersionUID = 4880838429325379959L;
-	private static final UUID MY_UUID = UUID.fromString("fa87c0d0-afac-11de-8a39-0800200c9a69");
+	private static UUID MY_UUID = UUID.fromString("fa87c0d0-afac-11de-8a39-0800200c9a69");
 	private final ManipuladorProtocolo handle = ManipuladorProtocolo.instance();
 	private static final String WOW = "wow";
 	private static final String TAG = "[Servidor]";
@@ -25,6 +26,9 @@ public class Servidor extends Thread implements Serializable {
 
 	private final BluetoothServerSocket servidorSocket;
 	private boolean encerrar = false;
+	
+	private String uuid1 = "fa87c0d0-afac-11de-8a39-0800200c9a69";
+	private String uuid2 = "fa87c0d0-afac-11de-8a39-0800200c9a68";
 
 	private List<ThreadConectada> threadsConectadas = new ArrayList<ThreadConectada>();
 
@@ -34,6 +38,20 @@ public class Servidor extends Thread implements Serializable {
 			servidorSocketTemporario = adaptadorBluetooth().listenUsingRfcommWithServiceRecord(WOW, MY_UUID);
 		} catch (IOException e) {
 			Log.e(TAG, "Falhou enquanto levantava o listener server.", e);
+			
+			if(MY_UUID.equals(uuid1)) {
+				MY_UUID = UUID.fromString(uuid2);
+			
+			} else {
+				MY_UUID = UUID.fromString(uuid1);
+			}
+			
+			try {
+				servidorSocketTemporario = adaptadorBluetooth().listenUsingRfcommWithServiceRecord(WOW, MY_UUID);
+			} catch (IOException e1) {
+				Log.e(TAG, "Falhou enquanto levantava o listener server mesmo mudando o UUID", e1);
+			}
+			
 		}
 		servidorSocket = servidorSocketTemporario;
 	}

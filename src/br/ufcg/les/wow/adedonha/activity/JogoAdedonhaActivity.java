@@ -19,28 +19,30 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
-import android.widget.TableRow;
 import android.widget.TextView;
 import br.ufcg.les.wow.R;
 import br.ufcg.les.wow.adedonha.model.ConfiguracaoParatida;
-import br.ufcg.les.wow.adedonha.model.Letra;
 import br.ufcg.les.wow.adedonha.model.Jogador;
+import br.ufcg.les.wow.adedonha.model.Letra;
 import br.ufcg.les.wow.bluetooth.Cliente;
 import br.ufcg.les.wow.bluetooth.ManipuladorProtocolo;
 import br.ufcg.les.wow.bluetooth.Servidor;
 
 public class JogoAdedonhaActivity extends Activity {
+	
 	private static final String TAG = "[JogoAdedonhaActivity]";
-
-	private String letra = "";
 	
 	private TextView nomeJogadorTextView;
 	private TextView contadorTextView;
 	private TextView letraTextView;
 	private ImageButton botaoSair;
 	private ImageButton botaoVerificar;
+	private Dialog dialog;
+	private EditText valorItem;
+	private Button botaoCancelar;
+	private Button botaoConfirmar;
 	
-	private List<Button> listaBotoesItens = new ArrayList<Button>();
+	private List<ImageButton> listaImageButtons = new ArrayList<ImageButton>();
 	
 	private Intent intentRespostas;
 	private CountDownTimer contador; 
@@ -48,19 +50,10 @@ public class JogoAdedonhaActivity extends Activity {
 	private Jogador jogador;
 	private ConfiguracaoParatida configuracao;
 	private Long tempoRestante = 0L;
-	private boolean marcouFim = false;
+	private String letra = "";
 	
-	private Dialog dialog;
-
-	private EditText valorItem;
-
-	private Button botaoCancelar;
-
-	private Button botaoConfirmar;
 	private boolean done = false;
-	
-	private static final int LARGURA_CAIXINHA = 90;
-	private static final int ALTURA_CAIXINHA = 50;
+	private boolean marcouFim = false;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -90,43 +83,36 @@ public class JogoAdedonhaActivity extends Activity {
 		LinearLayout vTblRow = (LinearLayout)layout.
 				findViewById(R.id.group_itens_adedonha);
 
+		
 		for (int i = 0; i < itensDesejados.size(); i++) {
-			Button botaoItem = new Button(this);
+			ImageButton botaoItem = new ImageButton(this);
 			botaoItem.setVisibility(Button.VISIBLE);
-			botaoItem.setText(itensDesejados.get(i).getDescricao());
-			botaoItem.setTextSize(24);
-			botaoItem.setLayoutParams(new TableRow.LayoutParams(LARGURA_CAIXINHA, ALTURA_CAIXINHA));
+			botaoItem.setBackgroundResource(itensDesejados.get(i).getIdImg());
 			
 			vTblRow.addView(botaoItem);
-			listaBotoesItens.add(botaoItem);
+			listaImageButtons.add(botaoItem);
+			
+			addOnClickListener(botaoItem, itensDesejados.get(i).getDescricao());
 		}
-		
-		addOnClickListenerBotoes();
 		
 		return layout;
 	}
 	
-	private void addOnClickListenerBotoes() {
-		for (Button botaoItem : listaBotoesItens) {
-			botaoItem.setOnClickListener(clickListenerItem(botaoItem));
-		}
-		
-	}
-	
-	private OnClickListener clickListenerItem(final Button botaoItem) {
-		return new OnClickListener() {
+	private void addOnClickListener(final ImageButton botaoItem, final String descricao) {
+		botaoItem.setOnClickListener(new OnClickListener() {
 			
 			public void onClick(View v) {
-				mostraDialog(botaoItem);
+				mostraDialog(botaoItem, descricao);
 			}
-		};
+		});
+		
 	}
-	
-	private void mostraDialog(Button botaoItem) {
+
+	private void mostraDialog(ImageButton botaoItem, String descricao) {
 		dialog = new Dialog(this);
 
 		dialog.setContentView(R.layout.custom_dialog_adedonha);
-		dialog.setTitle("Valor para o item: " + botaoItem.getText());
+		dialog.setTitle("Valor para o item: " + descricao);
 		
 		valorItem = (EditText) dialog.findViewById(R.id.edittext_dialog_adedonha);
 		
@@ -134,21 +120,24 @@ public class JogoAdedonhaActivity extends Activity {
 		botaoCancelar.setOnClickListener(cancelarListener());
 		
 		botaoConfirmar = (Button) dialog.findViewById(R.id.confirmar_dialog_adedonha);
-		botaoConfirmar.setOnClickListener(confirmarDialogListener(botaoItem));
+		botaoConfirmar.setOnClickListener(confirmarDialogListener(botaoItem, descricao));
 		
 		dialog.show();
 
 	}
 
-	private OnClickListener confirmarDialogListener(final Button botaoItem) {
+	private OnClickListener confirmarDialogListener(final ImageButton botaoItem, final String descricao) {
 		return new OnClickListener() {
 			
 			public void onClick(View v) {
 				String valorInserido = valorItem.getText().toString();
 				if (entradaValida(valorInserido)) {
-					jogador.putResultado(botaoItem.getText().toString(), valorInserido);
+					jogador.putResultado(descricao, valorInserido);
+					
 					botaoItem.getBackground().setColorFilter(
 							new LightingColorFilter(0xFFFFFFFF, 0xff0000ff));
+					
+					
 					dialog.dismiss();
 				}
 			}
@@ -158,7 +147,7 @@ public class JogoAdedonhaActivity extends Activity {
 			}
 		};
 	}
-
+	
 	private OnClickListener cancelarListener() {
 		return new OnClickListener() {
 			
@@ -168,7 +157,7 @@ public class JogoAdedonhaActivity extends Activity {
 		};
 	}
 
-	private CountDownTimer inicializaContador() {
+	private CountDownTimer inicializaContador() { //FIXME PROBLEMA AQUI
 		return new CountDownTimer(configuracao.tempo(), 1000) {
 
 			public void onTick(long tempoMiliseconds) {
@@ -191,7 +180,7 @@ public class JogoAdedonhaActivity extends Activity {
 		    		 tempoRestante = 0L;
 		    		 contadorTextView.setText("Fim de jogo!");
 		    		 jogador.setTempo(tempoRestante);
-		    		 mostraDialogSairJogo(msgFimJogo(), fimDeJogoListener(), null);
+		    		 configurarRespostas(jogador);
 		    	 }
 		     }
 		  }.start();
@@ -247,8 +236,6 @@ public class JogoAdedonhaActivity extends Activity {
 		marcouFim = true;
 		contadorTextView.setText("Fim de jogo!");
 		System.out.println("TEMPO NO FINALIZAR VARIAVEIS =" + tempoRestante);
-		
-		//configurarRespostas(this.jogador);
 		
 	}
 
@@ -320,13 +307,10 @@ public class JogoAdedonhaActivity extends Activity {
 		return new OnClickListener() {
 
 			public void onClick(View v) {
-				Intent botaoSairIntent = new Intent(getApplicationContext(), AdedonhaActivity.class);
-				
 				finalizaVariaveisJogo();
 				Servidor.instance().encerrarPartida(jogador);
 				Servidor.instance().cancelar();
 				
-				startActivity(botaoSairIntent);
 			}
 		};
 	}

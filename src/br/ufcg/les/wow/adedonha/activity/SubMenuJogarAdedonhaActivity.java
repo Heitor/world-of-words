@@ -84,10 +84,10 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 	
 	private void itensDefault() {
 		itensDesejados = new ArrayList<Letra>();
-		itensDesejados.add(new Letra("Nome"));
-		itensDesejados.add(new Letra("Objeto"));
-		itensDesejados.add(new Letra("Animal"));
-		itensDesejados.add(new Letra("Fruta"));
+		itensDesejados.add(new Letra("Nome", R.drawable.name));
+		itensDesejados.add(new Letra("Objeto", R.drawable.objeto));
+		itensDesejados.add(new Letra("Animal", R.drawable.animal));
+		itensDesejados.add(new Letra("Fruta", R.drawable.fruta));
 	}
 
 	@Override
