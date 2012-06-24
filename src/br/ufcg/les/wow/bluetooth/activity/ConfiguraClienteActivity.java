@@ -1,9 +1,5 @@
 package br.ufcg.les.wow.bluetooth.activity;
 
-import br.ufcg.les.wow.R;
-import br.ufcg.les.wow.adedonha.activity.AdedonhaActivity;
-import br.ufcg.les.wow.adedonha.activity.SubMenuJogarAdedonhaActivity;
-import br.ufcg.les.wow.adedonha.model.Jogador;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +8,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import br.ufcg.les.wow.R;
+import br.ufcg.les.wow.adedonha.model.Jogador;
 
 public class ConfiguraClienteActivity extends Activity {
 	private final static String TAG = "[ConfiguraClienteActivity]";
@@ -60,9 +58,6 @@ public class ConfiguraClienteActivity extends Activity {
 	private OnClickListener botaoCancelarListener() {
 		return new OnClickListener() {
 			public void onClick(View v) {
-				Intent intent = new Intent(ConfiguraClienteActivity.this,
-						AdedonhaActivity.class);
-				startActivity(intent);
 				finish();
 			}
 		};
@@ -80,7 +75,6 @@ public class ConfiguraClienteActivity extends Activity {
 				setJogador();
 				Jogador jogador = new Jogador(nomeJogador);
 				Intent listarDispositivos = new Intent(ConfiguraClienteActivity.this, DeviceListActivity.class);
-				//listarDispositivos.putExtra("nomeJogador", nomeJogador);
 				listarDispositivos.putExtra(Jogador.JOGADOR, jogador);
 				startActivityForResult(listarDispositivos, REQUISICAO_CONEXAO_DISPOSITIVO);
 				finish();

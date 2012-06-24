@@ -2,6 +2,8 @@ package br.ufcg.les.wow.bluetooth;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
 
@@ -54,7 +56,9 @@ public class ThreadConectada extends Thread {
 
 		while (true) {
 			try {
-				tamanhoBuffer = streamDeEntrada.read(buffer);
+				ObjectInputStream ois = new ObjectInputStream(streamDeEntrada);
+				tamanhoBuffer = ois.read(buffer);
+				//tamanhoBuffer = streamDeEntrada.read(buffer);
 				this.handle.obtainMessage(ManipuladorProtocolo.RECEBER_MENSAGEM, tamanhoBuffer, -1, buffer).sendToTarget();
 				buffer = new byte[1024];
 			} catch (IOException e) {
@@ -131,7 +135,10 @@ public class ThreadConectada extends Thread {
 
 	public void enviar(byte[] buffer) {
 		try {
-			streamDeSaida.write(buffer);
+			//streamDeSaida.write(buffer);
+			ObjectOutputStream oos = new ObjectOutputStream(streamDeSaida);
+			oos.write(buffer);
+			oos.flush();
 			this.handle.obtainMessage(ManipuladorProtocolo.ENVIAR_MENSAGEM, buffer.length, -1, buffer).sendToTarget();
 		} catch (IOException e) {
 			this.handle.obtainMessage(ManipuladorProtocolo.RECEBER_MENSAGEM, buffer.length, -1, buffer).sendToTarget();

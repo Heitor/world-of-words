@@ -20,11 +20,8 @@ public class ListaItemActivity extends ListActivity {
 	}
 
 	private void inicializaItens() {
-		if (adapterItens == null) {
-			adapterItens = new InteractiveArrayAdapter(this,
-				getItens());
-			
-		}
+		adapterItens = new InteractiveArrayAdapter(this, getItens());
+
 		setListAdapter(adapterItens);
 	}
 	

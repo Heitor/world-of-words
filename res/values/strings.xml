@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="hello">Bem vindo(a) ao World of Words !</string>
-    <string name="app_name">World of Words</string>
+    <string name="hello">Bem vindo(a) ao Adedonha !</string>
+    <string name="app_name">Adedonha</string>
     <string name="anagrama">AnagramaHT</string>
     <string name="dicRapido">Dicionário Rápido</string>
     <string name="adedonha">Adedonha</string>
     <string name="forca">Jogo da Forca</string>
-    <string name="app_name_adedonha">World of Words - Adedonha</string>
+    <string name="app_name_adedonha">Adedonha</string>
     <string name="app_name_dic">World of Words - Dicionário Rápido</string>
     
 

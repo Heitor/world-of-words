@@ -13,8 +13,6 @@ public class PreJogoAdedonhaActivity extends Activity {
 
 	private CountDownTimer contador;
 	private TextView contadorTextView;
-	//private Jogo jogo;
-	//private long tempoDesejado;
 	private Intent preJogoIntent;
 
 	@Override
@@ -28,15 +26,11 @@ public class PreJogoAdedonhaActivity extends Activity {
 
 		Intent intent = getIntent();
 
-		//jogo = (Jogo) intent.getSerializableExtra("jogo");
-		//tempoDesejado = intent.getLongExtra("tempoDesejado", 180000);
 		ConfiguracaoParatida configuracao = (ConfiguracaoParatida) intent.getSerializableExtra(ConfiguracaoParatida.CONFIGURACAO);
 		Jogador jogador = (Jogador) intent.getSerializableExtra(Jogador.JOGADOR);
 
 		this.preJogoIntent = new Intent(PreJogoAdedonhaActivity.this, JogoAdedonhaActivity.class);
 
-		//preJogoIntent.putExtra("jogo", jogo);
-		//preJogoIntent.putExtra("tempoDesejado", tempoDesejado);
 		this.preJogoIntent.putExtra(Jogador.JOGADOR, jogador);
 		this.preJogoIntent.putExtra(ConfiguracaoParatida.CONFIGURACAO, configuracao);
 	}

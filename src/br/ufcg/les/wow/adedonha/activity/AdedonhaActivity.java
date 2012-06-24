@@ -33,7 +33,7 @@ public class AdedonhaActivity extends Activity {
 		
 		setContentView(R.layout.main_adedonha);
 		
-		//activateBluetooth();
+		activateBluetooth();
 		
 		botaoJogarAction();
 		botaoSairAction();
@@ -98,23 +98,11 @@ public class AdedonhaActivity extends Activity {
 	        super.onStart();
 	        if(D) Log.e(TAG, "++ ON START ++");
 	        clearBluetooth();
-	        // If BT is not on, request that it be enabled.
-	        // setupChat() will then be called during onActivityResult
-//	        if (!mBluetoothAdapter.isEnabled()) {
-//	            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-//	            startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
-//	        }
-	        
 	 }
-	        // Otherwise, setup the chat session
-//	        } else {
-//	            if (mChatService == null) setupChat();
-//	        }
 	   
 
 	private void botaoJogarAction() {
 		Button botaoJogar = (Button) findViewById(R.id.jogar_adedonha);
-		//botaoJogar.setOnClickListener(listenerTrocarTela(SubMenuJogarAdedonhaActivity.class));
 		botaoJogar.setOnClickListener(listenerTrocarTela(ConfiguracoesDoJogoActivity.class));
 		
 	}
@@ -129,6 +117,9 @@ public class AdedonhaActivity extends Activity {
 		return new OnClickListener() {
 			
 			public void onClick(View v) {
+				if (Servidor.instance() != null) {
+					Servidor.instance().cancelar();
+				}
 				finish();
 			}
 		};
@@ -142,7 +133,6 @@ public class AdedonhaActivity extends Activity {
 				Intent outButton = new Intent(AdedonhaActivity.this,
 						telaDestino);
 				startActivity(outButton);
-				finish();
 			}
 		};
 	}

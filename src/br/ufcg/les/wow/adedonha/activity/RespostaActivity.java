@@ -153,6 +153,7 @@ public class RespostaActivity extends Activity {
 				addPlayerOnRanking(pontuation);
 				mostraDialogSairJogo("Parabéns " + jogador.getNome() + "\n" +
 						"Você fez " + pontuation + " Pontos", alertaFimListener() , listenerShare());
+				
 
 			}
 		};
@@ -214,9 +215,6 @@ public class RespostaActivity extends Activity {
 	
 	
 	private void apresentaDadosJogador() {
-		// TODO Contabilizar o tempo
-		// jogador.setPontuacao(pontos);
-		// jogador.resultado()
 
 		TextView nomeText = (TextView) findViewById(R.id.saida_jogador_adedonha);
 		nomeText.setText("Jogador: " + this.jogador.nome());

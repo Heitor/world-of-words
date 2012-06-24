@@ -73,6 +73,7 @@ public class JogoAdedonhaActivity extends Activity {
 
 	}
 	
+	
 	private ScrollView carregaBotoesItens() {
 		
 		List<Letra> itensDesejados = this.configuracao.itensDesejados();
@@ -115,6 +116,11 @@ public class JogoAdedonhaActivity extends Activity {
 		dialog.setTitle("Valor para o item: " + descricao);
 		
 		valorItem = (EditText) dialog.findViewById(R.id.edittext_dialog_adedonha);
+		
+		String last = jogador.resultado().get(descricao);
+		if (last != null && !last.equals("")) {
+			valorItem.setText(last);
+		}
 		
 		botaoCancelar = (Button) dialog.findViewById(R.id.cancelar_dialog_adedonha);
 		botaoCancelar.setOnClickListener(cancelarListener());
@@ -235,29 +241,27 @@ public class JogoAdedonhaActivity extends Activity {
 	private void finalizaVariaveisJogo() {
 		marcouFim = true;
 		contadorTextView.setText("Fim de jogo!");
-		System.out.println("TEMPO NO FINALIZAR VARIAVEIS =" + tempoRestante);
+		cleanBackGround();
 		
 	}
+
+	private void cleanBackGround() {
+		for (ImageButton imBut : this.listaImageButtons) {
+			imBut.getBackground().setColorFilter(
+					null);
+		}
+		
+	}
+
 
 	public void configurarRespostas(Jogador jogador) {
 		marcouFim = true;
 		contadorTextView.setText("Fim de jogo!");
-		System.out.println("TEMPO NO FINALIZAR VARIAVEIS =" + tempoRestante);
 		
 		this.jogador.setTempo(tempoRestante);
 		Log.d(TAG, "Jogador recebido: "+jogador);
-		//if(jogador != null) {
 		intentRespostas.putExtra(Jogador.JOGADOR+"2", jogador);
-		//}
 		intentRespostas.putExtra(ConfiguracaoParatida.CONFIGURACAO, this.configuracao);
-		// Se o cliente for null, quer dizer que esse é o servidor
-		// Deve haver uma solução melhor pra isso.
-		/*if(Cliente.instance() != null) {
-			Log.d(TAG, "Enviando mensagem teste de fim de jogo.");
-			Cliente.instance().enviarJogador(this.jogador);
-		} else {
-			Servidor.instance().enviarJogador(this.jogador);
-		}*/
 		this.done = true;
 		mostraDialogSairJogo(msgFimJogo(), fimDeJogoListener(), jogador);
 	}
@@ -271,6 +275,7 @@ public class JogoAdedonhaActivity extends Activity {
 			}
 		};
 	}
+	
 	
 	public String msgFimJogo() {
 		return "FIM DE JOGO" + "\n\n Parabéns: "
@@ -317,6 +322,7 @@ public class JogoAdedonhaActivity extends Activity {
 
 	private void recuperaIntent() {
 		Intent intent = getIntent();
+		this.configuracao = null;
 		this.configuracao = (ConfiguracaoParatida) intent.getSerializableExtra(ConfiguracaoParatida.CONFIGURACAO);
 		this.jogador = (Jogador) intent.getSerializableExtra(Jogador.JOGADOR);
 	}

@@ -260,18 +260,12 @@ public class SubMenuJogarAdedonhaActivity extends Activity {
 				if (itensDesejados.size() > 0) {
 					
 					setJogador();
-					//Jogo jogo = new Jogo(nomeJogador, nivel, letrasDesejadas, itensDesejados);
 					
 					ConfiguracaoParatida configuracoes = new ConfiguracaoParatida(tempoDesejado, escolheLetra(letrasDesejadas), itensDesejados);
 					Jogador jogador = new Jogador(nomeJogador);
 					
-					/*Intent subMenuIntent = new Intent(SubMenuJogarAdedonhaActivity.this,
-							JogoAdedonhaActivity.class);*/
 					Intent subMenuIntent = new Intent(SubMenuJogarAdedonhaActivity.this, NovasConexoesListenerActivity.class);
 					
-					//subMenuIntent.putExtra("tempoDesejado", tempoDesejado);
-					//
-					//subMenuIntent.putExtra("protocolo", protocolo);
 					subMenuIntent.putExtra(Jogador.JOGADOR, jogador);
 					subMenuIntent.putExtra(ConfiguracaoParatida.CONFIGURACAO, configuracoes); 
 					startActivity(subMenuIntent);
