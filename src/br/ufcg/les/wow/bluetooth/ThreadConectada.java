@@ -7,11 +7,9 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
 
-import br.ufcg.les.wow.adedonha.model.Jogador;
-
-
 import android.bluetooth.BluetoothSocket;
 import android.util.Log;
+import br.ufcg.les.wow.adedonha.model.Jogador;
 
 public class ThreadConectada extends Thread {
 	private static final String TAG = "[ThreadConectada]";
